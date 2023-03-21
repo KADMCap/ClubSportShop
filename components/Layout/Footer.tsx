@@ -2,19 +2,19 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-neutral-900 text-center text-white">
+    <footer className="text-center text-white bg-neutral-900">
       <div className="container px-6 pt-6">
-        <div className="mb-6 flex justify-center">
+        <div className="flex justify-center mb-6">
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -25,13 +25,13 @@ export const Footer = () => {
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -42,20 +42,20 @@ export const Footer = () => {
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
               <path
                 d="M7 11v2.4h3.97c-.16 1.029-1.2 3.02-3.97 3.02-2.39 0-4.34-1.979-4.34-4.42 0-2.44 1.95-4.42 4.34-4.42 1.36 0 2.27.58 2.79 1.08l1.9-1.83c-1.22-1.14-2.8-1.83-4.69-1.83-3.87 0-7 3.13-7 7s3.13 7 7 7c4.04 0 6.721-2.84 6.721-6.84 0-.46-.051-.81-.111-1.16h-6.61zm0 0 17 2h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2z"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </a>
@@ -63,13 +63,13 @@ export const Footer = () => {
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -80,13 +80,13 @@ export const Footer = () => {
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -97,13 +97,13 @@ export const Footer = () => {
           <a
             href="#!"
             type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            className="m-1 leading-normal text-white uppercase transition duration-150 ease-in-out border-2 border-white rounded-full h-9 w-9 hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
             data-te-ripple-color="light"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
+              className="w-4 h-full mx-auto"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -114,7 +114,7 @@ export const Footer = () => {
 
         <div>
           <form action="">
-            <div className="gird-cols-1 grid items-center justify-center gap-4 md:grid-cols-3">
+            <div className="grid items-center justify-center gap-4 gird-cols-1 md:grid-cols-3">
               <div className="md:ml-auto md:mb-6">
                 <p className="">
                   <strong>Sign up for our newsletter</strong>
