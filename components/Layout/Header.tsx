@@ -4,11 +4,13 @@ export const Header = () => {
   return (
     <header className="flex bg-transparent z-50 sticky justify-between w-full p-2.5">
       <div className="flex items-center justify-center ">
-        <span className="text-2xl font-medium ml-2.5">ClubSportStore</span>
+        <span className="text-2xl font-medium ml-2.5 font-russo">
+          ClubSportStore
+        </span>
       </div>
       <div className="flex justify-center">
         <div className="w-full">
-          <div className="relative flex w-full flex-wrap items-stretch">
+          <div className="relative flex flex-wrap items-stretch w-full">
             <input
               type="search"
               className="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:text-neutral-200 dark:placeholder:text-neutral-200"
@@ -27,7 +29,7 @@ export const Header = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="h-5 w-5"
+                className="w-5 h-5"
               >
                 <path
                   fill-rule="evenodd"

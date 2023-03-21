@@ -1,3 +1,5 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
@@ -10,6 +12,10 @@ module.exports = {
       xl: " 2rem",
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        russo: ["var(--font-russo)", ...fontFamily.sans],
+      },
       colors: {
         white: "#FFFFFF",
         black: "#000000",
