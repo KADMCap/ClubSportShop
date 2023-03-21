@@ -342,3 +342,97 @@ export const ChevronSelectIcon = ({
     </svg>
   );
 };
+
+export const FootballIcon = ({
+  size = "md",
+  color = "blueDark",
+}: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size], colorClass[color])}
+      width="24px"
+      height="24px"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path
+        d="M12 8l3.804 2.764M12 8l-3.804 2.764M12 8V5m3.804 5.764l-1.453 4.472m1.453-4.472L18.5 9.5m-4.149 5.736H9.65m4.702 0L16 17.5m-6.351-2.264l-1.453-4.472m1.453 4.472L8 17.5m.196-6.736L5.5 9.5m0 0L2.05 13M5.5 9.5l-1-4.115m14 4.115l3.45 3.5M18.5 9.5l1-4.115M12 5L8.624 2.584M12 5l3.376-2.416M8 17.5L3.338 17M8 17.5l2.5 4.388M16 17.5l4.662-.5M16 17.5l-2.5 4.388M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
+        stroke="#000000"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>
+  );
+};
+
+export const BasketballIcon = ({
+  size = "md",
+  color = "blueDark",
+}: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size], colorClass[color])}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <g
+        clip-path="url(#basketball-alt_svg__clip0)"
+        stroke="#000000"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M17.736 20.192c4.524-3.168 5.623-9.404 2.455-13.928C17.024 1.74 10.788.641 6.264 3.81 1.74 6.976.641 13.212 3.808 17.736c3.168 4.524 9.404 5.623 13.928 2.456zM17.736 20.192L6.264 3.809M19.577 5.473c-3.77 5.896-8.508 9.214-16.302 11.415M13.06 2.056c.413 5.24 3.392 9.494 8.646 12.35M2.293 9.595c4.783 2.18 7.761 6.434 8.647 12.349"></path>
+      </g>
+      <defs>
+        <clipPath id="basketball-alt_svg__clip0">
+          <path fill="#fff" d="M0 0h24v24H0z"></path>
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const ShirtIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size], colorClass[color])}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      color="#000000"
+    >
+      <path
+        d="M6 4h3s0 3 3 3 3-3 3-3h3m0 7v8.4a.6.6 0 01-.6.6H6.6a.6.6 0 01-.6-.6V11M18 4l4.443 1.777a.6.6 0 01.334.78l-1.626 4.066a.6.6 0 01-.557.377H18M6 4L1.557 5.777a.6.6 0 00-.334.78l1.626 4.066a.6.6 0 00.557.377H6"
+        stroke="#000000"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>
+  );
+};
+
+export const ShortIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size], colorClass[color])}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.06 5.655A.6.6 0 013.658 5h16.684a.6.6 0 01.598.655l-1.176 12.8a.6.6 0 01-.597.545h-4.152a.6.6 0 01-.574-.424l-1.867-6.102c-.174-.566-.974-.566-1.148 0l-1.868 6.102a.6.6 0 01-.573.424H4.833a.6.6 0 01-.597-.545L3.643 12 3.06 5.655z"
+        stroke="#000000"
+        stroke-width="1.5"
+      ></path>
+      <path
+        d="M4 9.5h1.5a2 2 0 002-2V5M20.5 9.5h-2a2 2 0 01-2-2V5"
+        stroke="#000000"
+        stroke-width="1.5"
+      ></path>
+    </svg>
+  );
+};
