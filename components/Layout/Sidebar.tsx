@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { HomeIcon } from "../Icons";
 
 const iconsStyle = "ml-2 w-[24px] h-[24px] text-blue";
 const itemStyle = "flex w-full justify-center";
@@ -7,7 +8,7 @@ const linkStyle =
   "mt-2.5  flex items-center w-[213px] h-[40px] rounded-lg hover:bg-lightblue";
 const linkActiveStyle =
   "mt-2.5 flex items-center w-[213px] h-[40px] bg-lightblue rounded-lg";
-const spanStyle = "ml-2.5 text-xl";
+const spanStyle = "ml-2.5 text-md text-blue";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -16,12 +17,13 @@ export const Sidebar = () => {
       <ul>
         <li className={itemStyle}>
           <Link href="/" passHref>
+            <HomeIcon />
             <span
               className={
                 router.pathname === "/" ? `${linkActiveStyle}` : `${linkStyle}`
               }
             >
-              <span className={spanStyle}>Home</span>
+              <span className="ml-2.5 text-md text-grayDark">Home</span>
             </span>
           </Link>
         </li>
@@ -34,7 +36,7 @@ export const Sidebar = () => {
                   : `${linkStyle}`
               }
             >
-              <span className={spanStyle}>Products</span>
+              <span className="ml-2.5 text-md text-blue">Products</span>
             </span>
           </Link>
         </li>
@@ -47,7 +49,7 @@ export const Sidebar = () => {
                   : `${linkStyle}`
               }
             >
-              <span className={spanStyle}>Sales</span>
+              <span className="ml-2.5 text-md text-blue-600">Sales</span>
             </span>
           </Link>
         </li>
