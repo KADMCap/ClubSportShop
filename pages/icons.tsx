@@ -20,6 +20,8 @@ import {
   BasketballIcon,
   ShirtIcon,
   ShortIcon,
+  SunIcon,
+  MoonIcon,
 } from "@/components/Icons";
 
 const IconsPage = () => {
@@ -87,6 +89,12 @@ const IconsPage = () => {
       </div>
       <div className="flex flex-col">
         <ShortIcon /> <div>ShortIcon</div>
+      </div>
+      <div className="flex flex-col">
+        <SunIcon /> <div>SunIcon</div>
+      </div>
+      <div className="flex flex-col">
+        <MoonIcon /> <div>MoonIcon</div>
       </div>
     </div>
   );
