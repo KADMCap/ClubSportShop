@@ -11,6 +11,7 @@ import {
 import { AccordionLi } from "./NavLinks/AccordionLi";
 import { Li } from "./NavLinks/Li";
 import { ThemeToggle } from "./ThemeToggle";
+import { UserBox } from "./UserBox";
 
 export const Sidebar = () => {
   return (
@@ -38,12 +39,10 @@ export const Sidebar = () => {
         <Li title="Premium" icon={<PremiumIcon />} pathname="/premium" />
         <Li title="Favorite" icon={<HeartIcon />} pathname="/favorite" />
       </ul>
-      <div className="w-full px-4">
+      <div className="flex flex-col w-full gap-4 px-4 py-4">
         <ThemeToggle />
+        <UserBox />
       </div>
-      <ul>
-        <span>User Name</span>
-      </ul>
     </nav>
   );
 };
