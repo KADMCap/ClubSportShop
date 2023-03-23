@@ -47,13 +47,13 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
 
       <div
         ref={contentRef}
-        className="flex flex-col gap-1 px-4 mb-2 overflow-hidden transition-all ease-in"
+        className="flex flex-col px-4 overflow-hidden transition-all ease-in"
       >
         {links.map(({ title, pathname }, index) => (
           <Link
             key={index}
             href={pathname}
-            className="text-grayLight hover:text-white"
+            className="pb-2 text-grayLight hover:text-white"
           >
             {title}
           </Link>

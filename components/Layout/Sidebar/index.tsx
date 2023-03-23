@@ -10,6 +10,7 @@ import {
 } from "../../Icons";
 import { AccordionLi } from "./NavLinks/AccordionLi";
 import { Li } from "./NavLinks/Li";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Sidebar = () => {
   return (
@@ -37,6 +38,9 @@ export const Sidebar = () => {
         <Li title="Premium" icon={<PremiumIcon />} pathname="/premium" />
         <Li title="Favorite" icon={<HeartIcon />} pathname="/favorite" />
       </ul>
+      <div className="w-full px-4">
+        <ThemeToggle />
+      </div>
       <ul>
         <span>User Name</span>
       </ul>
