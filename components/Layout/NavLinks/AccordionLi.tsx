@@ -1,8 +1,17 @@
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon, TicketIcon } from "../Icons";
+import { ChevronDownIcon, ChevronUpIcon } from "../../Icons";
 
-export const AccordionLi = () => {
+interface Props {
+  title: string;
+  icon: React.ReactNode;
+  links: {
+    title: string;
+    pathname: string;
+  }[];
+}
+
+export const AccordionLi = ({ title, icon, links }: Props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,9 +37,9 @@ export const AccordionLi = () => {
         onClick={toogleActive}
       >
         <div className="flex flex-row items-center">
-          <TicketIcon />
+          {icon}
           <span className="pl-2 font-semibold text-md text-grayDark">
-            Tickets
+            {title}
           </span>
         </div>
         {active ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -40,12 +49,15 @@ export const AccordionLi = () => {
         ref={contentRef}
         className="flex flex-col gap-1 px-4 mb-2 -mt-2 overflow-hidden transition-all ease-in"
       >
-        <Link href="/tickets/my" className="text-grayLight hover:text-white">
-          My Tickets
-        </Link>
-        <Link href="/tickets/buy" className="text-grayLight hover:text-white">
-          Buy Tickets
-        </Link>
+        {links.map(({ title, pathname }, index) => (
+          <Link
+            key={index}
+            href={pathname}
+            className="text-grayLight hover:text-white"
+          >
+            {title}
+          </Link>
+        ))}
       </div>
     </div>
   );
