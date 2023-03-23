@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "../../Icons";
+import { ChevronDownIcon, ChevronUpIcon } from "../../../Icons";
 
 interface Props {
   title: string;
@@ -33,7 +33,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
       }`}
     >
       <button
-        className="flex items-center justify-between w-full px-2 py-1 mb-2 transition ease-in rounded-lg outline-none hover:bg-blue"
+        className="flex items-center justify-between w-full px-2 py-1 transition ease-in rounded-lg outline-none hover:bg-blue"
         onClick={toogleActive}
       >
         <div className="flex flex-row items-center">
@@ -47,7 +47,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
 
       <div
         ref={contentRef}
-        className="flex flex-col gap-1 px-4 mb-2 -mt-2 overflow-hidden transition-all ease-in"
+        className="flex flex-col gap-1 px-4 mb-2 overflow-hidden transition-all ease-in"
       >
         {links.map(({ title, pathname }, index) => (
           <Link

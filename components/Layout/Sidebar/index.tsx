@@ -7,7 +7,7 @@ import {
   ProductsIcon,
   SalesIcon,
   TicketIcon,
-} from "../Icons";
+} from "../../Icons";
 import { AccordionLi } from "./NavLinks/AccordionLi";
 import { Li } from "./NavLinks/Li";
 
