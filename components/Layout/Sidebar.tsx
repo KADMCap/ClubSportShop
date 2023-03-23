@@ -10,6 +10,7 @@ import {
   SalesIcon,
   TicketIcon,
 } from "../Icons";
+import { AccordionLi } from "./AccordionLi";
 
 const itemStyle = "flex w-full justify-center";
 const linkStyle = "flex items-center px-2 py-1 w-full rounded-lg hover:bg-blue";
@@ -194,6 +195,7 @@ export const Sidebar = () => {
             </span>
           </Link>
         </li>
+        <AccordionLi />
       </ul>
       <ul>
         <span>User Name</span>
