@@ -13,7 +13,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
       <Header />
       <div className="flex flex-row justify-between w-full h-full bg-gray-200">
         <Sidebar />
-        <main className="flex w-full h-full p-4 text-black bg-secondary">
+        <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] bg-secondaryLight overflow-auto">
           {children}
         </main>
       </div>
