@@ -15,14 +15,14 @@ export const Li = ({ title, icon, pathname }: Props) => {
       <Link
         href={pathname}
         passHref
-        className={`flex items-center px-2 py-1 w-full rounded-lg hover:bg-blue ${
-          router.pathname === pathname && "bg-blue"
+        className={`flex items-center px-2 py-1 w-full rounded-lg hover:bg-primaryBlue ${
+          router.pathname === pathname && "bg-primaryBlue"
         }`}
       >
         {icon}
         <span
           className={`pl-2 font-semibold text-md ${
-            router.pathname === pathname ? "text-white" : "text-grayDark"
+            router.pathname === pathname ? "text-white" : "text-darkGray"
           }`}
         >
           {title}
