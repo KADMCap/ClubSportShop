@@ -16,10 +16,10 @@ type Size = {
 type Color = {
   white: string;
   black: string;
-  gray: string;
-  grayDark: string;
-  grayLight: string;
-  blue: string;
+  primaryGray: string;
+  darkGray: string;
+  lightGray: string;
+  primaryBlue: string;
   darkBlue: string;
   transparent: string;
 };
@@ -33,10 +33,10 @@ const sizeClass: Size = {
 const colorClass: Color = {
   white: "text-white",
   black: "text-black",
-  gray: "text-gray",
-  grayDark: "text-grayDark",
-  grayLight: "text-grayLight",
-  blue: "text-blue",
+  primaryGray: "text-primaryGray",
+  darkGray: "text-darkGray",
+  lightGray: "text-lightGray",
+  primaryBlue: "text-primaryBlue",
   darkBlue: "text-darkBlue",
   transparent: "text-transparent",
 };
@@ -44,10 +44,10 @@ const colorClass: Color = {
 const strokeColor: Color = {
   white: "#FFFFFF",
   black: "#000000",
-  gray: "#999999",
-  grayDark: "#555555",
-  grayLight: "#DDDDDD",
-  blue: "#17ABDB",
+  primaryGray: "#999999",
+  darkGray: "#555555",
+  lightGray: "#DDDDDD",
+  primaryBlue: "#17ABDB",
   darkBlue: "#0072AF",
   transparent: "transparent",
 };
@@ -485,7 +485,7 @@ export const ShortIcon = ({
   );
 };
 
-export const SunIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const SunIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -499,7 +499,7 @@ export const SunIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const MoonIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const MoonIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}

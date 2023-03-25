@@ -29,16 +29,16 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
   return (
     <div
       className={`flex flex-col w-full rounded-lg transition ease-in ${
-        active && "bg-blue"
+        active && "bg-primaryBlue"
       }`}
     >
       <button
-        className="flex items-center justify-between w-full px-2 py-1 transition ease-in rounded-lg outline-none hover:bg-blue"
+        className="flex items-center justify-between w-full px-2 py-1 transition ease-in rounded-lg outline-none hover:bg-primaryBlue"
         onClick={toogleActive}
       >
         <div className="flex flex-row items-center">
           {icon}
-          <span className="pl-2 font-semibold text-md text-grayDark">
+          <span className="pl-2 font-semibold text-md text-darkGray">
             {title}
           </span>
         </div>
@@ -53,7 +53,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
           <Link
             key={index}
             href={pathname}
-            className="pb-2 text-grayLight hover:text-white"
+            className="pb-2 text-lightGray hover:text-white"
           >
             {title}
           </Link>
