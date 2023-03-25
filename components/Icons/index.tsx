@@ -20,7 +20,7 @@ type Color = {
   grayDark: string;
   grayLight: string;
   blue: string;
-  blueDark: string;
+  darkBlue: string;
   transparent: string;
 };
 const sizeClass: Size = {
@@ -37,7 +37,7 @@ const colorClass: Color = {
   grayDark: "text-grayDark",
   grayLight: "text-grayLight",
   blue: "text-blue",
-  blueDark: "text-blueDark",
+  darkBlue: "text-darkBlue",
   transparent: "text-transparent",
 };
 
@@ -48,13 +48,13 @@ const strokeColor: Color = {
   grayDark: "#555555",
   grayLight: "#DDDDDD",
   blue: "#17ABDB",
-  blueDark: "#0072AF",
+  darkBlue: "#0072AF",
   transparent: "transparent",
 };
 
 export const BookmarkIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => (
   <svg
     className={classNames(sizeClass[size], colorClass[color])}
@@ -66,7 +66,7 @@ export const BookmarkIcon = ({
   </svg>
 );
 
-export const HomeIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const HomeIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -81,7 +81,28 @@ export const HomeIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const HeartIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const NotificationIcon = ({
+  size = "md",
+  color = "darkBlue",
+}: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size], colorClass[color])}
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+      ></path>
+    </svg>
+  );
+};
+
+export const HeartIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -97,7 +118,7 @@ export const HeartIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
 
 export const ProductsIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -112,7 +133,7 @@ export const ProductsIcon = ({
   );
 };
 
-export const SalesIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const SalesIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -130,7 +151,7 @@ export const SalesIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const OrdersIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const OrdersIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -153,7 +174,7 @@ export const OrdersIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const AuctionIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const AuctionIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -171,7 +192,7 @@ export const AuctionIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const TicketIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const TicketIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -189,7 +210,7 @@ export const TicketIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const PremiumIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const PremiumIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -207,7 +228,7 @@ export const PremiumIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const LogoutIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const LogoutIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -225,7 +246,7 @@ export const LogoutIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const CartIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const CartIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -243,7 +264,7 @@ export const CartIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
   );
 };
 
-export const StarIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
+export const StarIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
   return (
     <svg
       className={classNames(sizeClass[size], colorClass[color])}
@@ -263,7 +284,7 @@ export const StarIcon = ({ size = "md", color = "blueDark" }: IconProps) => {
 
 export const ChevronDownIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -284,7 +305,7 @@ export const ChevronDownIcon = ({
 
 export const ChevronUpIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -305,7 +326,7 @@ export const ChevronUpIcon = ({
 
 export const ChevronLeftIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -326,7 +347,7 @@ export const ChevronLeftIcon = ({
 
 export const ChevronRightIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -347,7 +368,7 @@ export const ChevronRightIcon = ({
 
 export const ChevronSelectIcon = ({
   size = "md",
-  color = "blueDark",
+  color = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -369,7 +390,7 @@ export const ChevronSelectIcon = ({
 export const FootballIcon = ({
   size = "md",
   color = "transparent",
-  stroke = "blueDark",
+  stroke = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -394,7 +415,7 @@ export const FootballIcon = ({
 export const BasketballIcon = ({
   size = "md",
   color = "transparent",
-  stroke = "blueDark",
+  stroke = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -418,7 +439,7 @@ export const BasketballIcon = ({
 export const ShirtIcon = ({
   size = "md",
   color = "transparent",
-  stroke = "blueDark",
+  stroke = "darkBlue",
 }: IconProps) => {
   return (
     <svg
@@ -441,7 +462,7 @@ export const ShirtIcon = ({
 export const ShortIcon = ({
   size = "md",
   color = "transparent",
-  stroke = "blueDark",
+  stroke = "darkBlue",
 }: IconProps) => {
   return (
     <svg
