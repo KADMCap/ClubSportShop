@@ -22,6 +22,8 @@ import {
   ShortIcon,
   SunIcon,
   MoonIcon,
+  MenuIcon,
+  CloseIcon,
 } from "@/components/Icons";
 
 const IconsPage = () => {
@@ -95,6 +97,12 @@ const IconsPage = () => {
       </div>
       <div className="flex flex-col">
         <MoonIcon /> <div>MoonIcon</div>
+      </div>
+      <div className="flex flex-col">
+        <MenuIcon /> <div>MenuIcon</div>
+      </div>
+      <div className="flex flex-col">
+        <CloseIcon /> <div>CloseIcon</div>
       </div>
     </div>
   );

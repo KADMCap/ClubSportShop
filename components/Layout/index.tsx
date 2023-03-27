@@ -1,5 +1,5 @@
 import { ThemeContext } from "@/context/ThemeContext";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
