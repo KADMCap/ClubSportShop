@@ -16,7 +16,7 @@ const russo = Russo_One({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main
-      className={`${inter.variable} ${russo.variable} font-sans max-w-[1440px] mx-auto`}
+      className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
     >
       <Component {...pageProps} />
     </main>
