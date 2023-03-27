@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "../../../Icons";
 
@@ -14,6 +15,9 @@ interface Props {
 export const AccordionLi = ({ title, icon, links }: Props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
+  const splitPath = (pathname: string) => pathname.split("/")[1];
 
   useEffect(() => {
     if (contentRef.current) {
@@ -21,7 +25,10 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
         ? `${contentRef.current.scrollHeight}px`
         : "0px";
     }
-  }, [contentRef, active]);
+    if (splitPath(router.pathname) === splitPath(links[0].pathname)) {
+      setActive(true);
+    }
+  }, [contentRef, active, router, links]);
 
   const toogleActive = () => {
     setActive(!active);
@@ -38,7 +45,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
       >
         <div className="flex flex-row items-center">
           {icon}
-          <span className="pl-2 font-semibold text-md text-darkGray">
+          <span className="pl-2 font-semibold text-black text-md dark:text-white">
             {title}
           </span>
         </div>
@@ -53,7 +60,9 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
           <Link
             key={index}
             href={pathname}
-            className="pb-2 text-lightGray hover:text-white"
+            className={`pb-2 text-lightGray hover:text-white ${
+              router.pathname === pathname && "text-white"
+            }`}
           >
             {title}
           </Link>
