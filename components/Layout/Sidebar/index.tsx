@@ -1,3 +1,5 @@
+import { MenuContext } from "@/context/MenuContext";
+import { useContext } from "react";
 import {
   AuctionIcon,
   HeartIcon,
@@ -14,8 +16,13 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserBox } from "./UserBox";
 
 export const Sidebar = () => {
+  const { open } = useContext(MenuContext);
   return (
-    <nav className="flex bg-primary justify-between flex-col p-4 w-[256px] sticky bg-primaryLight dark:bg-primaryDark">
+    <nav
+      className={`bg-primary justify-between flex-col p-4 w-[256px] sticky bg-primaryLight dark:bg-primaryDark ${
+        open ? "flex" : "hidden"
+      } md:flex`}
+    >
       <ul className="flex flex-col gap-2">
         <Li title="Home" icon={<HomeIcon />} pathname="/" />
         <Li title="Products" icon={<ProductsIcon />} pathname="/products" />
