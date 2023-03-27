@@ -13,9 +13,9 @@ export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
       <Header />
-      <div className="flex flex-row justify-between w-full h-full bg-gray-200">
+      <div className="flex flex-row justify-between w-full h-full">
         <Sidebar />
-        <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] bg-secondaryLight overflow-auto">
+        <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] bg-secondaryLight overflow-auto dark:text-white dark:bg-secondaryDark">
           {children}
         </main>
       </div>

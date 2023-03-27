@@ -22,7 +22,9 @@ export const Li = ({ title, icon, pathname }: Props) => {
         {icon}
         <span
           className={`pl-2 font-semibold text-md ${
-            router.pathname === pathname ? "text-white" : "text-darkGray"
+            router.pathname === pathname
+              ? "text-white"
+              : "text-black dark:text-white"
           }`}
         >
           {title}

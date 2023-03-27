@@ -15,8 +15,8 @@ import { UserBox } from "./UserBox";
 
 export const Sidebar = () => {
   return (
-    <nav className="flex bg-primary justify-between flex-col w-[256px] sticky bg-white">
-      <ul className="flex flex-col gap-2 px-4">
+    <nav className="flex bg-primary justify-between flex-col p-4 w-[256px] sticky bg-primaryLight dark:bg-primaryDark">
+      <ul className="flex flex-col gap-2">
         <Li title="Home" icon={<HomeIcon />} pathname="/" />
         <Li title="Products" icon={<ProductsIcon />} pathname="/products" />
         <Li title="Sales" icon={<SalesIcon />} pathname="/sales" />
@@ -39,7 +39,7 @@ export const Sidebar = () => {
         <Li title="Premium" icon={<PremiumIcon />} pathname="/premium" />
         <Li title="Favorite" icon={<HeartIcon />} pathname="/favorite" />
       </ul>
-      <div className="flex flex-col w-full gap-4 px-4 py-4">
+      <div className="flex flex-col w-full gap-4 py-4">
         <ThemeToggle />
         <UserBox />
       </div>
