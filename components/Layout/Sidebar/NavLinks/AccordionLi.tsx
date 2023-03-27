@@ -1,6 +1,7 @@
+import { MenuContext } from "@/context/MenuContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "../../../Icons";
 
 interface Props {
@@ -16,6 +17,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+  const { setOpen } = useContext(MenuContext);
 
   const splitPath = (pathname: string) => pathname.split("/")[1];
 
@@ -63,6 +65,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
             className={`pb-2 text-lightGray hover:text-white ${
               router.pathname === pathname && "text-white"
             }`}
+            onClick={() => setOpen(false)}
           >
             {title}
           </Link>
