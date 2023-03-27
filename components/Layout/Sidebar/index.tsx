@@ -28,11 +28,11 @@ export const Sidebar = () => {
           links={[
             {
               title: "My Tickets",
-              pathname: "/tickets/my",
+              pathname: "/tickets/my-tickets",
             },
             {
               title: "Buy Tickets",
-              pathname: "/tickets/buy",
+              pathname: "/tickets/buy-ticket",
             },
           ]}
         />
