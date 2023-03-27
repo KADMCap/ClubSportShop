@@ -1,4 +1,5 @@
-import React from "react";
+import { ThemeContext } from "@/context/ThemeContext";
+import React, { useContext } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -8,8 +9,9 @@ interface Props {
 }
 
 export const Layout: React.FC<Props> = ({ children }) => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
       <Header />
       <div className="flex flex-row justify-between w-full h-full bg-gray-200">
         <Sidebar />
