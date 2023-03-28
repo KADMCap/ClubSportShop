@@ -4,6 +4,7 @@ import React from "react";
 interface Props {
   children: React.ReactNode;
   onClick: () => void;
+  type?: "button" | "submit";
   size?: "small" | "medium" | "large";
   variant?: "primary" | "secondary" | "tertiary" | "danger";
   full?: boolean;
@@ -32,6 +33,7 @@ const classes = {
 export const Button = ({
   children,
   onClick,
+  type = "button",
   size = "medium",
   variant = "primary",
   full = false,
@@ -39,6 +41,7 @@ export const Button = ({
 }: Props) => {
   return (
     <button
+      type={type}
       className={classNames(
         classes.base,
         classes.size[size],
