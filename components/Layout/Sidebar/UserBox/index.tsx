@@ -10,7 +10,7 @@ export const UserBox = () => {
           {/* <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image"> */}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-black truncate">User Name</p>
+          <p className="font-medium truncate dark:text-white">User Name</p>
           <p className="text-sm text-gray-500 truncate dark:text-gray-400">
             username@mail.com
           </p>
