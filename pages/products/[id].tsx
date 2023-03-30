@@ -10,7 +10,7 @@ export type InferGetStaticPathsType<T> = T extends () => Promise<{
   : never;
 
 export async function getStaticPaths() {
-  const res = await fetch(`https://fakestoreapi.com/products`);
+  const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
   const data: StoreApiResponse[] = await res.json();
   return {
     paths: data.map((product) => ({
@@ -29,7 +29,9 @@ export const getStaticProps = async ({
       notFound: true,
     };
   }
-  const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
+  const res = await fetch(
+    `https://naszsklep-api.vercel.app/api/products/${params.id}`
+  );
   const data: StoreApiResponse | null = await res.json();
 
   return {
