@@ -6,6 +6,7 @@ import { HeartIcon, HeartOutlinedIcon } from "./Icons";
 
 type ProductCardProps = {
   id: number;
+  numer: number;
   name: string;
   image: string;
   price: number;
@@ -13,6 +14,7 @@ type ProductCardProps = {
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
+  numer,
   name,
   image,
   price,
@@ -39,7 +41,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div className="flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
       <div className="flex flex-row justify-between h-20 ">
-        <span>{name}</span>
+        <span>
+          {name} {numer}
+        </span>
         <div
           className="h-4 ml-2 hover:cursor-pointer"
           onClick={toggleIsFavourite}
