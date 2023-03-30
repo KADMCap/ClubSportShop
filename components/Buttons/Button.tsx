@@ -49,7 +49,7 @@ export const Button = ({
         full && classes.full,
         className
       )}
-      onClick={() => onClick}
+      onClick={onClick}
     >
       {children}
     </button>
