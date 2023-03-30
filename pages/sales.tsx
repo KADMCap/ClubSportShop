@@ -46,7 +46,7 @@ export default function SalesPage() {
             {products?.map((product: any) => {
               return (
                 <Link
-                  href={`/products/${product.id}`}
+                  href={`/products/slug/${product.title}`}
                   key={product.id}
                   className="flex flex-col bg-white rounded-lg"
                 >
