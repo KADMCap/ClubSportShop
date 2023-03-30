@@ -12,9 +12,10 @@ export type InferGetStaticPathsType<T> = T extends () => Promise<{
 export async function getStaticPaths() {
   const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
   const data: StoreApiResponse[] = await res.json();
+  //console.log(data);
   return {
     paths: data.map((product) => ({
-      params: { id: product.id.toString() },
+      params: { slug: product.id.toString() },
     })),
     fallback: false,
   };
@@ -23,14 +24,15 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({
   params,
 }: GetStaticPropsContext<InferGetStaticPathsType<typeof getStaticPaths>>) => {
-  if (!params?.id) {
+  console.log(params);
+  if (!params?.slug) {
     return {
       props: {},
       notFound: true,
     };
   }
   const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products/${params.id}`
+    `https://naszsklep-api.vercel.app/api/products/${params.slug}`
   );
   const data: StoreApiResponse | null = await res.json();
 
@@ -52,7 +54,7 @@ export default function ProductPage({
       </Head>
       <Layout>
         <div className="flex flex-col">
-          <div className="text-xl">Product {router.query.id} Page</div>
+          <div className="text-xl">Product {router.query.slug} Page</div>
           <div className="flex flex-col bg-white rounded-lg">
             <img
               src={data?.image}

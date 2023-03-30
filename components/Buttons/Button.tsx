@@ -15,14 +15,15 @@ const classes = {
   base: "focus:outline-none transition ease-in-out duration-300",
   full: "w-full",
   size: {
-    small: "px-2 py-1 text-sm rounded-sm",
+    small: "px-2 py-1 text-sm rounded-[4px]",
     medium: "px-4 py-2 rounded-md",
     large: "px-4 py-2 text-lg rounded-lg",
   },
   variant: {
     primary:
-      "bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white",
-    secondary: "bg-transparent ring-2 ring-primaryBlue hover:ring-2 hover:ring",
+      "bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white outline-none dark:bg-darkBlue",
+    secondary:
+      "bg-transparent border border-primaryBlue hover:ring-2 hover:ring hover:ring-primaryBlue outline-none",
     tertiary:
       "bg-transparent hover:ring-2 hover:ring-primaryBlue hover:bg-transparent focus:ring-2 focus:ring-primaryBlue",
     danger:
