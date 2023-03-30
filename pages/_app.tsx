@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { Inter, Russo_One } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,6 +17,8 @@ const russo = Russo_One({
   variable: "--font-russo",
   weight: "400",
 });
+
+const client = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -40,26 +43,31 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <ThemeProvider>
-      <MenuProvider>
-        <Head>
-          <title>
-            {router.route !== "/" ? titleString() : ""}
-            Club Sport Shop
-          </title>
-          <meta
-            name="description"
-            content="Club Sport Shop - where you can find your sports clothes"
-          />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <main
-          className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
-        >
-          <Component {...pageProps} />
-        </main>
-      </MenuProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={client}>
+      <ThemeProvider>
+        <MenuProvider>
+          <Head>
+            <title>
+              {router.route !== "/" ? titleString() : ""}
+              Club Sport Shop
+            </title>
+            <meta
+              name="description"
+              content="Club Sport Shop - where you can find your sports clothes"
+            />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <main
+            className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
+          >
+            <Component {...pageProps} />
+          </main>
+        </MenuProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
