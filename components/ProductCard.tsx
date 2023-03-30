@@ -37,17 +37,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl flex flex-col justify-between gap-4 dark:bg-primaryDark">
+    <div className="flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
       <div className="flex flex-row justify-between h-20 ">
         <span>{name}</span>
         <div
-          className="hover:cursor-pointer ml-2 h-4"
+          className="h-4 ml-2 hover:cursor-pointer"
           onClick={toggleIsFavourite}
         >
           {isFavourite ? <HeartIcon /> : <HeartOutlinedIcon />}
         </div>
       </div>
-      <div className="full bg-white">
+      <div className="bg-white full">
         <Image
           src={image}
           alt="Product image"
@@ -60,48 +60,53 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <div className="flex flex-row justify-between">
-        <div>{price}</div>
-        <div>
-          <s>98.99</s>
+        <div className="flex flex-row flex-1 gap-2">
+          <div>{price}</div>
+          <div>
+            <s>98.99</s>
+          </div>
         </div>
-        <div className="flex gap-2">
+        <div className="grid flex-1 grid-cols-4 gap-2">
           <Button
             onClick={() => onSelectSize("s")}
             size="small"
             variant={`${selectedSize === "s" ? "primary" : "secondary"}`}
           >
-            <span className="text-sm font-bold">S</span>
+            <p className="text-sm font-bold">S</p>
           </Button>{" "}
           <Button
             onClick={() => onSelectSize("m")}
             size="small"
             variant={`${selectedSize === "m" ? "primary" : "secondary"}`}
           >
-            <span className="text-sm font-bold">M</span>
+            <p className="text-sm font-bold">M</p>
           </Button>
           <Button
             onClick={() => onSelectSize("l")}
             size="small"
             variant={`${selectedSize === "l" ? "primary" : "secondary"}`}
           >
-            <span className="text-sm font-bold">L</span>
+            <p className="text-sm font-bold">L</p>
           </Button>
           <Button
             onClick={() => onSelectSize("xl")}
             size="small"
             variant={`${selectedSize === "xl" ? "primary" : "secondary"}`}
           >
-            <span className="text-sm font-bold">XL</span>
+            <p className="text-sm font-bold">XL</p>
           </Button>
         </div>
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="grid w-full grid-cols-2 gap-2">
         <Link href={`/products/${id}`}>
-          <Button variant="secondary" onClick={handleShowDetails}>
-            DETAILS
+          <Button variant="secondary" full onClick={handleShowDetails}>
+            <p className="text-sm font-bold">DETAILS</p>
+            {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
           </Button>
         </Link>
-        <Button onClick={handleAddToCart}>ADD TO CART</Button>
+        <Button onClick={handleAddToCart} full className="">
+          <p className="text-sm font-bold">ADD TO CART</p>
+        </Button>
       </div>
     </div>
   );
