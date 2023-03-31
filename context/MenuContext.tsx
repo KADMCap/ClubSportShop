@@ -5,19 +5,26 @@ interface Props {
 }
 
 export const MenuContext = createContext<{
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  openSidebar: boolean;
+  setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  openNotification: boolean;
+  setOpenNotification: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
-  open: false,
-  setOpen: () => null,
+  openSidebar: false,
+  setOpenSidebar: () => null,
+  openNotification: false,
+  setOpenNotification: () => null,
 });
 
 export const MenuProvider: FC<Props> = ({ children }) => {
-  const [open, setOpen] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openNotification, setOpenNotification] = useState(false);
 
   const value = {
-    open,
-    setOpen,
+    openSidebar,
+    setOpenSidebar,
+    openNotification,
+    setOpenNotification,
   };
 
   return <MenuContext.Provider value={value}>{children}</MenuContext.Provider>;

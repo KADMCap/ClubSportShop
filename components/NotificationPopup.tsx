@@ -1,9 +1,15 @@
+import { MenuContext } from "@/context/MenuContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 export const NotificationPopup = () => {
+  const { openNotification, setOpenNotification } = useContext(MenuContext);
   return (
-    <div className="absolute right-0 z-50 my-4 max-w-[250px] text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow top-11 dark:bg-primaryDark dark:divide-gray-600">
+    <div
+      className={`${
+        !openNotification && "hidden"
+      } absolute right-0 z-50 my-4 max-w-[250px] text-base list-none bg-white rounded-lg shadow top-11 divide-y divide-gray-100 dark:bg-primaryDark dark:divide-gray-700`}
+    >
       <div className="px-4 py-3">
         <span className="block text-sm font-semibold text-gray-900 dark:text-white">
           Notifications
@@ -30,7 +36,7 @@ export const NotificationPopup = () => {
         </Link>
       </ul>
       <div className="px-4 py-2">
-        <Link href="/">
+        <Link href="/" onClick={() => setOpenNotification(false)}>
           <p className="text-sm text-primaryBlue hover:text-darkBlue">
             View all notifications
           </p>
