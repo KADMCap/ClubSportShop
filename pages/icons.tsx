@@ -27,6 +27,7 @@ import {
   CloseIcon,
   HeartOutlinedIcon,
 } from "@/components/Icons";
+import { NotificationPopup } from "@/components/NotificationPopup";
 
 const IconsPage = () => {
   return (
@@ -174,6 +175,9 @@ const IconsPage = () => {
             Full
           </Button>
         </div>
+      </div>
+      <div className="flex flex-col">
+        <NotificationPopup />
       </div>
     </div>
   );
