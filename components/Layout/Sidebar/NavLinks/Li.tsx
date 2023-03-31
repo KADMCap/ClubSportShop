@@ -1,4 +1,4 @@
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useContext } from "react";
@@ -11,7 +11,7 @@ interface Props {
 
 export const Li = ({ title, icon, pathname }: Props) => {
   const router = useRouter();
-  const { setOpen } = useContext(MenuContext);
+  const { setOpen } = useContext(HeaderContext);
   return (
     <li className="flex justify-center w-full">
       <Link

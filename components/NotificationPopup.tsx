@@ -1,9 +1,9 @@
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 export const NotificationPopup = () => {
-  const { openNotification, setOpenNotification } = useContext(MenuContext);
+  const { openNotification, setOpenNotification } = useContext(HeaderContext);
   return (
     <div
       className={`${

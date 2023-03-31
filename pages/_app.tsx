@@ -1,4 +1,4 @@
-import { MenuProvider } from "@/context/MenuContext";
+import { HeaderProvider } from "@/context/HeaderContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={client}>
       <ThemeProvider>
-        <MenuProvider>
+        <HeaderProvider>
           <Head>
             <title>
               {router.route !== "/" ? titleString() : ""}
@@ -66,7 +66,7 @@ export default function App({ Component, pageProps }: AppProps) {
           >
             <Component {...pageProps} />
           </main>
-        </MenuProvider>
+        </HeaderProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

@@ -1,10 +1,10 @@
 import { NotificationIcon, HeartIcon, CartIcon } from "@/components/Icons";
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 const RightSide = () => {
-  const { setOpenNotification } = useContext(MenuContext);
+  const { setOpenNotification } = useContext(HeaderContext);
   return (
     <div className="flex items-center w-[100px] justify-between">
       <button

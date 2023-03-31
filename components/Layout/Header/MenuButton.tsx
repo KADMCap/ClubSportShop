@@ -1,9 +1,9 @@
 import { CloseIcon, MenuIcon } from "@/components/Icons";
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import React, { useContext } from "react";
 
 export const MenuButton = () => {
-  const { openSidebar, setOpenSidebar } = useContext(MenuContext);
+  const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
   return openSidebar ? (
     <button
       className="flex bg-transparent outline-none md:hidden"
