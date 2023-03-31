@@ -1,7 +1,7 @@
 import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FC, useContext } from "react";
+import React, { useContext } from "react";
 
 interface Props {
   title: string;
@@ -11,7 +11,7 @@ interface Props {
 
 export const Li = ({ title, icon, pathname }: Props) => {
   const router = useRouter();
-  const { setOpen } = useContext(HeaderContext);
+  const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
   return (
     <li className="flex justify-center w-full">
       <Link
@@ -20,7 +20,7 @@ export const Li = ({ title, icon, pathname }: Props) => {
         className={`flex items-center px-2 py-1 w-full rounded-lg hover:bg-primaryBlue ${
           router.pathname === pathname && "bg-primaryBlue"
         }`}
-        onClick={() => setOpen(false)}
+        onClick={() => openSidebar && setOpenSidebar(false)}
       >
         {icon}
         <span
