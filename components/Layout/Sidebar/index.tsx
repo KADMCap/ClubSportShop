@@ -1,4 +1,4 @@
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import { useContext } from "react";
 import {
   AuctionIcon,
@@ -16,11 +16,11 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserBox } from "./UserBox";
 
 export const Sidebar = () => {
-  const { open } = useContext(MenuContext);
+  const { openSidebar } = useContext(HeaderContext);
   return (
     <nav
       className={`bg-primary justify-between flex flex-col p-4 w-full h-[calc(100vh_-_64px)]  fixed t-10 transition-transform duration-300 bg-primaryLight dark:bg-primaryDark ${
-        !open && "-translate-x-full"
+        !openSidebar && "-translate-x-full"
       } md:sticky md:w-[256px] md:h-auto md:translate-x-0`}
     >
       <ul className="flex flex-col gap-2">

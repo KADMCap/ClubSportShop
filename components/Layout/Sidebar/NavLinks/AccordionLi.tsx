@@ -1,4 +1,4 @@
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -17,7 +17,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const { setOpen } = useContext(MenuContext);
+  const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
 
   const splitPath = (pathname: string) => pathname.split("/")[1];
 
@@ -65,7 +65,7 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
             className={`pb-2 text-lightGray hover:text-white ${
               router.pathname === pathname && "text-white"
             }`}
-            onClick={() => setOpen(false)}
+            onClick={() => openSidebar && setOpenSidebar(false)}
           >
             {title}
           </Link>

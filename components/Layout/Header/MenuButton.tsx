@@ -1,20 +1,20 @@
 import { CloseIcon, MenuIcon } from "@/components/Icons";
-import { MenuContext } from "@/context/MenuContext";
+import { HeaderContext } from "@/context/HeaderContext";
 import React, { useContext } from "react";
 
 export const MenuButton = () => {
-  const { open, setOpen } = useContext(MenuContext);
-  return open ? (
+  const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
+  return openSidebar ? (
     <button
       className="flex bg-transparent outline-none md:hidden"
-      onClick={() => setOpen(false)}
+      onClick={() => setOpenSidebar(false)}
     >
       <CloseIcon />
     </button>
   ) : (
     <button
       className="flex bg-transparent outline-none md:hidden"
-      onClick={() => setOpen(true)}
+      onClick={() => setOpenSidebar(true)}
     >
       <MenuIcon />
     </button>

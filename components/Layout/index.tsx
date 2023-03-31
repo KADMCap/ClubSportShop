@@ -1,5 +1,6 @@
 import { ThemeContext } from "@/context/ThemeContext";
 import React, { useContext, useState } from "react";
+import { NotificationPopup } from "../NotificationPopup";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -13,6 +14,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
       <Header />
+      <NotificationPopup />
       <div className="flex flex-row justify-between w-full h-full">
         <Sidebar />
         <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] bg-secondaryLight overflow-auto dark:text-white dark:bg-secondaryDark">
