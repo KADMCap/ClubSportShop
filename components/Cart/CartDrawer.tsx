@@ -2,6 +2,8 @@ import { HeaderContext } from "@/context/HeaderContext";
 import { useContext } from "react";
 import { CartItem } from "./CartItem";
 import { CouponInput } from "./CouponInput";
+import { SummaryBox } from "./SummaryBox";
+import { Button } from "../Buttons/Button";
 
 export const CartDrawer = () => {
   const { openCart } = useContext(HeaderContext);
@@ -18,7 +20,8 @@ export const CartDrawer = () => {
       </div>
       <div className="flex flex-col w-full gap-4 py-4">
         <CouponInput />
-        Summary
+        <SummaryBox />
+        <Button onClick={() => {}}>Proceed to Pay</Button>
       </div>
     </aside>
   );
