@@ -1,3 +1,4 @@
+import { CartItem } from "@/components/Cart/CartItem";
 import { Layout } from "@/components/Layout";
 import { Inter } from "next/font/google";
 
