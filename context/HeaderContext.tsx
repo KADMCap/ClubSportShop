@@ -9,22 +9,29 @@ export const HeaderContext = createContext<{
   setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   openNotification: boolean;
   setOpenNotification: React.Dispatch<React.SetStateAction<boolean>>;
+  openCart: boolean;
+  setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   openSidebar: false,
   setOpenSidebar: () => null,
   openNotification: false,
   setOpenNotification: () => null,
+  openCart: false,
+  setOpenCart: () => null,
 });
 
 export const HeaderProvider: FC<Props> = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
 
   const value = {
     openSidebar,
     setOpenSidebar,
     openNotification,
     setOpenNotification,
+    openCart,
+    setOpenCart,
   };
 
   return (
