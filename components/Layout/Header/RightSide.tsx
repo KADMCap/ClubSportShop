@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useContext } from "react";
 
 const RightSide = () => {
-  const { setOpenNotification } = useContext(HeaderContext);
+  const { setOpenNotification, setOpenCart } = useContext(HeaderContext);
   return (
     <div className="flex items-center w-[100px] justify-between">
       <button
@@ -16,9 +16,12 @@ const RightSide = () => {
       <Link href="/favorite" passHref>
         <HeartIcon />
       </Link>
-      <Link href="/cart" passHref>
+      <button
+        className="bg-transparent outline-none"
+        onClick={() => setOpenCart((prev) => !prev)}
+      >
         <CartIcon />
-      </Link>
+      </button>
     </div>
   );
 };
