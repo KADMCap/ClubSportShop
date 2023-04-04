@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 
 interface CartItem {
   readonly id: string;
@@ -15,8 +15,37 @@ interface CartState {
 
 export const CartContext = createContext<CartState | null>(null);
 
+const getCartItemsFromStorage = () => {
+  const itemsFromLocalStorage = localStorage.getItem("CLUBSHOP_CART_ITEMS");
+  if (!itemsFromLocalStorage) {
+    return;
+  }
+  try {
+    console.log(itemsFromLocalStorage);
+    const items = JSON.parse(itemsFromLocalStorage);
+    return items;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
+const setCartItemsInStorage = (cartItems: CartItem[]) => {
+  localStorage.setItem("CLUBSHOP_CART_ITEMS", JSON.stringify(cartItems));
+};
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    setCartItems(getCartItemsFromStorage());
+    console.log("setItem", { cartItems });
+  }, []);
+
+  useEffect(() => {
+    console.log({ cartItems });
+    setCartItemsInStorage(cartItems);
+  }, [cartItems]);
 
   return (
     <CartContext.Provider
