@@ -1,24 +1,29 @@
+import { useCartState } from "@/hooks/useCartState";
 import Image from "next/image";
 
 interface Props {
   imageSrc: string;
   alt: string;
-  name: string;
+  title: string;
   size: string;
   index: number;
   productId: string;
   price: string;
+  count: number;
 }
 
 export const CartItem = ({
   imageSrc,
   alt,
-  name,
+  title,
   size,
   index,
   productId,
   price,
+  count,
 }: Props) => {
+  const cartState = useCartState();
+
   return (
     <div className="flex flex-row items-center justify-between w-full">
       <div className="flex items-center justify-center w-5 pr-1 text-sm text-darkGray dark:text-primaryGray">
@@ -28,7 +33,7 @@ export const CartItem = ({
         <div className="flex flex-row gap-2">
           <Image src={imageSrc} alt={alt} width={40} height={40} />
           <div className="flex flex-col">
-            <p className="font-semibold">{name}</p>
+            <p className="font-semibold">{title}</p>
             <p className="items-center font-semibold">
               <span className="text-sm text-darkGray dark:text-primaryGray">
                 Size:
@@ -38,10 +43,14 @@ export const CartItem = ({
           </div>
         </div>
         <div className="flex flex-row gap-2 font-semibold">
-          <div className="flex flex-row items-center gap-2 px-2 rounded-sm bg-primaryLight dark:bg-primaryDark">
-            <button>-</button>
-            <p>1</p>
-            <button>+</button>
+          <div className="flex flex-row items-center gap-2 px-2 rounded-[4px] bg-primaryLight dark:bg-primaryDark">
+            <button onClick={() => cartState.removeItemFromCart(productId)}>
+              -
+            </button>
+            <p>{count}</p>
+            <button onClick={() => cartState.addCountToItem(productId)}>
+              +
+            </button>
           </div>
           <div>${price}</div>
         </div>
