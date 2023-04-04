@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "./Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "./Icons";
+import { useCartState } from "@/hooks/useCartState";
 
 type ProductCardProps = {
   id: number;
@@ -21,13 +22,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const cartState = useCartState();
 
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
   };
 
   const handleAddToCart = () => {
-    console.log("add to cart");
+    cartState.addItemToCart({
+      price: price,
+      title: name,
+      count: 1,
+    });
   };
 
   const handleShowDetails = () => {
@@ -40,10 +46,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div className="flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
-      <div className="flex flex-row justify-between h-20 ">
-        <span>
-          {name} {numer}
-        </span>
+      <div className="flex flex-row justify-between">
+        <span className="font-semibold">{name}</span>
         <div
           className="h-4 ml-2 hover:cursor-pointer"
           onClick={toggleIsFavourite}
@@ -64,11 +68,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <div className="flex flex-row justify-between">
-        <div className="flex flex-row flex-1 gap-2">
-          <div>{price}</div>
-          <div>
-            <s>98.99</s>
-          </div>
+        <div className="flex flex-row items-center flex-1 gap-2">
+          <span className="font-semibold">${price.toFixed(2)}</span>
+          <span className="text-sm text-primaryGray">
+            <s>$98.99</s>
+          </span>
         </div>
         <div className="grid flex-1 grid-cols-4 gap-2">
           <Button

@@ -8,6 +8,7 @@ interface Props {
   index: number;
   productId: string;
   price: string;
+  count: number;
 }
 
 export const CartItem = ({
@@ -18,6 +19,7 @@ export const CartItem = ({
   index,
   productId,
   price,
+  count,
 }: Props) => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
@@ -38,9 +40,9 @@ export const CartItem = ({
           </div>
         </div>
         <div className="flex flex-row gap-2 font-semibold">
-          <div className="flex flex-row items-center gap-2 px-2 rounded-sm bg-primaryLight dark:bg-primaryDark">
+          <div className="flex flex-row items-center gap-2 px-2 rounded-[4px] bg-primaryLight dark:bg-primaryDark">
             <button>-</button>
-            <p>1</p>
+            <p>{count}</p>
             <button>+</button>
           </div>
           <div>${price}</div>
