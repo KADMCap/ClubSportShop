@@ -71,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-row items-center flex-1 gap-2">
           <span className="font-semibold">${price.toFixed(2)}</span>
           <span className="text-sm text-primaryGray">
-            <s>$98.99</s>
+            <s>${(price + price * 0.2).toFixed(2)}</s>
           </span>
         </div>
         <div className="grid flex-1 grid-cols-4 gap-2">
