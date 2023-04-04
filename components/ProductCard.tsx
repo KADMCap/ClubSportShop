@@ -7,16 +7,14 @@ import { useCartState } from "@/hooks/useCartState";
 
 type ProductCardProps = {
   id: string;
-  numer: number;
-  name: string;
+  title: string;
   image: string;
   price: number;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
-  numer,
-  name,
+  title,
   image,
   price,
 }) => {
@@ -30,9 +28,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = () => {
     cartState.addItemToCart({
-      id: id,
-      price: price,
-      title: name,
+      id,
+      image,
+      price,
+      title,
       count: 1,
     });
   };
@@ -48,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div className="flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
       <div className="flex flex-row justify-between">
-        <span className="font-semibold">{name}</span>
+        <span className="font-semibold">{title}</span>
         <div
           className="h-4 ml-2 hover:cursor-pointer"
           onClick={toggleIsFavourite}

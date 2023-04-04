@@ -4,7 +4,7 @@ import Image from "next/image";
 interface Props {
   imageSrc: string;
   alt: string;
-  name: string;
+  title: string;
   size: string;
   index: number;
   productId: string;
@@ -15,7 +15,7 @@ interface Props {
 export const CartItem = ({
   imageSrc,
   alt,
-  name,
+  title,
   size,
   index,
   productId,
@@ -33,7 +33,7 @@ export const CartItem = ({
         <div className="flex flex-row gap-2">
           <Image src={imageSrc} alt={alt} width={40} height={40} />
           <div className="flex flex-col">
-            <p className="font-semibold">{name}</p>
+            <p className="font-semibold">{title}</p>
             <p className="items-center font-semibold">
               <span className="text-sm text-darkGray dark:text-primaryGray">
                 Size:
@@ -48,7 +48,9 @@ export const CartItem = ({
               -
             </button>
             <p>{count}</p>
-            <button>+</button>
+            <button onClick={() => cartState.addCountToItem(productId)}>
+              +
+            </button>
           </div>
           <div>${price}</div>
         </div>

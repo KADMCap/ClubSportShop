@@ -58,9 +58,8 @@ export default function ProductsPage({
               return (
                 <ProductCard
                   key={product.id}
-                  id={product.id}
-                  numer={index}
-                  name={product.title}
+                  id={product.id.toString()}
+                  title={product.title}
                   image={product.image}
                   price={product.price}
                 />

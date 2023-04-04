@@ -22,33 +22,15 @@ export const CartDrawer = () => {
           <CartItem
             key={`${item.title}_${index}`}
             index={index + 1}
-            imageSrc="https://naszsklep-api.vercel.app/images/71YXzeOuslL._AC_UY879_.jpg"
-            alt="image"
-            name={item.title}
+            imageSrc={item.image}
+            alt={item.title}
+            title={item.title}
             size="M"
             productId={item.id}
             price={item.price.toString()}
             count={item.count}
           />
         ))}
-        {/* <CartItem
-          index={1}
-          imageSrc="https://naszsklep-api.vercel.app/images/71YXzeOuslL._AC_UY879_.jpg"
-          alt="image"
-          name="Super Kit"
-          size="M"
-          productId="1"
-          price="75.00"
-        />
-        <CartItem
-          index={20}
-          imageSrc="https://naszsklep-api.vercel.app/images/71YXzeOuslL._AC_UY879_.jpg"
-          alt="image"
-          name="Atletico Short"
-          size="M"
-          productId="1"
-          price="55.00"
-        /> */}
       </div>
       <div className="flex flex-col w-full gap-4 px-2 py-4">
         <CouponInput />
