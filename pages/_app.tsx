@@ -1,4 +1,4 @@
-import { CartContext, CartProvider } from "@/context/CartContext";
+import { CartProvider } from "@/context/CartContext";
 import { HeaderProvider } from "@/context/HeaderContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import "@/styles/globals.css";

@@ -4,9 +4,11 @@ import { CartItem } from "./CartItem";
 import { CouponInput } from "./CouponInput";
 import { SummaryBox } from "./SummaryBox";
 import { Button } from "../Buttons/Button";
+import { CartContext } from "@/context/CartContext";
 
 export const CartDrawer = () => {
   const { openCart } = useContext(HeaderContext);
+  //const { cartItems } = useContext(CartContext);
   return (
     <aside
       className={`absolute bg-primary justify-between flex flex-col py-4 px-2 w-full h-[calc(100vh_-_64px)] t-12 right-0 transition-transform duration-300 md:absolute md:w-[400px] divide-y divide-primaryBlue translate-x-0 bg-primaryLight dark:bg-primaryDark ${
