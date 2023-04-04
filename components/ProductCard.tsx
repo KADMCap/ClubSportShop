@@ -6,7 +6,7 @@ import { HeartIcon, HeartOutlinedIcon } from "./Icons";
 import { useCartState } from "@/hooks/useCartState";
 
 type ProductCardProps = {
-  id: number;
+  id: string;
   numer: number;
   name: string;
   image: string;
@@ -30,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = () => {
     cartState.addItemToCart({
+      id: id,
       price: price,
       title: name,
       count: 1,

@@ -1,3 +1,4 @@
+import { useCartState } from "@/hooks/useCartState";
 import Image from "next/image";
 
 interface Props {
@@ -21,6 +22,8 @@ export const CartItem = ({
   price,
   count,
 }: Props) => {
+  const cartState = useCartState();
+
   return (
     <div className="flex flex-row items-center justify-between w-full">
       <div className="flex items-center justify-center w-5 pr-1 text-sm text-darkGray dark:text-primaryGray">
@@ -41,7 +44,9 @@ export const CartItem = ({
         </div>
         <div className="flex flex-row gap-2 font-semibold">
           <div className="flex flex-row items-center gap-2 px-2 rounded-[4px] bg-primaryLight dark:bg-primaryDark">
-            <button>-</button>
+            <button onClick={() => cartState.removeItemFromCart(productId)}>
+              -
+            </button>
             <p>{count}</p>
             <button>+</button>
           </div>
