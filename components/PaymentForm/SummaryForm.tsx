@@ -4,6 +4,7 @@ import { useCartState } from "@/hooks/useCartState";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
 import { Button } from "../Buttons/Button";
+import Link from "next/link";
 
 export const SummaryForm = () => {
   const cartState = useCartState();
@@ -50,7 +51,9 @@ export const SummaryForm = () => {
         <Button variant="tertiary" onClick={() => {}}>
           DECLINE
         </Button>
-        <Button onClick={() => {}}>CONFIRM</Button>
+        <Link href="/payment?step=2">
+          <Button onClick={() => {}}>CONFIRM</Button>
+        </Link>
       </section>
     </div>
   );
