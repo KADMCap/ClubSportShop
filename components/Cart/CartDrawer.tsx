@@ -6,6 +6,7 @@ import { SummaryBox } from "./SummaryBox";
 import { Button } from "../Buttons/Button";
 import { CartContext } from "@/context/CartContext";
 import { useCartState } from "@/hooks/useCartState";
+import Link from "next/link";
 
 export const CartDrawer = () => {
   const { openCart } = useContext(HeaderContext);
@@ -35,7 +36,9 @@ export const CartDrawer = () => {
       <div className="flex flex-col w-full gap-4 px-2 py-4">
         <CouponInput />
         <SummaryBox />
-        <Button onClick={() => {}}>Proceed to Pay</Button>
+        <Link href="/payment?step=1">
+          <Button onClick={() => {}}>Proceed to Pay</Button>
+        </Link>
       </div>
     </aside>
   );
