@@ -1,6 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
+import { SportBox } from "@/components/SportBox/SportBox";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -53,6 +54,10 @@ export default function ProductsPage({
     <>
       <Layout>
         <div className="flex flex-col">
+          <section className="flex flex-col gap-4 py-4">
+            <p className="font-semibold text-md">Sport</p>
+            <SportBox />
+          </section>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product, index) => {
               return (

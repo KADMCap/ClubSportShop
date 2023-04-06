@@ -31,6 +31,7 @@ import {
   RunningIcon,
   VolleyballIcon,
   OtherIcon,
+  AllIcon,
 } from "@/components/Icons";
 import { NotificationPopup } from "@/components/NotificationPopup";
 
@@ -91,6 +92,9 @@ const IconsPage = () => {
         </div>
         <div className="flex flex-col">
           <ChevronSelectIcon /> <div>ChevronSelectIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <AllIcon /> <div>AllIcon</div>
         </div>
         <div className="flex flex-col">
           <FootballIcon /> <div>FootballIcon</div>
