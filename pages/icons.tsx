@@ -26,6 +26,12 @@ import {
   MenuIcon,
   CloseIcon,
   HeartOutlinedIcon,
+  TennisIcon,
+  ShoeIcon,
+  RunningIcon,
+  VolleyballIcon,
+  OtherIcon,
+  AllIcon,
 } from "@/components/Icons";
 import { NotificationPopup } from "@/components/NotificationPopup";
 
@@ -88,16 +94,34 @@ const IconsPage = () => {
           <ChevronSelectIcon /> <div>ChevronSelectIcon</div>
         </div>
         <div className="flex flex-col">
+          <AllIcon /> <div>AllIcon</div>
+        </div>
+        <div className="flex flex-col">
           <FootballIcon /> <div>FootballIcon</div>
         </div>
         <div className="flex flex-col">
           <BasketballIcon /> <div>BasketballIcon</div>
         </div>
         <div className="flex flex-col">
+          <VolleyballIcon /> <div>VolleyballIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <TennisIcon /> <div>TennisIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <RunningIcon /> <div>RunningIcon</div>
+        </div>
+        <div className="flex flex-col">
           <ShirtIcon /> <div>ShirtIcon</div>
         </div>
         <div className="flex flex-col">
           <ShortIcon /> <div>ShortIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <ShoeIcon /> <div>ShoeIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <OtherIcon /> <div>OtherIcon</div>
         </div>
         <div className="flex flex-col">
           <SunIcon /> <div>SunIcon</div>
