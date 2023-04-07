@@ -1,9 +1,9 @@
-import { withStyles } from "@mui/material";
+import { FilterContext } from "@/context/FilterContext";
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
+import { useContext } from "react";
 
 export const PriceRange = () => {
-  const [priceValue, setPriceValue] = useState([0, 1000]);
+  const { priceValue, setPriceValue } = useContext(FilterContext);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setPriceValue(newValue as number[]);
@@ -19,7 +19,6 @@ export const PriceRange = () => {
           value={priceValue}
           onChange={handleChange}
           sx={{
-            //width: 300,
             height: 32,
             color: "#17ABDB",
             borderRadius: "8px",
