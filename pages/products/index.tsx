@@ -59,7 +59,7 @@ export default function ProductsPage({
           <p className="font-semibold text-md">Sport</p>
           <section className="flex flex-col justify-between gap-4 py-4 lg:flex-row">
             <SportBox />
-            <div className="flex flex-col flex-auto">
+            <div className="flex flex-col items-center gap-1 lg:flex-auto">
               <PriceRange />
               <Sort />
             </div>
