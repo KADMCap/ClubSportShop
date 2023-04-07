@@ -14,7 +14,7 @@ export const PriceRange = () => {
       <p className="font-semibold">
         {priceValue[0]}-{priceValue[1]}$
       </p>
-      <div className="flex-1 w-full max-w-[200px]">
+      <div className="flex-1 w-full max-w-[250px]">
         <Slider
           value={priceValue}
           onChange={handleChange}

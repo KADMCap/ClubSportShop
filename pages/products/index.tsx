@@ -1,4 +1,5 @@
 import { PriceRange } from "@/components/Filters/PriceRange";
+import { Sort } from "@/components/Filters/Sort";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
@@ -43,7 +44,7 @@ export default function ProductsPage({
   };
   useEffect(() => {
     setEndOffset(+itemOffset + +itemsPerPage);
-    console.log(itemsPerPage, itemOffset, endOffset);
+    //console.log(itemsPerPage, itemOffset, endOffset);
   }, [itemsPerPage, itemOffset]);
 
   const products = useMemo(() => {
@@ -60,6 +61,7 @@ export default function ProductsPage({
             <SportBox />
             <div className="flex flex-col flex-auto">
               <PriceRange />
+              <Sort />
             </div>
           </section>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
