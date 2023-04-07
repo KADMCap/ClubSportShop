@@ -3,7 +3,7 @@ import { Sort } from "@/components/Filters/Sort";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import { SportBox } from "@/components/SportBox/SportBox";
+import { SportBox } from "@/components/Filters/SportBox";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
