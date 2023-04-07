@@ -1,3 +1,4 @@
+import { PriceRange } from "@/components/Filters/PriceRange";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
@@ -54,9 +55,12 @@ export default function ProductsPage({
     <>
       <Layout>
         <div className="flex flex-col">
-          <section className="flex flex-col gap-4 py-4">
-            <p className="font-semibold text-md">Sport</p>
+          <p className="font-semibold text-md">Sport</p>
+          <section className="flex flex-col justify-between gap-4 py-4 lg:flex-row">
             <SportBox />
+            <div className="flex flex-col flex-auto">
+              <PriceRange />
+            </div>
           </section>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product, index) => {
