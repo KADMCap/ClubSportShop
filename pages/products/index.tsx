@@ -1,7 +1,9 @@
+import { PriceRange } from "@/components/Filters/PriceRange";
+import { Sort } from "@/components/Filters/Sort";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import { SportBox } from "@/components/SportBox/SportBox";
+import { SportBox } from "@/components/Filters/SportBox";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -42,7 +44,7 @@ export default function ProductsPage({
   };
   useEffect(() => {
     setEndOffset(+itemOffset + +itemsPerPage);
-    console.log(itemsPerPage, itemOffset, endOffset);
+    //console.log(itemsPerPage, itemOffset, endOffset);
   }, [itemsPerPage, itemOffset]);
 
   const products = useMemo(() => {
@@ -54,9 +56,13 @@ export default function ProductsPage({
     <>
       <Layout>
         <div className="flex flex-col">
-          <section className="flex flex-col gap-4 py-4">
-            <p className="font-semibold text-md">Sport</p>
+          <p className="font-semibold text-md">Sport</p>
+          <section className="flex flex-col justify-between gap-4 py-4 lg:flex-row">
             <SportBox />
+            <div className="flex flex-col items-center gap-1 lg:flex-auto">
+              <PriceRange />
+              <Sort />
+            </div>
           </section>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product, index) => {
