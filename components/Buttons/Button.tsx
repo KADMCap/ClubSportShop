@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -9,6 +10,11 @@ interface Props {
   variant?: "primary" | "secondary" | "tertiary" | "danger";
   full?: boolean;
   className?: string;
+}
+
+interface PropsLink extends Omit<Props, 'onClick'> {
+  href: string;
+  onClick?: () => void;
 }
 
 const classes = {
@@ -54,5 +60,31 @@ export const Button = ({
     >
       {children}
     </button>
+  );
+};
+
+export const LinkButton = ({
+  children,
+  onClick,
+  href,
+  size = "medium",
+  variant = "primary",
+  full = false,
+  className,
+}: PropsLink) => {
+  return (
+    <Link
+      className={classNames(
+        classes.base,
+        classes.size[size],
+        classes.variant[variant],
+        full && classes.full,
+        className
+      )}
+      href={href}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
   );
 };

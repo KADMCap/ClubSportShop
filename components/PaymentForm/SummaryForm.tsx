@@ -3,11 +3,12 @@ import { CartItem } from "../Cart/CartItem";
 import { useCartState } from "@/hooks/useCartState";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
-import { Button } from "../Buttons/Button";
-import Link from "next/link";
+import { Button, LinkButton } from "../Buttons/Button";
 
 export const SummaryForm = () => {
   const cartState = useCartState();
+
+  const handleConfirm = () => {}
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
@@ -51,9 +52,9 @@ export const SummaryForm = () => {
         <Button variant="tertiary" onClick={() => {}}>
           DECLINE
         </Button>
-        <Link href="/payment?step=2">
-          <Button onClick={() => {}}>CONFIRM</Button>
-        </Link>
+        <LinkButton href="/payment?step=2" onClick={handleConfirm}>
+          <p className="text-center">CONFIRM</p>
+        </LinkButton>
       </section>
     </div>
   );
