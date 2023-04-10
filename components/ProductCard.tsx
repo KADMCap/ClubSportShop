@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Button } from "./Buttons/Button";
+import { Button, LinkButton } from "./Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "./Icons";
 import { useCartState } from "@/hooks/useCartState";
 
@@ -34,10 +34,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       title,
       count: 1,
     });
-  };
-
-  const handleShowDetails = () => {
-    console.log("details");
   };
 
   const onSelectSize = (size: string) => {
@@ -106,12 +102,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">
-        <Link href={`/products/${id}`}>
-          <Button variant="secondary" full onClick={handleShowDetails}>
-            <p className="text-sm font-bold">DETAILS</p>
+          <LinkButton href={`/products/${id}`} variant="secondary" full>
+            <p className="text-sm font-bold text-center">DETAILS</p>
             {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
-          </Button>
-        </Link>
+          </LinkButton>
         <Button onClick={handleAddToCart} full className="">
           <p className="text-sm font-bold">ADD TO CART</p>
         </Button>
