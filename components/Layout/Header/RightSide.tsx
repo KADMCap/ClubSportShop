@@ -5,7 +5,8 @@ import Link from "next/link";
 import React, { useContext } from "react";
 
 const RightSide = () => {
-  const { setOpenNotification, setOpenCart } = useContext(HeaderContext);
+  const { setOpenNotification, setOpenCart, setOpenFavoriteModal } =
+    useContext(HeaderContext);
   const cartState = useCartState();
   return (
     <div className="flex items-center w-[100px] justify-between">
@@ -15,9 +16,12 @@ const RightSide = () => {
       >
         <NotificationIcon />
       </button>
-      <Link href="/favorite" passHref>
+      <button
+        className="bg-transparent outline-none"
+        onClick={() => setOpenFavoriteModal((prev) => !prev)}
+      >
         <HeartIcon />
-      </Link>
+      </button>
       <button
         className="bg-transparent outline-none"
         onClick={() => setOpenCart((prev) => !prev)}
