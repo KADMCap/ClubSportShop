@@ -7,8 +7,8 @@ interface Props {
   size: string;
   index: number;
   productId: string;
-  price: string;
-  count: number;
+  price: number;
+  quantity: number;
 }
 
 export const OrderItem = ({
@@ -19,7 +19,7 @@ export const OrderItem = ({
   index,
   productId,
   price,
-  count,
+  quantity,
 }: Props) => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
@@ -33,13 +33,13 @@ export const OrderItem = ({
         </div>
         <div className="flex flex-row gap-2">
           <p>
-            Items: <span className="font-semibold">3</span>
+            Items: <span className="font-semibold">{quantity}</span>
           </p>
           <p>
-            Size: <span className="font-semibold">M</span>
+            Size: <span className="font-semibold">{size}</span>
           </p>
           <p>
-            Price: <span className="font-semibold">$174.00</span>
+            Price: <span className="font-semibold">${price.toFixed(2)}</span>
           </p>
         </div>
       </div>
