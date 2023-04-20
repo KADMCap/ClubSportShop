@@ -2,7 +2,9 @@ import { CartProvider } from "@/context/CartContext";
 import { FilterProvider } from "@/context/FilterContext";
 import { HeaderProvider } from "@/context/HeaderContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { apolloClient } from "@/graphql/apolloClient";
 import "@/styles/globals.css";
+import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
 import { Inter, Russo_One } from "next/font/google";
 import Head from "next/head";
@@ -45,35 +47,37 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <ThemeProvider>
-      <HeaderProvider>
-        <CartProvider>
-          <FilterProvider>
-            <QueryClientProvider client={client}>
-              <Head>
-                <title>
-                  {router.route !== "/" ? titleString() : ""}
-                  Club Sport Shop
-                </title>
-                <meta
-                  name="description"
-                  content="Club Sport Shop - where you can find your sports clothes"
-                />
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-              </Head>
-              <main
-                className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
-              >
-                <Component {...pageProps} />
-              </main>
-            </QueryClientProvider>
-          </FilterProvider>
-        </CartProvider>
-      </HeaderProvider>
-    </ThemeProvider>
+    <ApolloProvider client={apolloClient}>
+      <ThemeProvider>
+        <HeaderProvider>
+          <CartProvider>
+            <FilterProvider>
+              <QueryClientProvider client={client}>
+                <Head>
+                  <title>
+                    {router.route !== "/" ? titleString() : ""}
+                    Club Sport Shop
+                  </title>
+                  <meta
+                    name="description"
+                    content="Club Sport Shop - where you can find your sports clothes"
+                  />
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                  />
+                  <link rel="icon" href="/favicon.ico" />
+                </Head>
+                <main
+                  className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
+                >
+                  <Component {...pageProps} />
+                </main>
+              </QueryClientProvider>
+            </FilterProvider>
+          </CartProvider>
+        </HeaderProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 }
