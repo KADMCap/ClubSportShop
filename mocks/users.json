@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1",
+        "name": "John Doe",
+        "nickname": "Johnny95",
+        "email": "john@example.com",
+        "avatar": "http://www.example.com",
+        "premium": true,
+        "shippingAddresses": [
+            {
+                "addressName": "Home",
+                "fullName": "John Doe",
+                "emailAddress": "john@example.com",
+                "phoneNumber": "600-500-400",
+                "postCode": "12-345",
+                "city": "Poznan",
+                "streetAddress": "Main Street 100"
+            }
+        ],
+        "lastLogin": "2023-04-23 16:22",
+        "language": "English"
+    }
+]

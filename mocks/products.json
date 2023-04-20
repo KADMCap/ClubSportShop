@@ -1,0 +1,48 @@
+[
+    {
+        "id": "1",
+        "title": "Handcrafted Steel Pants",
+        "slug": "Handcrafted Steel Pants",
+        "promo": true,
+        "prices": [
+            {
+                "date": "2023-04-05",
+                "price": 832
+            }
+        ],
+        "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+        "category": "Shirt",
+        "sport": "Football",
+        "tags": [
+            "Real Madrid",
+            "Football",
+            "White"
+        ],
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "rating": {
+            "rate": 1.56,
+            "count": 870
+        },
+        "images": [
+            {
+                "url": "https://naszsklep-api.vercel.app/images/81XH0e8fefL._AC_UY879_.jpg",
+                "alt": "image"
+            },
+            {
+                "url": "https://naszsklep-api.vercel.app/images/81XH0e8fefL._AC_UY879_.jpg",
+                "alt": "image"
+            },
+            {
+                "url": "https://naszsklep-api.vercel.app/images/81XH0e8fefL._AC_UY879_.jpg",
+                "alt": "image"
+            }
+        ],
+        "bought": 2,
+        "views": 2
+    }
+]

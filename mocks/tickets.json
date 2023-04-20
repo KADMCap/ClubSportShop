@@ -1,0 +1,21 @@
+[
+    {
+        "id": "123",
+        "date": "2023-04-23 16:00",
+        "stadium": "Anfield",
+        "league": "England",
+        "game": {
+            "id": "123",
+            "round": 23,
+            "short": "LIVARS",
+            "host": "Liverpool",
+            "guest": "Arsenal"
+        },
+        "seats": [
+            {
+                "seat": "13R",
+                "userName": "John Doe"
+            }
+        ]
+    }
+]
