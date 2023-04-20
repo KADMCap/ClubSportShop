@@ -1,6 +1,7 @@
 [
     {
         "orderId": "100089",
+        "userId": "1",
         "date": "05.04.2023",
         "itemsQty": 3,
         "totalPrice": 1948,
@@ -42,6 +43,7 @@
     },
     {
         "orderId": "100090",
+        "userId": "1",
         "date": "07.04.2023",
         "itemsQty": 2,
         "totalPrice": 1326,
@@ -83,6 +85,7 @@
     },
     {
         "orderId": "100091",
+        "userId": "1",
         "date": "07.04.2023",
         "itemsQty": 4,
         "totalPrice": 2160,
@@ -140,6 +143,7 @@
     },
     {
         "orderId": "100093",
+        "userId": "1",
         "date": "09.04.2023",
         "itemsQty": 1,
         "totalPrice": 832,
