@@ -1,6 +1,6 @@
 import React from "react";
 
-const Search = () => {
+export const Search = () => {
   return (
     <form className="flex items-center mx-6 grow lg:mx-40">
       <label htmlFor="voice-search" className="sr-only">
@@ -57,4 +57,3 @@ const Search = () => {
     </form>
   );
 };
-export default Search;

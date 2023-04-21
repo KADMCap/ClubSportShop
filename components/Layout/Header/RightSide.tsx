@@ -1,10 +1,9 @@
 import { NotificationIcon, HeartIcon, CartIcon } from "@/components/Icons";
 import { HeaderContext } from "@/context/HeaderContext";
 import { useCartState } from "@/hooks/useCartState";
-import Link from "next/link";
 import React, { useContext } from "react";
 
-const RightSide = () => {
+export const RightSide = () => {
   const { setOpenNotification, setOpenCart, setOpenFavoriteModal } =
     useContext(HeaderContext);
   const cartState = useCartState();
@@ -34,4 +33,3 @@ const RightSide = () => {
     </div>
   );
 };
-export default RightSide;
