@@ -8,7 +8,7 @@ import { Button, LinkButton } from "../Buttons/Button";
 export const SummaryForm = () => {
   const cartState = useCartState();
 
-  const handleConfirm = () => {}
+  const handleConfirm = () => {};
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">

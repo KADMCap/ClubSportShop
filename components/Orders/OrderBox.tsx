@@ -59,18 +59,18 @@ export const OrderBox = ({
   };
   return (
     <div className="flex flex-col w-full gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
-      <section className="flex flex-col items-start justify-between md:flex-row md:items-center">
+      <button
+        className="flex flex-col items-start justify-between md:flex-row md:items-center"
+        onClick={toogleOpen}
+      >
         <div className="flex flex-row items-center justify-between flex-1 w-full">
           <p className="font-semibold">
             Order {orderId}
             <span className="text-sm text-primaryGray"> / {date}</span>
           </p>
-          <button
-            className="bg-transparent outline-none md:hidden"
-            onClick={toogleOpen}
-          >
+          <div className="bg-transparent md:hidden">
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </button>
+          </div>
         </div>
         <div className="flex flex-row gap-2">
           <p>
@@ -83,14 +83,11 @@ export const OrderBox = ({
           <div className={`px-1 font-semibold rounded ${statusBg(status)}`}>
             {status}
           </div>
-          <button
-            className="hidden bg-transparent outline-none md:flex"
-            onClick={toogleOpen}
-          >
+          <div className="hidden bg-transparent md:flex">
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          </button>
+          </div>
         </div>
-      </section>
+      </button>
       <section
         ref={ordersRef}
         className="flex flex-col h-auto gap-1 overflow-hidden transition-all ease-in"
