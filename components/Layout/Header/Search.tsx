@@ -1,15 +1,15 @@
 import React from "react";
 
-const Search = () => {
+export const Search = () => {
   return (
-    <form className="flex items-center grow lg:mx-40 mx-6">
+    <form className="flex items-center mx-6 grow lg:mx-40">
       <label htmlFor="voice-search" className="sr-only">
         Search
       </label>
       <div className="relative w-full">
         <button
           type="submit"
-          className="absolute top-0 left-0 h-full w-9 text-sm font-medium text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="absolute top-0 left-0 h-full text-sm font-medium text-white border rounded-l-lg border-primaryBlue w-9 bg-primaryBlue hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           <svg
             aria-hidden="true"
@@ -31,8 +31,8 @@ const Search = () => {
         <input
           type="text"
           id="voice-search"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-blue-500"
-          placeholder="Search Mockups, Logos, Design Templates..."
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primaryBlue focus:border-primaryBlue block w-full pl-12 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkBlue dark:focus:border-darkBlue outline-none"
+          placeholder="Search Shirts, Shorts and other clothes..."
           required
         />
         <button
@@ -57,4 +57,3 @@ const Search = () => {
     </form>
   );
 };
-export default Search;

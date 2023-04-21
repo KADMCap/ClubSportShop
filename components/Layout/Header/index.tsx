@@ -1,7 +1,7 @@
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 import { MenuButton } from "./MenuButton";
-import RightSide from "./RightSide";
-import Search from "./Search";
+import { RightSide } from "./RightSide";
+import { Search } from "./Search";
 
 export const Header = () => {
   return (
