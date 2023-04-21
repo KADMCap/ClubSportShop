@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Logo = () => {
+export const Logo = () => {
   return (
     <Link href="/" className="flex items-center justify-center">
       <span className="pl-2.5 font-russo md:text-lg">
@@ -12,4 +12,3 @@ const Logo = () => {
     </Link>
   );
 };
-export default Logo;
