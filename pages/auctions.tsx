@@ -6,15 +6,29 @@ export default function AuctionsPage() {
   const { loading, error, data } = useQuery(gql`
     query GetAllProducts {
       products {
+        createdAt
         id
+        promo
         slug
-        name
-        price
+        title
         description
-        images {
+        sport
+        category
+        tags
+        sizes
+        prices {
           id
-          url
+          price
+          date
         }
+        images {
+          image {
+            id
+            url
+          }
+          alt
+        }
+        rating
       }
     }
   `);
@@ -55,9 +69,9 @@ export default function AuctionsPage() {
               <ProductCard
                 key={product.id}
                 id={product.id.toString()}
-                title={product.name}
-                image={product.images[0].url}
-                price={product.price}
+                title={product.title}
+                image={product.images[0].image?.url}
+                price={product.prices[0].price}
               />
             );
           })}
