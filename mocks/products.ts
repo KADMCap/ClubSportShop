@@ -16,8 +16,12 @@ export interface Product {
 }
 
 export interface Image {
-  url: string;
   alt: string;
+  id: string;
+  image: {
+    url: string;
+    alt: string;
+  };
 }
 
 export interface Price {
