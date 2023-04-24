@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Button, LinkButton } from "./Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "./Icons";
@@ -9,18 +8,28 @@ type ProductCardProps = {
   id: string;
   title: string;
   image: string;
+  prices: Prices[];
+  sale: boolean;
+  sizes: string[];
+};
+
+type Prices = {
   price: number;
+  date: string;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   title,
   image,
-  price,
+  prices,
+  sale,
+  sizes,
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const cartState = useCartState();
+  const price = prices[0].price;
 
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
@@ -51,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {isFavourite ? <HeartIcon /> : <HeartOutlinedIcon />}
         </div>
       </div>
-      <div className="bg-white full">
+      <div className="bg-white rounded-md full">
         <Image
           src={image}
           alt="Product image"
@@ -67,11 +76,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-row items-center flex-1 gap-2">
           <span className="font-semibold">${price.toFixed(2)}</span>
           <span className="text-sm text-primaryGray">
-            <s>${(price + price * 0.2).toFixed(2)}</s>
+            <s>{sale && "$" + prices[1]?.price.toFixed(2)}</s>
           </span>
         </div>
         <div className="grid flex-1 grid-cols-4 gap-2">
-          <Button
+          {sizes?.map((size) => (
+            <Button
+              key={size}
+              onClick={() => onSelectSize(size)}
+              size="small"
+              variant={`${selectedSize === size ? "primary" : "secondary"}`}
+            >
+              <span className="text-sm font-bold text-center">{size}</span>
+            </Button>
+          ))}
+          {/* <Button
             onClick={() => onSelectSize("s")}
             size="small"
             variant={`${selectedSize === "s" ? "primary" : "secondary"}`}
@@ -98,14 +117,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             variant={`${selectedSize === "xl" ? "primary" : "secondary"}`}
           >
             <p className="text-sm font-bold">XL</p>
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">
-          <LinkButton href={`/products/${id}`} variant="secondary" full>
-            <p className="text-sm font-bold text-center">DETAILS</p>
-            {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
-          </LinkButton>
+        <LinkButton href={`/products/${id}`} variant="secondary" full>
+          <p className="text-sm font-bold text-center">DETAILS</p>
+          {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
+        </LinkButton>
         <Button onClick={handleAddToCart} full className="">
           <p className="text-sm font-bold">ADD TO CART</p>
         </Button>
