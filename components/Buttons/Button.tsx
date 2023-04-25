@@ -4,7 +4,7 @@ import React from "react";
 
 interface Props {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: () => void | undefined;
   type?: "button" | "submit";
   size?: "small" | "medium" | "large";
   variant?: "primary" | "secondary" | "tertiary" | "danger";
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-interface PropsLink extends Omit<Props, 'onClick'> {
+interface PropsLink extends Omit<Props, "onClick"> {
   href: string;
   onClick?: () => void;
 }
@@ -56,7 +56,7 @@ export const Button = ({
         full && classes.full,
         className
       )}
-      onClick={onClick}
+      onClick={type === "submit" ? undefined : onClick}
     >
       {children}
     </button>

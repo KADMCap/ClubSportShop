@@ -1,7 +1,23 @@
-import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "../Buttons/Button";
 
+type Inputs = {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  postCode: string;
+  city: string;
+  street: string;
+};
+
 export const ShippingForm = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
@@ -29,7 +45,7 @@ export const ShippingForm = () => {
         </select>
       </section>
       <section className="flex flex-col gap-1">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <div>
               <label
@@ -43,7 +59,7 @@ export const ShippingForm = () => {
                 id="full_name"
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="John Doe"
-                required
+                {...(register("fullName"), { required: true })}
               />
             </div>
             <div>
@@ -58,7 +74,7 @@ export const ShippingForm = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@email.com"
-                required
+                {...(register("email"), { required: true })}
               />
             </div>
             <div>
@@ -74,7 +90,7 @@ export const ShippingForm = () => {
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="123-456-789"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
-                required
+                {...(register("phoneNumber"), { required: true })}
               />
             </div>
             <div>
@@ -90,7 +106,7 @@ export const ShippingForm = () => {
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="11-111"
                 pattern="[0-9]{2}-[0-9]{3}"
-                required
+                {...(register("postCode"), { required: true })}
               />
             </div>
             <div>
@@ -105,7 +121,7 @@ export const ShippingForm = () => {
                 id="city"
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Poznan"
-                required
+                {...(register("city"), { required: true })}
               />
             </div>
             <div>
@@ -120,17 +136,28 @@ export const ShippingForm = () => {
                 id="street"
                 className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Polska 567/89"
-                required
+                {...(register("street"), { required: true })}
               />
             </div>
           </div>
+          <button
+            type="submit"
+            className="text-white outline-none bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-darkBlue"
+          >
+            CONFIRM
+          </button>
         </form>
       </section>
       <section className="flex flex-row items-center justify-center w-full gap-2">
         <Button variant="tertiary" onClick={() => {}}>
           DECLINE
         </Button>
-        <Button onClick={() => {}}>CONFIRM</Button>
+        <button
+          type="submit"
+          className="text-white outline-none bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-darkBlue"
+        >
+          CONFIRM
+        </button>
       </section>
     </div>
   );
