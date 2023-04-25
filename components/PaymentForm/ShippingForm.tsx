@@ -2,6 +2,7 @@ import { useForm, SubmitHandler, useFormState } from "react-hook-form";
 import { Button } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { Input } from "./Input";
 
 type FormData = {
   fullName: string;
@@ -62,45 +63,50 @@ export const ShippingForm = () => {
       <section className="flex flex-col gap-1">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-              <label
-                htmlFor="full_name"
-                className="block mb-2 text-sm dark:text-white"
-              >
-                Full name
-              </label>
-              <input
-                type="text"
-                id="full_name"
-                className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="John Doe"
-                required
-                {...register("fullName")}
-              />
-              <span className="text-sm text-red-500">
-                {errors.fullName?.message}
-              </span>
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm dark:text-white"
-              >
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@email.com"
-                required
-                {...register("email")}
-              />
-              <span className="text-sm text-red-500">
-                {errors.email?.message}
-              </span>
-            </div>
-            <div>
+            <Input
+              label="Full Name"
+              type="text"
+              register={register}
+              name="fullName"
+              required
+            />
+            <Input
+              label="Email address"
+              type="email"
+              register={register}
+              name="email"
+              required
+            />
+            <Input
+              label="Phone Number"
+              type="tel"
+              register={register}
+              name="phoneNumber"
+              required
+            />
+            <Input
+              label="Post Code"
+              type="tel"
+              register={register}
+              name="postCode"
+              required
+            />
+            <Input
+              label="City"
+              type="string"
+              register={register}
+              name="city"
+              required
+            />
+            <Input
+              label="Street address"
+              type="string"
+              register={register}
+              name="street"
+              required
+            />
+
+            {/* <div>
               <label
                 htmlFor="phone"
                 className="block mb-2 text-sm dark:text-white"
@@ -119,65 +125,7 @@ export const ShippingForm = () => {
               <span className="text-sm text-red-500">
                 {errors.phoneNumber?.message}
               </span>
-            </div>
-            <div>
-              <label
-                htmlFor="post_code"
-                className="block mb-2 text-sm dark:text-white"
-              >
-                Post Code
-              </label>
-              <input
-                type="tel"
-                id="post_code"
-                className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="11-111"
-                pattern="[0-9]{2}-[0-9]{3}"
-                required
-                {...register("postCode")}
-              />
-              <span className="text-sm text-red-500">
-                {errors.postCode?.message}
-              </span>
-            </div>
-            <div>
-              <label
-                htmlFor="city"
-                className="block mb-2 text-sm dark:text-white"
-              >
-                City
-              </label>
-              <input
-                type="text"
-                id="city"
-                className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Poznan"
-                required
-                {...register("city")}
-              />
-              <span className="text-sm text-red-500">
-                {errors.city?.message}
-              </span>
-            </div>
-            <div>
-              <label
-                htmlFor="street"
-                className="block mb-2 text-sm dark:text-white"
-              >
-                Street address
-              </label>
-              <input
-                type="text"
-                id="street"
-                className="bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Polska 567/89"
-                required
-                {...register("street")}
-              />
-              <span className="text-sm text-red-500">
-                {errors.street?.message}
-              </span>
-            </div>
+            </div> */}
           </div>
           <input
             type="submit"
