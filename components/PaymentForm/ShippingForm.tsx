@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, useFormState } from "react-hook-form";
-import { Button } from "../Buttons/Button";
+import { Button, SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./Input";
@@ -33,7 +33,7 @@ export const ShippingForm = () => {
     watch,
     formState: { errors },
   } = useForm<FormData>();
-  const onSubmit = (data: FormData) => console.log(data, "data");
+  const onSubmit = (data: FormData) => console.log(data);
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
@@ -66,6 +66,7 @@ export const ShippingForm = () => {
             <Input
               label="Full Name"
               type="text"
+              placeholder="John Doe"
               register={register}
               name="fullName"
               required
@@ -73,6 +74,7 @@ export const ShippingForm = () => {
             <Input
               label="Email address"
               type="email"
+              placeholder="john@mail.com"
               register={register}
               name="email"
               required
@@ -80,6 +82,7 @@ export const ShippingForm = () => {
             <Input
               label="Phone Number"
               type="tel"
+              placeholder="123-456-789"
               register={register}
               name="phoneNumber"
               required
@@ -87,6 +90,7 @@ export const ShippingForm = () => {
             <Input
               label="Post Code"
               type="tel"
+              placeholder="12-345"
               register={register}
               name="postCode"
               required
@@ -94,6 +98,7 @@ export const ShippingForm = () => {
             <Input
               label="City"
               type="string"
+              placeholder="Poznan"
               register={register}
               name="city"
               required
@@ -101,6 +106,7 @@ export const ShippingForm = () => {
             <Input
               label="Street address"
               type="string"
+              placeholder="Polska 21/37"
               register={register}
               name="street"
               required
@@ -127,22 +133,13 @@ export const ShippingForm = () => {
               </span>
             </div> */}
           </div>
-          <input
-            type="submit"
-            className="text-white outline-none bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-darkBlue"
-          />
+          <section className="flex flex-row items-center justify-center w-full gap-2">
+            <Button variant="tertiary" onClick={() => {}}>
+              DECLINE
+            </Button>
+            <SubmitButton value="CONFIRM" />
+          </section>
         </form>
-      </section>
-      <section className="flex flex-row items-center justify-center w-full gap-2">
-        <Button variant="tertiary" onClick={() => {}}>
-          DECLINE
-        </Button>
-        {/* <button
-          type="submit"
-          className="text-white outline-none bg-primaryBlue hover:bg-darkBlue focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-darkBlue"
-        >
-          CONFIRM
-        </button> */}
       </section>
     </div>
   );
