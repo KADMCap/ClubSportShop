@@ -8,7 +8,7 @@ export default function AuctionsPage() {
       products {
         createdAt
         id
-        promo
+        sale
         slug
         title
         description
@@ -71,7 +71,9 @@ export default function AuctionsPage() {
                 id={product.id.toString()}
                 title={product.title}
                 image={product.images[0].image?.url}
-                price={product.prices[0].price}
+                prices={product.prices}
+                sale={product.sale}
+                sizes={product.sizes}
               />
             );
           })}

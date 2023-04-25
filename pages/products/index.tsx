@@ -76,7 +76,14 @@ export default function ProductsPage({
                   id={product.id.toString()}
                   title={product.title}
                   image={product.image}
-                  price={product.price}
+                  prices={[
+                    {
+                      price: product.price,
+                      date: "2023-04-24",
+                    },
+                  ]}
+                  sale={false}
+                  sizes={["S", "M"]}
                 />
               );
             })}
