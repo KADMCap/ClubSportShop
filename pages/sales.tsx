@@ -1,10 +1,11 @@
+import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { useQuery, gql } from "@apollo/client";
 
 export default function SalesPage() {
   const { loading, error, data } = useQuery(gql`
-    query GetAllProducts {
+    query GetSalesProducts {
       products(first: 24, where: { sale: true }) {
         createdAt
         id
@@ -36,7 +37,8 @@ export default function SalesPage() {
     return (
       <Layout>
         <div className="flex flex-col">
-          <div className="text-xl">Sales Page</div>
+          <div className="text-xl">Sales Products</div>
+          <FiltersContainer />
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             <p>Loading...</p>
           </div>
@@ -49,7 +51,8 @@ export default function SalesPage() {
     return (
       <Layout>
         <div className="flex flex-col">
-          <div className="text-xl">Sales Page</div>
+          <div className="text-xl">Sales Products</div>
+          <FiltersContainer />
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             <p>{JSON.stringify(error)}</p>
           </div>
@@ -61,7 +64,8 @@ export default function SalesPage() {
   return (
     <Layout>
       <div className="flex flex-col">
-        <div className="text-xl">Sales Page</div>
+        <div className="text-xl">Sales Products</div>
+        <FiltersContainer />
         <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
           {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
           {data.products.map((product: any) => {
