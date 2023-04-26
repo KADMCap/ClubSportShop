@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
+    <div className="relative flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
       <div className="flex flex-row justify-between">
         <span className="font-semibold">{title}</span>
         <div
@@ -90,34 +90,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               <span className="text-sm font-bold text-center">{size}</span>
             </Button>
           ))}
-          {/* <Button
-            onClick={() => onSelectSize("s")}
-            size="small"
-            variant={`${selectedSize === "s" ? "primary" : "secondary"}`}
-          >
-            <p className="text-sm font-bold">S</p>
-          </Button>{" "}
-          <Button
-            onClick={() => onSelectSize("m")}
-            size="small"
-            variant={`${selectedSize === "m" ? "primary" : "secondary"}`}
-          >
-            <p className="text-sm font-bold">M</p>
-          </Button>
-          <Button
-            onClick={() => onSelectSize("l")}
-            size="small"
-            variant={`${selectedSize === "l" ? "primary" : "secondary"}`}
-          >
-            <p className="text-sm font-bold">L</p>
-          </Button>
-          <Button
-            onClick={() => onSelectSize("xl")}
-            size="small"
-            variant={`${selectedSize === "xl" ? "primary" : "secondary"}`}
-          >
-            <p className="text-sm font-bold">XL</p>
-          </Button> */}
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">
@@ -129,6 +101,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <p className="text-sm font-bold">ADD TO CART</p>
         </Button>
       </div>
+      {sale && (
+        <div className="absolute left-0 p-2 rounded-r-md bg-primaryBlue top-1/2">
+          <div className="flex flex-col items-center justify-center font-semibold text-white ">
+            <p className="text-sm">Sale </p>
+            <p>${(prices[1]?.price - price).toFixed(2)}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
