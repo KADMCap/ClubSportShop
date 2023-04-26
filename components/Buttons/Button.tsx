@@ -12,9 +12,13 @@ interface Props {
   className?: string;
 }
 
-interface PropsLink extends Omit<Props, 'onClick'> {
+interface PropsLink extends Omit<Props, "onClick"> {
   href: string;
   onClick?: () => void;
+}
+
+interface PropsSubmit extends Omit<Props, "onClick" | "children"> {
+  value: string;
 }
 
 const classes = {
@@ -86,5 +90,28 @@ export const LinkButton = ({
     >
       {children}
     </Link>
+  );
+};
+
+export const SubmitButton = ({
+  value,
+  type = "submit",
+  size = "medium",
+  variant = "primary",
+  full = false,
+  className,
+}: PropsSubmit) => {
+  return (
+    <input
+      type={type}
+      value={value}
+      className={classNames(
+        classes.base,
+        classes.size[size],
+        classes.variant[variant],
+        full && classes.full,
+        className
+      )}
+    />
   );
 };
