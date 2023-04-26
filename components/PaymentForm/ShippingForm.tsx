@@ -69,7 +69,7 @@ export const ShippingForm = () => {
               placeholder="John Doe"
               register={register}
               name="fullName"
-              required
+              errorMsg={errors.fullName?.message}
             />
             <Input
               label="Email address"
@@ -77,7 +77,7 @@ export const ShippingForm = () => {
               placeholder="john@mail.com"
               register={register}
               name="email"
-              required
+              errorMsg={errors.email?.message}
             />
             <Input
               label="Phone Number"
@@ -85,7 +85,7 @@ export const ShippingForm = () => {
               placeholder="123-456-789"
               register={register}
               name="phoneNumber"
-              required
+              errorMsg={errors.phoneNumber?.message}
             />
             <Input
               label="Post Code"
@@ -93,7 +93,7 @@ export const ShippingForm = () => {
               placeholder="12-345"
               register={register}
               name="postCode"
-              required
+              errorMsg={errors.postCode?.message}
             />
             <Input
               label="City"
@@ -101,7 +101,7 @@ export const ShippingForm = () => {
               placeholder="Poznan"
               register={register}
               name="city"
-              required
+              errorMsg={errors.city?.message}
             />
             <Input
               label="Street address"
@@ -109,7 +109,7 @@ export const ShippingForm = () => {
               placeholder="Polska 21/37"
               register={register}
               name="street"
-              required
+              errorMsg={errors.street?.message}
             />
 
             {/* <div>

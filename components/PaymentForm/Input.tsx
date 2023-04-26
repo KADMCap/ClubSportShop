@@ -15,7 +15,7 @@ type InputProps = {
   placeholder: string;
   register: UseFormRegister<IFormValues>;
   name: Path<IFormValues>;
-  required: boolean;
+  errorMsg: string | undefined;
 };
 
 export const Input = ({
@@ -24,6 +24,7 @@ export const Input = ({
   placeholder,
   register,
   name,
+  errorMsg,
 }: InputProps) => {
   return (
     <div>
@@ -35,9 +36,7 @@ export const Input = ({
         required
         {...register(name)}
       />
-      {/* <span className="text-sm text-red-500">
-                {errors.fullName?.message}
-              </span> */}
+      <span className="text-sm text-red-500">{errorMsg}</span>
     </div>
   );
 };
