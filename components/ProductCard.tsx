@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const cartState = useCartState();
-  const price = prices[0].price;
+  const price = prices[0]?.price;
 
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
@@ -74,7 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center flex-1 gap-2">
-          <span className="font-semibold">${price.toFixed(2)}</span>
+          <span className="font-semibold">${price?.toFixed(2)}</span>
           <span className="text-sm text-primaryGray">
             <s>{sale && "$" + prices[1]?.price.toFixed(2)}</s>
           </span>

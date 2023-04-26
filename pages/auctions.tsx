@@ -5,7 +5,7 @@ import { useQuery, gql } from "@apollo/client";
 export default function AuctionsPage() {
   const { loading, error, data } = useQuery(gql`
     query GetAllProducts {
-      products {
+      products(first: 24) {
         createdAt
         id
         sale
