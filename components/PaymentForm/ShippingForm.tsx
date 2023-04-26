@@ -1,32 +1,23 @@
-import { useForm, SubmitHandler, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./Input";
 import addresses from "@/mocks/shippingAddresses.json";
 
-type FormData = {
-  orderId: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  postCode: string;
-  city: string;
-  street: string;
-};
+const schema = yup
+  .object({
+    orderId: yup.string().required(),
+    fullName: yup.string().required(),
+    email: yup.string().email().required(),
+    phoneNumber: yup.string().required(),
+    postCode: yup.string().required(),
+    city: yup.string().required(),
+    street: yup.string().required(),
+  })
+  .required();
 
-// const schema = yup
-//   .object({
-//     fullName: yup.string().required(),
-//     email: yup.string().email().required(),
-//     phoneNumber: yup.string().required(),
-//     postCode: yup.string().required(),
-//     city: yup.string().required(),
-//     street: yup.string().required(),
-//   })
-//   .required();
-
-// type FormData = yup.InferType<typeof schema>;
+type FormData = yup.InferType<typeof schema>;
 
 export const ShippingForm = () => {
   const {
@@ -35,7 +26,9 @@ export const ShippingForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
   const userId = "123"; //temp for finding user address
   const onSubmit = (data: FormData) => console.log(data);
 
