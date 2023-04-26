@@ -1,6 +1,7 @@
 import { Path, useForm, UseFormRegister, SubmitHandler } from "react-hook-form";
 
 interface IFormValues {
+  orderId: string;
   fullName: string;
   email: string;
   phoneNumber: string;

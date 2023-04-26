@@ -6,6 +6,7 @@ import { Input } from "./Input";
 import addresses from "@/mocks/shippingAddresses.json";
 
 type FormData = {
+  orderId: string;
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -91,6 +92,7 @@ export const ShippingForm = () => {
       </section>
       <section className="flex flex-col gap-1">
         <form onSubmit={handleSubmit(onSubmit)}>
+          <input type="hidden" value="10009929" {...register("orderId")} />
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <Input
               label="Full Name"
