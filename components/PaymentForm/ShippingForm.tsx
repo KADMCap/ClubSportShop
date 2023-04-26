@@ -3,6 +3,7 @@ import { Button, SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./Input";
+import addresses from "@/mocks/shippingAddresses.json";
 
 type FormData = {
   fullName: string;
@@ -29,11 +30,33 @@ type FormData = {
 export const ShippingForm = () => {
   const {
     register,
+    setValue,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<FormData>();
+  const userId = "123"; //temp for finding user address
   const onSubmit = (data: FormData) => console.log(data);
+
+  const fillForm = (addressId: string) => {
+    if (addressId === "") {
+      setValue("fullName", "");
+      setValue("email", "");
+      setValue("phoneNumber", "");
+      setValue("postCode", "");
+      setValue("city", "");
+      setValue("street", "");
+    }
+    let address = addresses.find((address) => address.id === addressId);
+    if (address) {
+      setValue("fullName", address.fullName);
+      setValue("email", address.email);
+      setValue("phoneNumber", address.phoneNumber);
+      setValue("postCode", address.postCode);
+      setValue("city", address.city);
+      setValue("street", address.street);
+    }
+  };
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
@@ -54,10 +77,16 @@ export const ShippingForm = () => {
       </section>
       <section>
         Select Address:{" "}
-        <select className="px-2 py-1 rounded-md bg-secondaryLight dark:bg-secondaryDark">
-          <option value="New">New Address</option>
-          <option value="Home">Home</option>
-          <option value="Office">Office</option>
+        <select
+          className="px-2 py-1 rounded-md bg-secondaryLight dark:bg-secondaryDark"
+          onChange={(e) => fillForm(e.target.value)}
+        >
+          <option value="">New Address</option>
+          {addresses.map((address) => (
+            <option key={address.id} value={address.id}>
+              {address.name}
+            </option>
+          ))}
         </select>
       </section>
       <section className="flex flex-col gap-1">

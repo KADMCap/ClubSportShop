@@ -1,0 +1,22 @@
+[
+    {
+        "id": "12",
+        "name": "Home",
+        "fullName": "Mike Smith",
+        "email": "mike@mail.com",
+        "phoneNumber": "123-123-123",
+        "postCode": "12-123",
+        "city": "Warsaw",
+        "street": "Green 120"
+    },
+    {
+        "id": "13",
+        "name": "Work",
+        "fullName": "Mike Smith",
+        "email": "mike@mail.com",
+        "phoneNumber": "123-123-123",
+        "postCode": "12-123",
+        "city": "Warsaw",
+        "street": "Blue 90"
+    }
+]
