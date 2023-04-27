@@ -62,6 +62,7 @@ export default function ProductsPage({
                   key={product.id}
                   id={product.id.toString()}
                   title={product.title}
+                  slug="slug"
                   image={product.image}
                   prices={[
                     {
