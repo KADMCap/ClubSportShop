@@ -53,7 +53,7 @@ export default function ProductsPage({
   return (
     <>
       <Layout>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <FiltersContainer />
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product, index) => {
@@ -62,6 +62,7 @@ export default function ProductsPage({
                   key={product.id}
                   id={product.id.toString()}
                   title={product.title}
+                  slug="slug"
                   image={product.image}
                   prices={[
                     {
