@@ -17,11 +17,46 @@ export type InferGetStaticPathsType<T> = T extends () => Promise<{
   ? R
   : never;
 
+export interface GetProductDetailResponse {
+  products: ProductDetail[];
+}
+
+export interface ProductDetail {
+  id: string;
+  sale: boolean;
+  slug: string;
+  title: string;
+  description: string;
+  sport: string;
+  category: string;
+  tags: string[];
+  sizes: string[];
+  prices: Price[];
+  rating: number[];
+  images: ImageElement[];
+}
+
+export interface ImageElement {
+  image: ImageImage;
+  alt: string;
+}
+
+export interface ImageImage {
+  id: string;
+  url: string;
+}
+
+export interface Price {
+  id: string;
+  price: number;
+  date: string;
+}
+
 export async function getStaticPaths() {
   const { data } = await apolloClient.query<GetProductsSlugsResponse>({
     query: gql`
       query GetProductsSlugs {
-        products {
+        products(first: 24) {
           slug
         }
       }
@@ -49,7 +84,7 @@ export const getStaticProps = async ({
       notFound: true,
     };
   }
-  const { data } = await apolloClient.query<GetProductsSlugsResponse>({
+  const { data } = await apolloClient.query<GetProductDetailResponse>({
     variables: {
       slug: params.slug,
     },
@@ -94,7 +129,7 @@ const ProductPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   console.log({ data });
-  return <div>ProductPage</div>;
+  return <div>ProductPage {data?.products[0].title}</div>;
 };
 
 export default ProductPage;

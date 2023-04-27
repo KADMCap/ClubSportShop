@@ -7,6 +7,7 @@ import { useCartState } from "@/hooks/useCartState";
 type ProductCardProps = {
   id: string;
   title: string;
+  slug: string;
   image: string;
   prices: Prices[];
   sale: boolean;
@@ -21,6 +22,7 @@ type Prices = {
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   title,
+  slug,
   image,
   prices,
   sale,
@@ -93,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">
-        <LinkButton href={`/products/${id}`} variant="secondary" full>
+        <LinkButton href={`/products/${slug}`} variant="secondary" full>
           <p className="text-sm font-bold text-center">DETAILS</p>
           {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
         </LinkButton>

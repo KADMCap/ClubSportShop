@@ -70,6 +70,7 @@ export default function AuctionsPage() {
                 key={product.id}
                 id={product.id.toString()}
                 title={product.title}
+                slug={product.slug}
                 image={product.images[0].image?.url}
                 prices={product.prices}
                 sale={product.sale}
