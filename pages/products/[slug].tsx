@@ -10,7 +10,9 @@ import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import ReactStars from "react-stars";
-import { identifierToKeywordKind } from "typescript";
+
+import opinions from "../../mocks/opinions.json";
+import { Opinion } from "@/components/Opinion/Opinion";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -164,7 +166,7 @@ const ProductPage = ({
       count: selectedQuantity,
     });
   };
-  // console.log(data?.products[0].images[0].image.url);
+  console.log(opinions);
 
   if (!data) {
     console.log("No product found");
@@ -178,9 +180,9 @@ const ProductPage = ({
   return (
     <Layout>
       <div className="flex-col w-full">
-        <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
-          <div className="flex flex-col flex-1">
-            <div className="flex justify-center w-full bg-white">
+        <div className="bg-white rounded-xl flex md:flex-row flex-col p-6 dark:bg-primaryDark h-fit">
+          <div className="flex flex-1 flex-col">
+            <div className="flex w-full bg-white justify-center mb-2">
               <Image
                 width={500}
                 height={500}
@@ -229,7 +231,7 @@ const ProductPage = ({
             </div>
             <div className="flex flex-row items-center gap-1">
               <span className="text-sm">{product.rating}/5</span>{" "}
-              <ReactStars edit={false} value={product.rating} />
+              <ReactStars edit={false} value={product.rating[0]} />
               <span className="text-sm text-primaryGray">
                 ({`${product.rating.length} reviews`})
               </span>
@@ -287,7 +289,7 @@ const ProductPage = ({
           <div className="m-6">
             <span className="font-bold">Similar Products</span>
           </div>
-          <div className="flex flex-row gap-4 dark:bg-primaryDark h-fit">
+          <div className="flex flex-row dark:bg-primaryDark h-fit gap-4  rounded-xl">
             <ProductCard
               id={product.id}
               title={product.title}
@@ -315,8 +317,17 @@ const ProductPage = ({
               ADD OPINION
             </Button>
           </div>
-          <div className="flex flex-row p-6 bg-white rounded-xl dark:bg-primaryDark h-fit">
-            op op op
+          <div className=" flex flex-col p-6 gap-4 dark:bg-primaryDark h-fit  rounded-xl">
+            {opinions.map((opinion) => (
+              <Opinion
+                key={opinion.id}
+                id={opinion.id}
+                user={opinion.user}
+                date={opinion.date}
+                rating={opinion.rating}
+                description={opinion.description}
+              />
+            ))}
           </div>
         </div>
       </div>
