@@ -18,7 +18,7 @@ export type InferGetStaticPathsType<T> = T extends () => Promise<{
   : never;
 
 export interface GetProductDetailResponse {
-  products: ProductDetail[];
+  product: ProductDetail;
 }
 
 export interface ProductDetail {
@@ -90,7 +90,7 @@ export const getStaticProps = async ({
     },
     query: gql`
       query GetProductDetailBySlug($slug: String) {
-        products(where: { slug: $slug }) {
+        product(where: { slug: $slug }) {
           id
           sale
           slug
@@ -129,7 +129,7 @@ const ProductPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   console.log({ data });
-  return <div>ProductPage {data?.products[0].title}</div>;
+  return <div>ProductPage {data?.product.title}</div>;
 };
 
 export default ProductPage;
