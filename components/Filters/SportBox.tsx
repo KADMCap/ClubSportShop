@@ -13,7 +13,7 @@ export const SportBox = () => {
     <div className="flex items-center gap-2">
       <SportBoxItem icon={<FootballIcon />} title="Football" />
       <SportBoxItem icon={<BasketballIcon />} title="Basketball" />
-      <SportBoxItem icon={<VolleyballIcon />} title="Volleytball" />
+      <SportBoxItem icon={<VolleyballIcon />} title="Volleyball" />
       <SportBoxItem icon={<TennisIcon />} title="Tennis" />
       <SportBoxItem icon={<RunningIcon />} title="Running" />
     </div>

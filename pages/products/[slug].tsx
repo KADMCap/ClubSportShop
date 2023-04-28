@@ -29,7 +29,7 @@ export type InferGetStaticPathsType<T> = T extends () => Promise<{
   : never;
 
 export interface GetProductDetailResponse {
-  products: ProductDetail[];
+  product: ProductDetail;
 }
 
 export interface ProductDetail {
@@ -101,7 +101,7 @@ export const getStaticProps = async ({
     },
     query: gql`
       query GetProductDetailBySlug($slug: String) {
-        products(where: { slug: $slug }) {
+        product(where: { slug: $slug }) {
           id
           sale
           slug
@@ -173,7 +173,7 @@ const ProductPage = ({
     return;
   }
 
-  const product = data?.products[0];
+  const product = data?.product;
   const quantityToChoose = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   console.log({ product });
 
@@ -195,8 +195,9 @@ const ProductPage = ({
               />
             </div>
             <div className="flex gap-4">
-              {product.images.map((image, id) => (
+              {product.images.map((image: any, id: any) => (
                 <div
+                  key={id}
                   className={`border-2 ${
                     id === selectedImageNumber
                       ? `border-blue-400`
@@ -218,8 +219,8 @@ const ProductPage = ({
               ))}
             </div>
           </div>
-          <div className="flex flex-col flex-1 px-4 h-full gap-4">
-            <div className="w-full flex flex-row justify-between ">
+          <div className="flex flex-col flex-1 h-full gap-4 px-4">
+            <div className="flex flex-row justify-between w-full ">
               <span className="font-bold">{product.title}</span>
               <div
                 className="h-4 ml-2 hover:cursor-pointer"
@@ -228,10 +229,10 @@ const ProductPage = ({
                 {isFavourite ? <HeartIcon /> : <HeartOutlinedIcon />}
               </div>
             </div>
-            <div className="flex flex-row gap-1 items-center">
+            <div className="flex flex-row items-center gap-1">
               <span className="text-sm">{product.rating}/5</span>{" "}
               <ReactStars edit={false} value={product.rating[0]} />
-              <span className=" text-sm text-primaryGray">
+              <span className="text-sm text-primaryGray">
                 ({`${product.rating.length} reviews`})
               </span>
             </div>
@@ -247,8 +248,8 @@ const ProductPage = ({
             </div>
             <span>{product.description}</span>
 
-            <div className="grid flex-1 grid-cols-4 gap-1 w-32">
-              {product.sizes?.map((size) => (
+            <div className="grid flex-1 w-32 grid-cols-4 gap-1">
+              {product.sizes?.map((size: any) => (
                 <Button
                   key={size}
                   onClick={() => onSelectSize(size)}
@@ -310,7 +311,7 @@ const ProductPage = ({
           </div>
         </div>
         <div>
-          <div className="my-6 px-6 w-full flex flex-row justify-between">
+          <div className="flex flex-row justify-between w-full px-6 my-6">
             <span className="font-bold">Opinions</span>
             <Button size="small" onClick={() => {}}>
               ADD OPINION
