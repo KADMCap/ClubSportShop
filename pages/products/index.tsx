@@ -10,8 +10,17 @@ import { gql, useQuery } from "@apollo/client";
 import { FilterContext } from "@/context/FilterContext";
 
 const query = gql`
-  query GetAllProducts($first: Int, $skip: Int, $category: [Category]) {
-    products(first: $first, skip: $skip, where: { category_in: $category }) {
+  query GetAllProducts(
+    $first: Int
+    $skip: Int
+    $category: [Category]
+    $sport: [Sport]
+  ) {
+    products(
+      first: $first
+      skip: $skip
+      where: { category_in: $category, sport_in: $sport }
+    ) {
       createdAt
       id
       sale
@@ -46,13 +55,14 @@ const query = gql`
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { category } = useContext(FilterContext);
+  const { category, sport } = useContext(FilterContext);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { loading, error, data } = useQuery(query, {
     variables: {
       first: 24,
       skip: (currentPage - 1) * 24,
-      category: category,
+      category,
+      sport,
     },
   });
   const items = data?.productsConnection.aggregate.count;
