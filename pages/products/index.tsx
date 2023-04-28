@@ -52,22 +52,15 @@ export default function ProductsPage() {
     variables: {
       first: 24,
       skip: (currentPage - 1) * 24,
-      category: [category],
+      category: category,
     },
   });
   const items = data?.productsConnection.aggregate.count;
 
   const handlePageClick = (event: any) => {
-    // console.log({ event });
-    // const newOffset = (event.selected * itemsPerPage) % data.length;
-    // console.log(
-    //   `User requested page number ${event.selected}, which is offset ${newOffset}`
-    // );
-
     window.scrollTo(0, 0);
     scrollContainer();
     setCurrentPage(event.selected + 1);
-    //setItemOffset(newOffset);
   };
 
   const scrollContainer = () => {
