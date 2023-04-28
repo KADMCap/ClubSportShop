@@ -45,7 +45,7 @@ const query = gql`
       }
       rating
     }
-    productsConnection {
+    productsConnection(where: { category_in: $category, sport_in: $sport }) {
       aggregate {
         count
       }
@@ -95,7 +95,7 @@ export default function ProductsPage() {
       <Layout>
         <div className="flex flex-col w-full" ref={containerRef}>
           <FiltersContainer />
-          <p>All products: {items}</p>
+          <span className="pb-1 text-sm">All products: {items}</span>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
             {data?.products.map((product: any) => (
               <ProductCard
