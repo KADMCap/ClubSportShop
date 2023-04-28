@@ -3,14 +3,15 @@ import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { gql, useQuery } from "@apollo/client";
+import { FilterContext } from "@/context/FilterContext";
 
 const query = gql`
-  query GetAllProducts($first: Int, $skip: Int) {
-    products(first: $first, skip: $skip) {
+  query GetAllProducts($first: Int, $skip: Int, $category: [Category]) {
+    products(first: $first, skip: $skip, where: { category_in: $category }) {
       createdAt
       id
       sale
@@ -45,11 +46,13 @@ const query = gql`
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const { category } = useContext(FilterContext);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { loading, error, data } = useQuery(query, {
     variables: {
       first: 24,
       skip: (currentPage - 1) * 24,
+      category: [category],
     },
   });
   const items = data?.productsConnection.aggregate.count;
