@@ -1,9 +1,15 @@
-import { SearchIcon } from "@/components/Icons";
-import React from "react";
+import { CloseIcon, SearchIcon } from "@/components/Icons";
+import { HeaderContext } from "@/context/HeaderContext";
+import React, { useContext } from "react";
 
-export const Search = () => {
+export const SearchMobile = () => {
+  const { openSearchBar, setOpenSearchBar } = useContext(HeaderContext);
   return (
-    <form className="flex items-center w-full mx-6 grow lg:mx-40">
+    <form
+      className={`absolute sm:hidden top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow ${
+        !openSearchBar && "hidden"
+      }`}
+    >
       <label htmlFor="voice-search" className="sr-only">
         Search
       </label>
@@ -18,7 +24,7 @@ export const Search = () => {
         <input
           type="text"
           id="voice-search"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primaryBlue focus:border-primaryBlue block w-full pl-12 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkBlue dark:focus:border-darkBlue outline-none"
+          className="block w-full p-2 pl-12 text-sm text-gray-900 border border-gray-300 rounded-lg outline-none bg-gray-50 focus:ring-primaryBlue focus:border-primaryBlue dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkBlue dark:focus:border-darkBlue"
           placeholder="Search Shirts, Shorts and other clothes..."
           required
         />
@@ -41,6 +47,12 @@ export const Search = () => {
           </svg>
         </button>
       </div>
+      <button
+        className="bg-transparent outline-none md:hidden"
+        onClick={() => setOpenSearchBar(false)}
+      >
+        <CloseIcon color="darkBlue" />
+      </button>
     </form>
   );
 };
