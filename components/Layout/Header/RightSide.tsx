@@ -17,7 +17,7 @@ export const RightSide = () => {
   } = useContext(HeaderContext);
   const cartState = useCartState();
   return (
-    <div className="flex items-center w-[100px] justify-between gap-2">
+    <div className="flex items-center justify-end w-full gap-2">
       <button
         className="bg-transparent outline-none sm:hidden"
         onClick={() => setOpenSearchBar(true)}
@@ -37,11 +37,11 @@ export const RightSide = () => {
         <HeartIcon />
       </button>
       <button
-        className="bg-transparent outline-none"
+        className="relative bg-transparent outline-none z-2"
         onClick={() => setOpenCart((prev) => !prev)}
       >
         <CartIcon />
-        <div className="absolute w-4 h-4 text-sm text-white rounded-full right-1 bottom-3 bg-primaryBlue">
+        <div className="absolute w-4 h-4 text-sm text-white rounded-full -right-1 top-4 bg-primaryBlue">
           {cartState.items.length}
         </div>
       </button>

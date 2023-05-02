@@ -1,4 +1,4 @@
-import { CloseIcon } from "@/components/Icons";
+import { CloseIcon, SearchIcon } from "@/components/Icons";
 import { HeaderContext } from "@/context/HeaderContext";
 import React, { useContext } from "react";
 
@@ -6,7 +6,7 @@ export const SearchMobile = () => {
   const { openSearchBar, setOpenSearchBar } = useContext(HeaderContext);
   return (
     <form
-      className={`absolute top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow ${
+      className={`absolute sm:hidden top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow ${
         !openSearchBar && "hidden"
       }`}
     >
@@ -16,23 +16,9 @@ export const SearchMobile = () => {
       <div className="relative w-full">
         <button
           type="submit"
-          className="absolute top-0 left-0 h-full text-sm font-medium text-white border rounded-l-lg border-primaryBlue w-9 bg-primaryBlue hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="absolute top-0 left-0 flex items-center justify-center h-full text-sm font-medium text-white border rounded-l-lg border-primaryBlue w-9 bg-primaryBlue hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          <svg
-            aria-hidden="true"
-            className="w-6 h-6 pl-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
+          <SearchIcon color="white" size="sm" />
           <span className="sr-only">Search</span>
         </button>
         <input
