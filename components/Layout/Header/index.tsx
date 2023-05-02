@@ -12,7 +12,7 @@ export const Header = () => {
         <MenuButton />
         <Logo />
       </div>
-      <div className="hidden w-full md:flex">
+      <div className="hidden w-full sm:flex">
         <Search />{" "}
       </div>
 

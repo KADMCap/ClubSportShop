@@ -9,14 +9,18 @@ import { useCartState } from "@/hooks/useCartState";
 import React, { useContext } from "react";
 
 export const RightSide = () => {
-  const { setOpenNotification, setOpenCart, setOpenFavoriteModal } =
-    useContext(HeaderContext);
+  const {
+    setOpenNotification,
+    setOpenCart,
+    setOpenFavoriteModal,
+    setOpenSearchBar,
+  } = useContext(HeaderContext);
   const cartState = useCartState();
   return (
     <div className="flex items-center w-[100px] justify-between gap-2">
       <button
-        className="bg-transparent outline-none md:hidden"
-        onClick={() => setOpenNotification((prev) => !prev)}
+        className="bg-transparent outline-none sm:hidden"
+        onClick={() => setOpenSearchBar(true)}
       >
         <SearchIcon />
       </button>

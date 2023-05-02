@@ -1,9 +1,15 @@
 import { CloseIcon } from "@/components/Icons";
-import React from "react";
+import { HeaderContext } from "@/context/HeaderContext";
+import React, { useContext } from "react";
 
 export const SearchMobile = () => {
+  const { openSearchBar, setOpenSearchBar } = useContext(HeaderContext);
   return (
-    <form className="absolute top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow">
+    <form
+      className={`absolute top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow ${
+        !openSearchBar && "hidden"
+      }`}
+    >
       <label htmlFor="voice-search" className="sr-only">
         Search
       </label>
@@ -55,7 +61,10 @@ export const SearchMobile = () => {
           </svg>
         </button>
       </div>
-      <button>
+      <button
+        className="bg-transparent outline-none md:hidden"
+        onClick={() => setOpenSearchBar(false)}
+      >
         <CloseIcon color="darkBlue" />
       </button>
     </form>

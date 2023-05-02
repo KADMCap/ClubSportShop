@@ -13,6 +13,8 @@ export const HeaderContext = createContext<{
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
   openFavoriteModal: boolean;
   setOpenFavoriteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  openSearchBar: boolean;
+  setOpenSearchBar: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   openSidebar: false,
   setOpenSidebar: () => null,
@@ -22,6 +24,8 @@ export const HeaderContext = createContext<{
   setOpenCart: () => null,
   openFavoriteModal: false,
   setOpenFavoriteModal: () => null,
+  openSearchBar: false,
+  setOpenSearchBar: () => null,
 });
 
 export const HeaderProvider: FC<Props> = ({ children }) => {
@@ -29,6 +33,7 @@ export const HeaderProvider: FC<Props> = ({ children }) => {
   const [openNotification, setOpenNotification] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openFavoriteModal, setOpenFavoriteModal] = useState(false);
+  const [openSearchBar, setOpenSearchBar] = useState(false);
 
   const value = {
     openSidebar,
@@ -39,6 +44,8 @@ export const HeaderProvider: FC<Props> = ({ children }) => {
     setOpenCart,
     openFavoriteModal,
     setOpenFavoriteModal,
+    openSearchBar,
+    setOpenSearchBar,
   };
 
   return (
