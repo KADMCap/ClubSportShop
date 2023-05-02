@@ -1,4 +1,9 @@
-import { NotificationIcon, HeartIcon, CartIcon } from "@/components/Icons";
+import {
+  NotificationIcon,
+  HeartIcon,
+  CartIcon,
+  SearchIcon,
+} from "@/components/Icons";
 import { HeaderContext } from "@/context/HeaderContext";
 import { useCartState } from "@/hooks/useCartState";
 import React, { useContext } from "react";
@@ -8,7 +13,13 @@ export const RightSide = () => {
     useContext(HeaderContext);
   const cartState = useCartState();
   return (
-    <div className="flex items-center w-[100px] justify-between">
+    <div className="flex items-center w-[100px] justify-between gap-2">
+      <button
+        className="bg-transparent outline-none md:hidden"
+        onClick={() => setOpenNotification((prev) => !prev)}
+      >
+        <SearchIcon />
+      </button>
       <button
         className="bg-transparent outline-none"
         onClick={() => setOpenNotification((prev) => !prev)}
