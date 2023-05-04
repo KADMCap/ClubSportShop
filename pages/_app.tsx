@@ -10,6 +10,8 @@ import { Inter, Russo_One } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,10 +50,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <ThemeProvider>
-        <HeaderProvider>
-          <CartProvider>
-            <FilterProvider>
+      <HeaderProvider>
+        <CartProvider>
+          <FilterProvider>
+            <Provider store={store}>
               <QueryClientProvider client={client}>
                 <Head>
                   <title>
@@ -74,10 +76,10 @@ export default function App({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </main>
               </QueryClientProvider>
-            </FilterProvider>
-          </CartProvider>
-        </HeaderProvider>
-      </ThemeProvider>
+            </Provider>
+          </FilterProvider>
+        </CartProvider>
+      </HeaderProvider>
     </ApolloProvider>
   );
 }
