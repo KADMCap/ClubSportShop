@@ -1,22 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import React from "react";
+import { RootState } from "../store";
 
 type filterState = {
   sport: string[];
-  setSport: React.Dispatch<React.SetStateAction<string[]>>;
   priceValue: number[];
-  setPriceValue: React.Dispatch<React.SetStateAction<number[]>>;
   category: string[];
-  setCategory: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const initialState: filterState = {
   sport: ["Football", "Basketball", "Volleyball", "Tennis", "Running"],
-  setSport: () => null,
   priceValue: [0, 1000],
-  setPriceValue: () => null,
   category: ["Shirts", "Shorts", "Shoes", "Other"],
-  setCategory: () => null,
 };
 
 export const filterSlice = createSlice({
@@ -36,5 +31,8 @@ export const filterSlice = createSlice({
 });
 
 export const { setSport, setPrice, setCategory } = filterSlice.actions;
+
+export const selectedSports = (state: RootState) => state.filter.sport;
+export const selectedCategory = (state: RootState) => state.filter.category;
 
 export default filterSlice.reducer;

@@ -5,12 +5,10 @@ type Theme = "light" | "dark";
 
 type themeState = {
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
 };
 
 const initialState: themeState = {
   theme: "light",
-  setTheme: () => null,
 };
 
 export const themeSlice = createSlice({

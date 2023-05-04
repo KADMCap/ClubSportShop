@@ -52,32 +52,30 @@ export default function App({ Component, pageProps }: AppProps) {
     <ApolloProvider client={apolloClient}>
       <HeaderProvider>
         <CartProvider>
-          <FilterProvider>
-            <Provider store={store}>
-              <QueryClientProvider client={client}>
-                <Head>
-                  <title>
-                    {router.route !== "/" ? titleString() : ""}
-                    Club Sport Shop
-                  </title>
-                  <meta
-                    name="description"
-                    content="Club Sport Shop - where you can find your sports clothes"
-                  />
-                  <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                  />
-                  <link rel="icon" href="/favicon.ico" />
-                </Head>
-                <main
-                  className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
-                >
-                  <Component {...pageProps} />
-                </main>
-              </QueryClientProvider>
-            </Provider>
-          </FilterProvider>
+          <Provider store={store}>
+            <QueryClientProvider client={client}>
+              <Head>
+                <title>
+                  {router.route !== "/" ? titleString() : ""}
+                  Club Sport Shop
+                </title>
+                <meta
+                  name="description"
+                  content="Club Sport Shop - where you can find your sports clothes"
+                />
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
+              </Head>
+              <main
+                className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
+              >
+                <Component {...pageProps} />
+              </main>
+            </QueryClientProvider>
+          </Provider>
         </CartProvider>
       </HeaderProvider>
     </ApolloProvider>

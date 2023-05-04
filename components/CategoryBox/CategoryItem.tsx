@@ -1,5 +1,5 @@
-import { FilterContext } from "@/context/FilterContext";
-import { useContext } from "react";
+import { selectedCategory, setCategory } from "@/redux/slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 interface Props {
   title: "Shirts" | "Shorts" | "Shoes" | "Other";
@@ -7,14 +7,15 @@ interface Props {
 }
 
 export const CategotyItem = ({ title, icon }: Props) => {
-  const { category, setCategory } = useContext(FilterContext);
+  const category = useAppSelector(selectedCategory);
+  const dispatch = useAppDispatch();
 
   const selectCategory = () => {
     // click double on the same category can active and inactive this category (if close inactive then all categories will show up in products)
     if (category.length === 1 && category[0] === title) {
-      setCategory(["Shirts", "Shorts", "Shoes", "Other"]);
+      dispatch(setCategory(["Shirts", "Shorts", "Shoes", "Other"]));
     } else {
-      setCategory([title]);
+      dispatch(setCategory([title]));
     }
   };
 
