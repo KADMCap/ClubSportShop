@@ -62,7 +62,10 @@ export const FavoriteModal = () => {
                         id={product.id.toString()}
                         title={product.title}
                         image={product.image}
-                        price={product.price}
+                        slug={"test"}
+                        sale={false}
+                        sizes={["xl"]}
+                        prices={[{ date: "12-12-2022", price: 129 }]}
                       />
                     );
                   })}

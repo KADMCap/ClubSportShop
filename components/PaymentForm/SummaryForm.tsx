@@ -4,9 +4,11 @@ import { useCartState } from "@/hooks/useCartState";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
 import { Button, LinkButton } from "../Buttons/Button";
+import { useAppSelector } from "@/redux/store";
+import { cartItems } from "@/redux/slices/cartSlice";
 
 export const SummaryForm = () => {
-  const cartState = useCartState();
+  const cart = useAppSelector(cartItems);
 
   const handleConfirm = () => {};
   return (
@@ -28,7 +30,7 @@ export const SummaryForm = () => {
         </div>
       </section>
       <section className="flex flex-col gap-1">
-        {cartState.items.map((item, index) => (
+        {cart.map((item, index) => (
           <CartItem
             key={`${item.title}_${index}`}
             index={index + 1}

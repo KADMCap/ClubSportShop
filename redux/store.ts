@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "./slices/filterSlice";
 import themeReducer from "./slices/themeSlice";
+import cartReducer from "./slices/cartSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
     theme: themeReducer,
+    cart: cartReducer,
   },
 });
 
