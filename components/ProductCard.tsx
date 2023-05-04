@@ -81,17 +81,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <s>{sale && "$" + prices[1]?.price.toFixed(2)}</s>
           </span>
         </div>
-        <div className="grid flex-1 grid-cols-4 gap-2">
-          {sizes?.map((size) => (
-            <Button
-              key={size}
-              onClick={() => onSelectSize(size)}
-              size="small"
-              variant={`${selectedSize === size ? "primary" : "secondary"}`}
-            >
-              <span className="text-sm font-bold text-center">{size}</span>
-            </Button>
-          ))}
+        <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
+          <label className="text-xs text-primaryGray">Size</label>
+          <select className="text-sm font-semibold outline-none">
+            {sizes?.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">
