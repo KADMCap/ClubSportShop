@@ -1,9 +1,15 @@
 import { CloseIcon, SearchIcon } from "@/components/Icons";
 import { HeaderContext } from "@/context/HeaderContext";
+import { searchBarIsOpen, setOpenSearchBar } from "@/redux/slices/headerSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import React, { useContext } from "react";
 
 export const SearchMobile = () => {
-  const { openSearchBar, setOpenSearchBar } = useContext(HeaderContext);
+  const openSearchBar = useAppSelector(searchBarIsOpen);
+  const dispatch = useAppDispatch();
+  const toggleOpenSearchBar = () => {
+    dispatch(setOpenSearchBar());
+  };
   return (
     <form
       className={`absolute sm:hidden top-0 left-0 flex items-center w-full px-2 py-1 bg-primaryLight grow ${
@@ -49,7 +55,7 @@ export const SearchMobile = () => {
       </div>
       <button
         className="bg-transparent outline-none md:hidden"
-        onClick={() => setOpenSearchBar(false)}
+        onClick={toggleOpenSearchBar}
       >
         <CloseIcon color="darkBlue" />
       </button>

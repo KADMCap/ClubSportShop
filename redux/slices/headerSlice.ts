@@ -6,6 +6,7 @@ type headerState = {
   openNotification: boolean;
   openCart: boolean;
   openFavoriteModal: boolean;
+  openSearchBar: boolean;
 };
 
 const initialState: headerState = {
@@ -13,6 +14,7 @@ const initialState: headerState = {
   openNotification: false,
   openCart: false,
   openFavoriteModal: false,
+  openSearchBar: false,
 };
 
 const headerSlice = createSlice({
@@ -35,6 +37,9 @@ const headerSlice = createSlice({
     ) => {
       state.openFavoriteModal = !state.openFavoriteModal;
     },
+    setOpenSearchBar: (state, action: PayloadAction<string | undefined>) => {
+      state.openSearchBar = !state.openSearchBar;
+    },
   },
 });
 
@@ -43,6 +48,7 @@ export const {
   setOpenFavoriteModal,
   setOpenNotification,
   setOpenSidebar,
+  setOpenSearchBar,
 } = headerSlice.actions;
 
 export const sidebarIsOpen = (state: RootState) => state.header.openSidebar;
@@ -51,5 +57,6 @@ export const favoriteModalIsOpen = (state: RootState) =>
   state.header.openFavoriteModal;
 export const notificationIsOpen = (state: RootState) =>
   state.header.openNotification;
+export const searchBarIsOpen = (state: RootState) => state.header.openSearchBar;
 
 export default headerSlice.reducer;

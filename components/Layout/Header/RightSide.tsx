@@ -30,7 +30,7 @@ export const RightSide = () => {
     dispatch(setOpenCart());
   };
   const toggleOpenSearchBar = () => {
-    dispatch(setOpenSearchBar);
+    dispatch(setOpenSearchBar());
   };
 
   return (
