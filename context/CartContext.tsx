@@ -23,7 +23,6 @@ const getCartItemsFromStorage = () => {
     return;
   }
   try {
-    console.log(itemsFromLocalStorage);
     const items = JSON.parse(itemsFromLocalStorage);
     return items;
   } catch (error) {
@@ -41,14 +40,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setCartItems(getCartItemsFromStorage());
-    console.log("setItem", { cartItems });
   }, []);
 
   useEffect(() => {
     if (cartItems === undefined) {
       return;
     }
-    console.log({ cartItems });
     setCartItemsInStorage(cartItems);
   }, [cartItems]);
 

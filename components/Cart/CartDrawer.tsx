@@ -1,14 +1,14 @@
-import { HeaderContext } from "@/context/HeaderContext";
 import { cartItems } from "@/redux/slices/cartSlice";
 import { useAppSelector } from "@/redux/store";
-import { useContext } from "react";
 import { LinkButton } from "../Buttons/Button";
 import { CartItem } from "./CartItem";
 import { CouponInput } from "./CouponInput";
 import { SummaryBox } from "./SummaryBox";
+import { cartIsOpen } from "@/redux/slices/headerSlice";
 
 export const CartDrawer = () => {
-  const { openCart } = useContext(HeaderContext);
+  // const { openCart } = useContext(HeaderContext);
+  const openCart = useAppSelector(cartIsOpen);
   const cart = useAppSelector(cartItems);
 
   return (

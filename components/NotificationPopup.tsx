@@ -1,9 +1,23 @@
 import { HeaderContext } from "@/context/HeaderContext";
+import {
+  notificationIsOpen,
+  setOpenNotification,
+} from "@/redux/slices/headerSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 export const NotificationPopup = () => {
-  const { openNotification, setOpenNotification } = useContext(HeaderContext);
+  const openNotification = useAppSelector(notificationIsOpen);
+  const dispatch = useAppDispatch();
+
+  const handleViewAllNotificationsClick = (
+    event: React.MouseEvent<HTMLElement>
+  ) => {
+    event.preventDefault();
+    dispatch(setOpenNotification());
+  };
+
   return (
     <div
       className={`${
@@ -36,7 +50,7 @@ export const NotificationPopup = () => {
         </Link>
       </ul>
       <div className="px-4 py-2">
-        <Link href="/" onClick={() => setOpenNotification(false)}>
+        <Link href="/" onClick={handleViewAllNotificationsClick}>
           <p className="text-sm text-primaryBlue hover:text-darkBlue">
             View all notifications
           </p>

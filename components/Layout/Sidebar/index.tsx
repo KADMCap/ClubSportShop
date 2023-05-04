@@ -14,9 +14,12 @@ import { AccordionLi } from "./NavLinks/AccordionLi";
 import { Li } from "./NavLinks/Li";
 import { ThemeToggle } from "./ThemeToggle";
 import { UserBox } from "./UserBox";
+import { sidebarIsOpen } from "@/redux/slices/headerSlice";
+import { useAppSelector } from "@/redux/store";
 
 export const Sidebar = () => {
-  const { openSidebar } = useContext(HeaderContext);
+  const openSidebar = useAppSelector(sidebarIsOpen);
+
   return (
     <nav
       className={`bg-primary justify-between flex flex-col p-4 w-full h-[calc(100vh_-_64px)]  fixed t-10 transition-transform duration-300 bg-primaryLight dark:bg-primaryDark ${

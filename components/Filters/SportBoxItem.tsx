@@ -10,7 +10,6 @@ interface Props {
 export const SportBoxItem = ({ title, icon }: Props) => {
   const sport = useAppSelector(selectedSports);
   const dispatch = useAppDispatch();
-  console.log("sport", sport);
 
   const selectSport = () => {
     if (sport.length === 1 && sport[0] === title) {
