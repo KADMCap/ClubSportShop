@@ -5,7 +5,6 @@ import ProductCard from "@/components/ProductCard";
 import { CartContext } from "@/context/CartContext";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
-import { Listbox } from "@headlessui/react";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import { useContext, useState } from "react";
@@ -179,15 +178,14 @@ const ProductPage = ({
   }
 
   const product = data?.product;
-  const quantityToChoose = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   console.log({ product });
 
   return (
     <Layout>
       <div className="flex-col w-full">
-        <div className="bg-white rounded-xl flex md:flex-row flex-col p-6 dark:bg-primaryDark h-fit">
-          <div className="flex flex-1 flex-col">
-            <div className="flex w-full bg-white justify-center mb-2">
+        <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
+          <div className="flex flex-col flex-1">
+            <div className="flex justify-center w-full mb-2 bg-white">
               <Image
                 width={500}
                 height={500}
@@ -265,28 +263,23 @@ const ProductPage = ({
                 </Button>
               ))}
             </div>
-            <div>
-              <div>
-                <span>Quantity: </span>
-                <Listbox
-                  value={selectedQuantity}
-                  onChange={setSelectedQuantity}
+            <div className="flex flex-row gap-2 ">
+              <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
+                <label className="text-xs text-primaryGray">Qty</label>
+                <select
+                  className="text-sm font-semibold outline-none"
+                  onChange={(e) => setSelectedQuantity(+e.target.value)}
                 >
-                  <Listbox.Button>{selectedQuantity}</Listbox.Button>
-                  <Listbox.Options>
-                    {quantityToChoose.map((quantity) => (
-                      <Listbox.Option key={quantity} value={quantity}>
-                        {quantity}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Listbox>
+                  {Array.from({ length: 10 }, (v, k) => k + 1).map((qty) => (
+                    <option key={qty} value={qty}>
+                      {qty}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div>
-                <Button onClick={handleAddToCart}>
-                  <p className="text-sm font-bold">ADD TO CART</p>
-                </Button>
-              </div>
+              <Button onClick={handleAddToCart}>
+                <p className="text-sm font-bold">ADD TO CART</p>
+              </Button>
             </div>
           </div>
         </div>
@@ -294,7 +287,7 @@ const ProductPage = ({
           <div className="m-6">
             <span className="font-bold">Similar Products</span>
           </div>
-          <div className="flex flex-row dark:bg-primaryDark h-fit gap-4  rounded-xl">
+          <div className="flex flex-row gap-4 dark:bg-primaryDark h-fit rounded-xl">
             <ProductCard
               id={product.id}
               title={product.title}
@@ -303,6 +296,7 @@ const ProductPage = ({
               prices={product.prices}
               sale={product.sale}
               sizes={product.sizes}
+              category={product.category}
             />
             <ProductCard
               id={product.id}
@@ -312,6 +306,7 @@ const ProductPage = ({
               prices={product.prices}
               sale={product.sale}
               sizes={product.sizes}
+              category={product.category}
             />
           </div>
         </div>
@@ -322,7 +317,7 @@ const ProductPage = ({
               ADD OPINION
             </Button>
           </div>
-          <div className=" flex flex-col p-6 gap-4 dark:bg-primaryDark h-fit  rounded-xl">
+          <div className="flex flex-col gap-4 p-6 dark:bg-primaryDark h-fit rounded-xl">
             {opinions.map((opinion) => (
               <Opinion
                 key={opinion.id}

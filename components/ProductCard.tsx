@@ -14,6 +14,7 @@ type ProductCardProps = {
   prices: Prices[];
   sale: boolean;
   sizes: string[];
+  category: string;
 };
 
 type Prices = {
@@ -29,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   prices,
   sale,
   sizes,
+  category,
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
@@ -61,8 +63,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const onSelectSize = (size: string) => {
+    console.log({ size });
     setSelectedSize(size);
   };
+
+  const sizeOptions =
+    category === "Shoes"
+      ? sizes?.map((size) => (
+          <option key={size} value={size.substring(1)}>
+            {size.substring(1)}
+          </option>
+        ))
+      : sizes?.map((size) => (
+          <option key={size} value={size}>
+            {size}
+          </option>
+        ));
 
   return (
     <div className="relative flex flex-col justify-between gap-4 p-4 bg-white rounded-xl dark:bg-primaryDark">
@@ -87,24 +103,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
           }}
         />
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-center flex-1 gap-2">
           <span className="font-semibold">${price?.toFixed(2)}</span>
           <span className="text-sm text-primaryGray">
             <s>{sale && "$" + prices[1]?.price.toFixed(2)}</s>
           </span>
         </div>
-        <div className="grid flex-1 grid-cols-4 gap-2">
-          {sizes?.map((size) => (
-            <Button
-              key={size}
-              onClick={() => onSelectSize(size)}
-              size="small"
-              variant={`${selectedSize === size ? "primary" : "secondary"}`}
-            >
-              <span className="text-sm font-bold text-center">{size}</span>
-            </Button>
-          ))}
+        <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
+          <label className="text-xs text-primaryGray">Size</label>
+          <select
+            className="text-sm font-semibold outline-none"
+            onChange={(e) => onSelectSize(e.target.value)}
+          >
+            {sizeOptions}
+          </select>
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-2">

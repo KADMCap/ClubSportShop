@@ -110,6 +110,7 @@ export default function ProductsPage() {
                 prices={product.prices}
                 sale={product.sale}
                 sizes={product.sizes}
+                category={product.category}
               />
             ))}
           </div>

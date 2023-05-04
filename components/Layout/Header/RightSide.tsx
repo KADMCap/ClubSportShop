@@ -1,9 +1,15 @@
-import { CartIcon, HeartIcon, NotificationIcon } from "@/components/Icons";
+import {
+  CartIcon,
+  HeartIcon,
+  NotificationIcon,
+  SearchIcon,
+} from "@/components/Icons";
 import { cartItems } from "@/redux/slices/cartSlice";
 import {
   setOpenCart,
   setOpenFavoriteModal,
   setOpenNotification,
+  setOpenSearchBar,
 } from "@/redux/slices/headerSlice";
 import { useAppDispatch } from "@/redux/store";
 
@@ -21,12 +27,20 @@ export const RightSide = () => {
     dispatch(setOpenFavoriteModal());
   };
   const toggleOpenCart = () => {
-    console.log("toggleopen");
     dispatch(setOpenCart());
+  };
+  const toggleOpenSearchBar = () => {
+    dispatch(setOpenSearchBar);
   };
 
   return (
-    <div className="flex items-center w-[100px] justify-between">
+    <div className="flex items-center justify-end w-full gap-2">
+      <button
+        className="bg-transparent outline-none sm:hidden"
+        onClick={toggleOpenSearchBar}
+      >
+        <SearchIcon />
+      </button>
       <button
         className="bg-transparent outline-none"
         onClick={toggleNotification}
