@@ -14,10 +14,6 @@ import {
 import { useAppDispatch } from "@/redux/store";
 
 export const RightSide = () => {
-  // const { setOpenNotification, setOpenCart, setOpenFavoriteModal } =
-  //   useContext(HeaderContext);
-  // const cartState = useCartState();
-
   const dispatch = useAppDispatch();
 
   const toggleNotification = () => {

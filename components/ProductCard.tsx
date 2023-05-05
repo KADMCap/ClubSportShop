@@ -1,10 +1,9 @@
+import { addItemToCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button, LinkButton } from "./Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "./Icons";
-import { useCartState } from "@/hooks/useCartState";
-import { useAppDispatch } from "@/redux/store";
-import { addItemToCart } from "@/redux/slices/cartSlice";
 
 type ProductCardProps = {
   id: string;
@@ -34,7 +33,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const cartState = useCartState();
   const price = prices[0]?.price;
   const dispatch = useAppDispatch();
 
@@ -52,14 +50,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         count: 1,
       })
     );
-
-    // cartState.addItemToCart({
-    //   id,
-    //   image,
-    //   price,
-    //   title,
-    //   count: 1,
-    // });
   };
 
   const onSelectSize = (size: string) => {

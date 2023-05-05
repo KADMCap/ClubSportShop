@@ -1,8 +1,6 @@
 import { CloseIcon, SearchIcon } from "@/components/Icons";
-import { HeaderContext } from "@/context/HeaderContext";
 import { searchBarIsOpen, setOpenSearchBar } from "@/redux/slices/headerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import React, { useContext } from "react";
 
 export const SearchMobile = () => {
   const openSearchBar = useAppSelector(searchBarIsOpen);

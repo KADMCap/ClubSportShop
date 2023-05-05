@@ -1,4 +1,3 @@
-import { useCartState } from "@/hooks/useCartState";
 import { addCountToItem, removeItemFromCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
@@ -24,7 +23,6 @@ export const CartItem = ({
   price,
   count,
 }: Props) => {
-  const cartState = useCartState();
   const dispatch = useAppDispatch();
 
   return (

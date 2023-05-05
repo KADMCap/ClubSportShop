@@ -1,11 +1,9 @@
-import React from "react";
+import { cartItems } from "@/redux/slices/cartSlice";
+import { useAppSelector } from "@/redux/store";
+import { Button, LinkButton } from "../Buttons/Button";
 import { CartItem } from "../Cart/CartItem";
-import { useCartState } from "@/hooks/useCartState";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
-import { Button, LinkButton } from "../Buttons/Button";
-import { useAppSelector } from "@/redux/store";
-import { cartItems } from "@/redux/slices/cartSlice";
 
 export const SummaryForm = () => {
   const cart = useAppSelector(cartItems);
