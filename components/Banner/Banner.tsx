@@ -4,6 +4,35 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { Slide } from "./Slide";
+
+const slides = [
+  {
+    title: "Bike’s season started now!",
+    description: "Check our new items for your bike adventures",
+    info: "",
+    imgSrc:
+      "https://cdn.shopify.com/s/files/1/0082/4128/3143/files/storm-transparent-silverback-bikes_1.png?v=1669803222",
+    link: "/",
+  },
+  {
+    title: "Champions League Final is comming!",
+    description: "Get your tickets for the best game in this season",
+    info: "Sales is open until 20.05.2023",
+    imgSrc:
+      "https://w7.pngwing.com/pngs/380/500/png-transparent-soccer-field-arena-lawn-arena-lawn-grassland.png",
+    link: "/",
+  },
+  {
+    title: "New Real Madrid colletion!",
+    description:
+      "For truly Real Madrid fans, the new collection is available now",
+    info: "",
+    imgSrc:
+      "https://www.realmadrid.com/cs/Satellite?blobcol=urldata&blobheader=image%2Fjpeg&blobkey=id&blobtable=MungoBlobs&blobwhere=1203423916498&ssbinary=true",
+    link: "/",
+  },
+];
 
 export const Banner = () => {
   return (
@@ -23,18 +52,17 @@ export const Banner = () => {
         }}
         modules={[Autoplay, EffectFade, Pagination]}
       >
-        <SwiperSlide className="max-h-[200px] w-full overflow-hidden">
-          <img
-            className="object-fill"
-            src="https://swiperjs.com/demos/images/nature-1.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="max-h-[200px] w-full overflow-hidden">
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-        </SwiperSlide>
-        <SwiperSlide className="max-h-[200px] w-full overflow-hidden">
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </SwiperSlide>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <Slide
+              title={slide.title}
+              description={slide.description}
+              info={slide.info}
+              imgSrc={slide.imgSrc}
+              link={slide.link}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
