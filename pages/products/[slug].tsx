@@ -12,6 +12,8 @@ import ReactStars from "react-stars";
 
 import opinions from "../../mocks/opinions.json";
 import { Opinion } from "@/components/Opinion/Opinion";
+import { useAppDispatch } from "@/redux/store";
+import { addItemToCart } from "@/redux/slices/cartSlice";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -142,6 +144,7 @@ const ProductPage = ({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+  const dispatch = useAppDispatch();
 
   const cartCtx = useContext(CartContext);
 
@@ -157,13 +160,15 @@ const ProductPage = ({
   };
 
   const handleAddToCart = () => {
-    cartCtx?.addItemToCart({
-      id: product.id,
-      price: product.prices[0].price,
-      title: product.title,
-      image: product.images[0].image.url,
-      count: selectedQuantity,
-    });
+    dispatch(
+      addItemToCart({
+        id: product.id,
+        price: product.prices[0].price,
+        title: product.title,
+        image: product.images[0].image.url,
+        count: selectedQuantity,
+      })
+    );
   };
   console.log(opinions);
 

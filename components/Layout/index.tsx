@@ -6,13 +6,16 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { CartDrawer } from "../Cart/CartDrawer";
 import { FavoriteModal } from "../FavoriteModal";
+import { useAppSelector } from "@/redux/store";
+import { selectedTheme } from "@/redux/slices/themeSlice";
 
 interface Props {
   children: React.ReactNode;
 }
 
 export const Layout: React.FC<Props> = ({ children }) => {
-  const { theme } = useContext(ThemeContext);
+  // const { theme } = useContext(ThemeContext);
+  const theme = useAppSelector(selectedTheme);
   return (
     <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
       <Header />

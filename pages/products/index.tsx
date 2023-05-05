@@ -8,6 +8,8 @@ import ReactPaginate from "react-paginate";
 import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { gql, useQuery } from "@apollo/client";
 import { FilterContext } from "@/context/FilterContext";
+import { useAppSelector } from "@/redux/store";
+import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
 
 const query = gql`
   query GetAllProducts(
@@ -55,7 +57,8 @@ const query = gql`
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { category, sport } = useContext(FilterContext);
+  const sport = useAppSelector(selectedSports);
+  const category = useAppSelector(selectedCategory);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { loading, error, data } = useQuery(query, {
     variables: {

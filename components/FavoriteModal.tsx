@@ -4,21 +4,30 @@ import { HeaderContext } from "@/context/HeaderContext";
 import ProductCard from "./ProductCard";
 import { useQuery } from "react-query";
 import { CloseIcon } from "./Icons";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import {
+  favoriteModalIsOpen,
+  setOpenFavoriteModal,
+} from "@/redux/slices/headerSlice";
 
 export const FavoriteModal = () => {
-  const { openFavoriteModal, setOpenFavoriteModal } = useContext(HeaderContext);
+  // const { openFavoriteModal, setOpenFavoriteModal } = useContext(HeaderContext);
+
+  const dispatch = useAppDispatch();
+  const openFavoriteModal = useAppSelector(favoriteModalIsOpen);
   const { data } = useQuery(["favProducts"], () =>
     fetch(`https://naszsklep-api.vercel.app/api/products`).then((res) =>
       res.json()
     )
   );
+
+  const handleDialogClose = () => {
+    dispatch(setOpenFavoriteModal());
+  };
+
   return (
     <Transition appear show={openFavoriteModal} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={() => setOpenFavoriteModal(false)}
-      >
+      <Dialog as="div" className="relative z-10" onClose={handleDialogClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -49,7 +58,7 @@ export const FavoriteModal = () => {
                   </p>
                   <button
                     className="bg-transparent outline-none"
-                    onClick={() => setOpenFavoriteModal(false)}
+                    onClick={handleDialogClose}
                   >
                     <CloseIcon />
                   </button>
@@ -62,7 +71,10 @@ export const FavoriteModal = () => {
                         id={product.id.toString()}
                         title={product.title}
                         image={product.image}
-                        price={product.price}
+                        slug={"test"}
+                        sale={false}
+                        sizes={["xl"]}
+                        prices={[{ date: "12-12-2022", price: 129 }]}
                       />
                     );
                   })}
@@ -72,7 +84,7 @@ export const FavoriteModal = () => {
                   <button
                     type="button"
                     className="justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md  hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={() => setOpenFavoriteModal(false)}
+                    onClick={handleDialogClose}
                   >
                     Close
                   </button>

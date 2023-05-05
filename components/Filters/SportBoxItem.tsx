@@ -1,5 +1,6 @@
-import { FilterContext } from "@/context/FilterContext";
-import React, { useContext } from "react";
+import { selectedSports, setSport } from "@/redux/slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import React from "react";
 
 interface Props {
   title: string;
@@ -7,16 +8,19 @@ interface Props {
 }
 
 export const SportBoxItem = ({ title, icon }: Props) => {
-  const { sport, setSport } = useContext(FilterContext);
+  const sport = useAppSelector(selectedSports);
+  const dispatch = useAppDispatch();
 
   const selectSport = () => {
-    // click double on the same category can active and inactive this category (if close inactive then all categories will show up in products)
     if (sport.length === 1 && sport[0] === title) {
-      setSport(["Football", "Basketball", "Volleyball", "Tennis", "Running"]);
+      dispatch(
+        setSport(["Football", "Basketball", "Volleyball", "Tennis", "Running"])
+      );
     } else {
-      setSport([title]);
+      dispatch(setSport([title]));
     }
   };
+
   return (
     <button
       className={`flex flex-col items-center justify-between gap-2 py-2 rounded-md w-[72px] bg-primaryLight dark:bg-primaryDark ${

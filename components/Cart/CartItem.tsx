@@ -1,4 +1,5 @@
-import { useCartState } from "@/hooks/useCartState";
+import { addCountToItem, removeItemFromCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
 
 interface Props {
@@ -22,7 +23,7 @@ export const CartItem = ({
   price,
   count,
 }: Props) => {
-  const cartState = useCartState();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex flex-row items-center justify-between w-full">
@@ -44,11 +45,11 @@ export const CartItem = ({
         </div>
         <div className="flex flex-row gap-2 font-semibold">
           <div className="flex flex-row items-center gap-2 px-2 rounded-[4px] bg-primaryLight dark:bg-primaryDark">
-            <button onClick={() => cartState.removeItemFromCart(productId)}>
+            <button onClick={() => dispatch(removeItemFromCart(productId))}>
               -
             </button>
             <p>{count}</p>
-            <button onClick={() => cartState.addCountToItem(productId)}>
+            <button onClick={() => dispatch(addCountToItem(productId))}>
               +
             </button>
           </div>

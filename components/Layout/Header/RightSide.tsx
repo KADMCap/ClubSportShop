@@ -1,48 +1,58 @@
 import {
-  NotificationIcon,
-  HeartIcon,
   CartIcon,
+  HeartIcon,
+  NotificationIcon,
   SearchIcon,
 } from "@/components/Icons";
-import { HeaderContext } from "@/context/HeaderContext";
-import { useCartState } from "@/hooks/useCartState";
-import React, { useContext } from "react";
+import { cartItems } from "@/redux/slices/cartSlice";
+import {
+  setOpenCart,
+  setOpenFavoriteModal,
+  setOpenNotification,
+  setOpenSearchBar,
+} from "@/redux/slices/headerSlice";
+import { useAppDispatch } from "@/redux/store";
 
 export const RightSide = () => {
-  const {
-    setOpenNotification,
-    setOpenCart,
-    setOpenFavoriteModal,
-    setOpenSearchBar,
-  } = useContext(HeaderContext);
-  const cartState = useCartState();
+  const dispatch = useAppDispatch();
+
+  const toggleNotification = () => {
+    dispatch(setOpenNotification());
+  };
+  const toggleFavouriteModal = () => {
+    dispatch(setOpenFavoriteModal());
+  };
+  const toggleOpenCart = () => {
+    dispatch(setOpenCart());
+  };
+  const toggleOpenSearchBar = () => {
+    dispatch(setOpenSearchBar());
+  };
+
   return (
     <div className="flex items-center justify-end w-full gap-2">
       <button
         className="bg-transparent outline-none sm:hidden"
-        onClick={() => setOpenSearchBar(true)}
+        onClick={toggleOpenSearchBar}
       >
         <SearchIcon />
       </button>
       <button
         className="bg-transparent outline-none"
-        onClick={() => setOpenNotification((prev) => !prev)}
+        onClick={toggleNotification}
       >
         <NotificationIcon />
       </button>
       <button
         className="bg-transparent outline-none"
-        onClick={() => setOpenFavoriteModal((prev) => !prev)}
+        onClick={toggleFavouriteModal}
       >
         <HeartIcon />
       </button>
-      <button
-        className="relative bg-transparent outline-none z-2"
-        onClick={() => setOpenCart((prev) => !prev)}
-      >
+      <button className="bg-transparent outline-none" onClick={toggleOpenCart}>
         <CartIcon />
-        <div className="absolute w-4 h-4 text-sm text-white rounded-full -right-1 top-4 bg-primaryBlue">
-          {cartState.items.length}
+        <div className="absolute w-4 h-4 text-sm text-white rounded-full right-1 bottom-3 bg-primaryBlue">
+          {cartItems.length}
         </div>
       </button>
     </div>

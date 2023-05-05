@@ -1,16 +1,15 @@
-import { HeaderContext } from "@/context/HeaderContext";
-import { useContext } from "react";
+import { cartItems } from "@/redux/slices/cartSlice";
+import { useAppSelector } from "@/redux/store";
+import { LinkButton } from "../Buttons/Button";
 import { CartItem } from "./CartItem";
 import { CouponInput } from "./CouponInput";
 import { SummaryBox } from "./SummaryBox";
-import { Button, LinkButton } from "../Buttons/Button";
-import { CartContext } from "@/context/CartContext";
-import { useCartState } from "@/hooks/useCartState";
-import Link from "next/link";
+import { cartIsOpen } from "@/redux/slices/headerSlice";
 
 export const CartDrawer = () => {
-  const { openCart } = useContext(HeaderContext);
-  const cartState = useCartState();
+  // const { openCart } = useContext(HeaderContext);
+  const openCart = useAppSelector(cartIsOpen);
+  const cart = useAppSelector(cartItems);
 
   return (
     <aside
@@ -19,7 +18,7 @@ export const CartDrawer = () => {
       } `}
     >
       <div className="flex flex-col gap-1 overflow-y-auto">
-        {cartState.items.map((item, index) => (
+        {cart.map((item, index) => (
           <CartItem
             key={`${item.title}_${index}`}
             index={index + 1}

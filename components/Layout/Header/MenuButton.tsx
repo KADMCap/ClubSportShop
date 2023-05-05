@@ -1,22 +1,24 @@
 import { CloseIcon, MenuIcon } from "@/components/Icons";
 import { HeaderContext } from "@/context/HeaderContext";
+import { sidebarIsOpen, setOpenSidebar } from "@/redux/slices/headerSlice";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
 import React, { useContext } from "react";
 
 export const MenuButton = () => {
-  const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
-  return openSidebar ? (
+  const openSidebar = useAppSelector(sidebarIsOpen);
+  const dispatch = useAppDispatch();
+
+  console.log(openSidebar);
+
+  const handleToggleSidebarClick = () => {
+    dispatch(setOpenSidebar());
+  };
+  return (
     <button
       className="flex bg-transparent outline-none md:hidden"
-      onClick={() => setOpenSidebar(false)}
+      onClick={handleToggleSidebarClick}
     >
-      <CloseIcon />
-    </button>
-  ) : (
-    <button
-      className="flex bg-transparent outline-none md:hidden"
-      onClick={() => setOpenSidebar(true)}
-    >
-      <MenuIcon />
+      {openSidebar ? <CloseIcon /> : <MenuIcon />}
     </button>
   );
 };

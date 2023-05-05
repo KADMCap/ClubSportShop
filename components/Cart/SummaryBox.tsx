@@ -1,9 +1,10 @@
-import { useCartState } from "@/hooks/useCartState";
+import { cartItems } from "@/redux/slices/cartSlice";
+import { useAppSelector } from "@/redux/store";
 
 export const SummaryBox = () => {
-  const cartState = useCartState();
+  const cartState = useAppSelector(cartItems);
 
-  const price = cartState.items.reduce((acc, item) => {
+  const price = cartState.reduce((acc, item) => {
     acc += item.price * item.count;
     return acc;
   }, 0);
