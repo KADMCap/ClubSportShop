@@ -4,9 +4,11 @@ import { Button, LinkButton } from "../Buttons/Button";
 import { CartItem } from "../Cart/CartItem";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
+import { useCartCount } from "@/hooks/useCartCount";
 
 export const SummaryForm = () => {
   const cart = useAppSelector(cartItems);
+  const { cartCount, totalPrice } = useCartCount();
 
   const handleConfirm = () => {};
   return (
@@ -20,10 +22,11 @@ export const SummaryForm = () => {
         </div>
         <div className="flex flex-row gap-2">
           <p>
-            Items: <span className="font-semibold">3</span>
+            Items: <span className="font-semibold">{cartCount}</span>
           </p>
           <p>
-            Total Price: <span className="font-semibold">$174.00</span>
+            Total Price:{" "}
+            <span className="font-semibold">${totalPrice.toFixed(2)}</span>
           </p>
         </div>
       </section>

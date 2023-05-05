@@ -1,22 +1,24 @@
-import { FilterContext } from "@/context/FilterContext";
+import { selectedPriceRange, setPriceRange } from "@/redux/slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Slider from "@mui/material/Slider";
-import { useContext } from "react";
 
 export const PriceRange = () => {
-  const { priceValue, setPriceValue } = useContext(FilterContext);
+  const priceRange = useAppSelector(selectedPriceRange);
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setPriceValue(newValue as number[]);
+    dispatch(setPriceRange(newValue as number[]));
+    //setPriceValue(newValue as number[]);
   };
 
   return (
     <div className="flex flex-row items-center justify-start w-full gap-2 lg:justify-end">
       <p className="font-semibold w-[100px] lg:w-auto p-0 m-0">
-        {priceValue[0]}-{priceValue[1]}$
+        {priceRange[0]}-{priceRange[1]}$
       </p>
       <div className="flex-1 w-full max-w-[250px]">
         <Slider
-          value={priceValue}
+          value={priceRange}
           onChange={handleChange}
           sx={{
             height: 28,

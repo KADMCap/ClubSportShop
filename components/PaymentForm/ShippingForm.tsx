@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./Input";
 import addresses from "@/mocks/shippingAddresses.json";
+import { useCartCount } from "@/hooks/useCartCount";
 
 const schema = yup
   .object({
@@ -31,6 +32,7 @@ export const ShippingForm = () => {
   });
   const userId = "123"; //temp for finding user address
   const onSubmit = (data: FormData) => console.log(data);
+  const { cartCount, totalPrice } = useCartCount();
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
@@ -62,10 +64,11 @@ export const ShippingForm = () => {
         </div>
         <div className="flex flex-row gap-2">
           <p>
-            Items: <span className="font-semibold">3</span>
+            Items: <span className="font-semibold">{cartCount}</span>
           </p>
           <p>
-            Total Price: <span className="font-semibold">$174.00</span>
+            Total Price:{" "}
+            <span className="font-semibold">${totalPrice.toFixed(2)}</span>
           </p>
         </div>
       </section>

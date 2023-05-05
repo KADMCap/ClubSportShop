@@ -146,8 +146,6 @@ const ProductPage = ({
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const dispatch = useAppDispatch();
 
-  const cartCtx = useContext(CartContext);
-
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
   };
@@ -267,7 +265,7 @@ const ProductPage = ({
               <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
                 <label className="text-xs text-primaryGray">Qty</label>
                 <select
-                  className="text-sm font-semibold outline-none"
+                  className="text-sm font-semibold outline-none dark:bg-primaryDark"
                   onChange={(e) => setSelectedQuantity(+e.target.value)}
                 >
                   {Array.from({ length: 10 }, (v, k) => k + 1).map((qty) => (
