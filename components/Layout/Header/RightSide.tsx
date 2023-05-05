@@ -4,6 +4,7 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@/components/Icons";
+import { useCartCount } from "@/hooks/useCartCount";
 import { cartItems } from "@/redux/slices/cartSlice";
 import {
   setOpenCart,
@@ -15,6 +16,7 @@ import { useAppDispatch } from "@/redux/store";
 
 export const RightSide = () => {
   const dispatch = useAppDispatch();
+  const { cartCount } = useCartCount();
 
   const toggleNotification = () => {
     dispatch(setOpenNotification());
@@ -52,7 +54,7 @@ export const RightSide = () => {
       <button className="bg-transparent outline-none" onClick={toggleOpenCart}>
         <CartIcon />
         <div className="absolute w-4 h-4 text-sm text-white rounded-full right-1 bottom-3 bg-primaryBlue">
-          {cartItems.length}
+          {cartCount}
         </div>
       </button>
     </div>
