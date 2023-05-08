@@ -103,7 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
           <label className="text-xs text-primaryGray">Size</label>
           <select
-            className="text-sm font-semibold outline-none dark:bg-primaryDark"
+            className="flex flex-row items-center justify-center text-sm font-semibold outline-none dark:bg-primaryDark"
             onChange={(e) => onSelectSize(e.target.value)}
           >
             {sizeOptions}
