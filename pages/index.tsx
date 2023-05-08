@@ -6,7 +6,7 @@ import { gql } from "@apollo/client";
 import { InferGetServerSidePropsType } from "next";
 
 export async function getServerSideProps() {
-  const { data } = await apolloClient.query({
+  const specialOffers = await apolloClient.query({
     query: gql`
       query GetSpecialOffersProducts {
         products(first: 8, where: { sale: true }) {
@@ -38,11 +38,45 @@ export async function getServerSideProps() {
     `,
   });
 
-  return { props: { data } };
+  const popular = await apolloClient.query({
+    query: gql`
+      query GetProductByTags {
+        products(orderBy: bought_DESC, where: { bought_gt: 0 }) {
+          createdAt
+          id
+          sale
+          slug
+          title
+          description
+          sport
+          category
+          tags
+          sizes
+          prices {
+            id
+            price
+            date
+          }
+          images {
+            image {
+              id
+              url
+            }
+            alt
+          }
+          bought
+          rating
+        }
+      }
+    `,
+  });
+
+  return { props: { special: specialOffers.data, popular: popular.data } };
 }
 
 export default function Home({
-  data,
+  special,
+  popular,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
@@ -53,7 +87,7 @@ export default function Home({
             <p className="font-semibold text-md">Special offers</p>
             {/* <div className="grid grid-flow-row grid-rows-1 gap-2 overflow-x-scroll auto-cols-auto"> */}
             <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px]">
-              {data?.products.map((product: any) => (
+              {special?.products.map((product: any) => (
                 <div key={product.id} className="min-w-[268px] py-2">
                   <ProductCard
                     id={product.id.toString()}
@@ -73,7 +107,7 @@ export default function Home({
             <p className="font-semibold text-md">Trending</p>
             {/* <div className="grid grid-flow-row grid-rows-1 gap-2 overflow-x-scroll auto-cols-auto"> */}
             <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px]">
-              {data?.products.map((product: any) => (
+              {popular?.products.map((product: any) => (
                 <div key={product.id} className="min-w-[268px] py-2">
                   <ProductCard
                     id={product.id.toString()}
