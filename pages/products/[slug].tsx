@@ -2,18 +2,17 @@ import { Button } from "@/components/Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import { CartContext } from "@/context/CartContext";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ReactStars from "react-stars";
 
-import opinions from "../../mocks/opinions.json";
 import { Opinion } from "@/components/Opinion/Opinion";
-import { useAppDispatch } from "@/redux/store";
 import { addItemToCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/redux/store";
+import opinions from "../../mocks/opinions.json";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -137,6 +136,28 @@ export const getStaticProps = async ({
   };
 };
 
+const tagsQuery = gql`
+  query getProductsByTags($tags: [String!], $id: ID) {
+    products(where: { tags_contains_some: $tags, id_not: $id }) {
+      id
+      sizes
+      title
+      prices {
+        id
+        price
+        date
+      }
+      tags
+      images {
+        image {
+          url
+          id
+        }
+      }
+    }
+  }
+`;
+
 const ProductPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -145,6 +166,13 @@ const ProductPage = ({
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const dispatch = useAppDispatch();
+  const {
+    loading,
+    error,
+    data: ProductsByTagData,
+  } = useQuery(tagsQuery, {
+    variables: { tags: data?.product.tags, id: data?.product.id },
+  });
 
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
@@ -168,7 +196,6 @@ const ProductPage = ({
       })
     );
   };
-  console.log(opinions);
 
   if (!data) {
     console.log("No product found");
@@ -176,7 +203,8 @@ const ProductPage = ({
   }
 
   const product = data?.product;
-  console.log({ product });
+  const tags = product.tags;
+  const productsFromTags = { ...ProductsByTagData };
 
   return (
     <Layout>
@@ -285,27 +313,31 @@ const ProductPage = ({
           <div className="m-6">
             <span className="font-bold">Similar Products</span>
           </div>
-          <div className="flex flex-row gap-4 dark:bg-primaryDark h-fit rounded-xl">
-            <ProductCard
-              id={product.id}
-              title={product.title}
-              slug={product.slug}
-              image={product.images[0].image.url}
-              prices={product.prices}
-              sale={product.sale}
-              sizes={product.sizes}
-              category={product.category}
-            />
-            <ProductCard
-              id={product.id}
-              title={product.title}
-              slug={product.slug}
-              image={product.images[0].image.url}
-              prices={product.prices}
-              sale={product.sale}
-              sizes={product.sizes}
-              category={product.category}
-            />
+          <div className="flex flex-row gap-2 overflow-x-scroll w-full min-h-[320px]">
+            {loading ? (
+              <div className="ml-8 text-darkBlue text-md">
+                Loading similar products...
+              </div>
+            ) : (
+              <>
+                {productsFromTags.products
+                  .slice(0, 5)
+                  .map((product: ProductDetail) => (
+                    <div key={product.id} className="flex py-2 min-w-[268px]">
+                      <ProductCard
+                        id={product.id}
+                        title={product.title}
+                        slug={product.slug}
+                        image={product.images[0].image.url}
+                        prices={product.prices}
+                        sale={product.sale}
+                        sizes={product.sizes}
+                        category={product.category}
+                      />
+                    </div>
+                  ))}
+              </>
+            )}
           </div>
         </div>
         <div>

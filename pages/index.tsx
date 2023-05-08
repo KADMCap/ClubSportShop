@@ -88,7 +88,7 @@ export default function Home({
             {/* <div className="grid grid-flow-row grid-rows-1 gap-2 overflow-x-scroll auto-cols-auto"> */}
             <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px]">
               {special?.products.map((product: any) => (
-                <div key={product.id} className="flex py-2 grow min-w-[268px]">
+                <div key={product.id} className="flex py-2 min-w-[268px]">
                   <ProductCard
                     id={product.id.toString()}
                     title={product.title}
