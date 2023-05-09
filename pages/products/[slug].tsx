@@ -1,4 +1,4 @@
-import { NextSeo } from "next-seo";
+import { NextSeo, ProductJsonLd } from "next-seo";
 import { Button } from "@/components/Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
@@ -226,6 +226,33 @@ const ProductPage = ({
           ],
           siteName: "ClubSportStore",
         }}
+      />
+      <ProductJsonLd
+        productName={product?.title}
+        images={[
+          product.images[0].image.url,
+          product.images[1]?.image.url,
+          product.images[2]?.image.url,
+        ]}
+        description={product?.description}
+        brand="Nike"
+        color="white"
+        aggregateRating={{
+          ratingValue: product.rating[0],
+          reviewCount: product.rating.length,
+        }}
+        offers={[
+          {
+            price: product.prices[0].price,
+            priceCurrency: "USD",
+            priceValidUntil: "2020-11-05",
+          },
+          {
+            price: product.prices[0].price * 4.2,
+            priceCurrency: "PLN",
+            priceValidUntil: "2020-09-05",
+          },
+        ]}
       />
       <div className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
