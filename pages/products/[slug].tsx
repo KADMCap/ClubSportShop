@@ -1,3 +1,4 @@
+import { NextSeo } from "next-seo";
 import { Button } from "@/components/Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
@@ -208,6 +209,24 @@ const ProductPage = ({
 
   return (
     <Layout>
+      <NextSeo
+        title={product?.title}
+        description={product?.description}
+        canonical={`http://localhost:3000/products/${product?.slug}`}
+        openGraph={{
+          url: `http://localhost:3000/products/${product?.slug}`,
+          title: product?.title,
+          description: product?.description,
+          images: [
+            {
+              url: product.images[0].image.url,
+              alt: product.images[0].alt,
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "ClubSportStore",
+        }}
+      />
       <div className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
           <div className="flex flex-col flex-1">
