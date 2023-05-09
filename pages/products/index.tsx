@@ -10,6 +10,7 @@ import { gql, useQuery } from "@apollo/client";
 import { FilterContext } from "@/context/FilterContext";
 import { useAppSelector } from "@/redux/store";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
+import { NextSeo } from "next-seo";
 
 const query = gql`
   query GetAllProducts(
@@ -84,18 +85,30 @@ export default function ProductsPage() {
   };
   if (loading) {
     return (
-      <div className="flex flex-col w-full">
-        <FiltersContainer />
-        <p>All products: {items}</p>
-        <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-          <p>Loading...</p>;
+      <Layout>
+        <NextSeo
+          title="Products | ClubSportStore"
+          description="Sports clothes for Football, Basketball, Volleyball, Tennis and Running"
+          canonical="http://localhost:3000/products/"
+        />
+        <div className="flex flex-col w-full">
+          <FiltersContainer />
+          <p>All products: {items}</p>
+          <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
+            <p>Loading...</p>;
+          </div>
         </div>
-      </div>
+      </Layout>
     );
   }
   return (
     <>
       <Layout>
+        <NextSeo
+          title="Products | ClubSportStore"
+          description="Sports clothes for Football, Basketball, Volleyball, Tennis and Running"
+          canonical="http://localhost:3000/products/"
+        />
         <div className="flex flex-col w-full" ref={containerRef}>
           <FiltersContainer />
           <span className="pb-1 text-sm">All products: {items}</span>

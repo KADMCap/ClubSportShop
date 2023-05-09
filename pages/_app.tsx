@@ -1,6 +1,6 @@
-import { CartProvider } from "@/context/CartContext";
 import { apolloClient } from "@/graphql/apolloClient";
 import "@/styles/globals.css";
+import nextSeoConfig from "@/next-seo.config";
 import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
 import { Inter, Russo_One } from "next/font/google";
@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
+import { DefaultSeo } from "next-seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,21 +50,15 @@ export default function App({ Component, pageProps }: AppProps) {
     <ApolloProvider client={apolloClient}>
       <Provider store={store}>
         <QueryClientProvider client={client}>
-          <Head>
-            <title>
-              {router.route !== "/" ? titleString() : ""}
-              Club Sport Shop
-            </title>
-            <meta
-              name="description"
-              content="Club Sport Shop - where you can find your sports clothes"
-            />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
+          <DefaultSeo
+            {...nextSeoConfig}
+            additionalLinkTags={[
+              {
+                rel: "icon",
+                href: "/favicon.ico",
+              },
+            ]}
+          />
           <main
             className={`${inter.variable} ${russo.variable} font-sans max-w-[1920px] mx-auto`}
           >
