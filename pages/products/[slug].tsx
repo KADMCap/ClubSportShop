@@ -13,6 +13,7 @@ import { Opinion } from "@/components/Opinion/Opinion";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
 import opinions from "../../mocks/opinions.json";
+import { AddOpinionModal } from "@/components/AddOpinionModal";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -165,6 +166,7 @@ const ProductPage = ({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+  const [openOpinionModal, setOpenOpinionModal] = useState(false);
   const dispatch = useAppDispatch();
   const {
     loading,
@@ -197,6 +199,13 @@ const ProductPage = ({
     );
   };
 
+  const handleOpenAddOpinionDialog = () => {
+    setOpenOpinionModal(true);
+  };
+  const handleCloseAddOpinionDialog = () => {
+    setOpenOpinionModal(false);
+  };
+
   if (!data) {
     console.log("No product found");
     return;
@@ -209,6 +218,11 @@ const ProductPage = ({
   return (
     <Layout>
       <div className="flex-col w-full">
+        <AddOpinionModal
+          product={product}
+          openOpinionModal={openOpinionModal}
+          handleCloseAddOpinionDialog={handleCloseAddOpinionDialog}
+        />
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
           <div className="flex flex-col flex-1">
             <div className="flex justify-center w-full mb-2 bg-white">
@@ -343,7 +357,7 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full px-6 my-6">
             <span className="font-bold">Opinions</span>
-            <Button size="small" onClick={() => {}}>
+            <Button size="small" onClick={handleOpenAddOpinionDialog}>
               ADD OPINION
             </Button>
           </div>
