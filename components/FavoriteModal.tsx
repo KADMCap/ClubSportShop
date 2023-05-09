@@ -75,6 +75,7 @@ export const FavoriteModal = () => {
                         sale={false}
                         sizes={["xl"]}
                         prices={[{ date: "12-12-2022", price: 129 }]}
+                        category={product.category}
                       />
                     );
                   })}
