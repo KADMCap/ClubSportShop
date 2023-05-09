@@ -16,35 +16,35 @@ import Image from "next/image";
 import ReactStars from "react-stars";
 import { Button } from "./Buttons/Button";
 
-interface AddOpinionModalProps {
+interface AddReviewModalProps {
   product: ProductDetail;
-  openOpinionModal: boolean;
-  handleCloseAddOpinionDialog: () => void;
+  openReviewModal: boolean;
+  handleCloseAddReviewDialog: () => void;
 }
 
-export const AddOpinionModal = ({
+export const AddReviewModal = ({
   product,
-  openOpinionModal,
-  handleCloseAddOpinionDialog,
-}: AddOpinionModalProps) => {
+  openReviewModal,
+  handleCloseAddReviewDialog,
+}: AddReviewModalProps) => {
   const [rating, setRating] = useState(0);
-  const [opinionText, setOpinionText] = useState("");
+  const [reviewText, setReviewText] = useState("");
 
-  const handleOpinionTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setOpinionText(e.currentTarget.value);
+  const handleReviewTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setReviewText(e.currentTarget.value);
   };
 
   const onSubmitRating = () => {
-    console.log("on submit opinion");
-    handleCloseAddOpinionDialog();
+    console.log("on submit Review");
+    handleCloseAddReviewDialog();
   };
 
   return (
-    <Transition appear show={openOpinionModal} as={Fragment}>
+    <Transition appear show={openReviewModal} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={handleCloseAddOpinionDialog}
+        onClose={handleCloseAddReviewDialog}
       >
         <Transition.Child
           as={Fragment}
@@ -76,7 +76,7 @@ export const AddOpinionModal = ({
                   </p>
                   <button
                     className="bg-transparent outline-none"
-                    onClick={handleCloseAddOpinionDialog}
+                    onClick={handleCloseAddReviewDialog}
                   >
                     <CloseIcon />
                   </button>
@@ -98,18 +98,18 @@ export const AddOpinionModal = ({
                   </div>
                   <div>
                     <label
-                      htmlFor="opinion"
+                      htmlFor="review"
                       className="block mt-4 mb-2 text-md font-medium text-gray-900 dark:text-white"
                     >
-                      Add your opinion
+                      Add your review
                     </label>
                     <textarea
-                      id="opinion"
+                      id="review"
                       rows={4}
                       className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Write your thoughts here..."
-                      value={opinionText}
-                      onChange={handleOpinionTextChange}
+                      value={reviewText}
+                      onChange={handleReviewTextChange}
                     />
                   </div>
                   <div>
@@ -138,7 +138,7 @@ export const AddOpinionModal = ({
                   </Button>
 
                   <Button
-                    onClick={handleCloseAddOpinionDialog}
+                    onClick={handleCloseAddReviewDialog}
                     size="medium"
                     variant="primary"
                   >

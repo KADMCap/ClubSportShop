@@ -9,11 +9,11 @@ import Image from "next/image";
 import { useState } from "react";
 import ReactStars from "react-stars";
 
-import { Opinion } from "@/components/Opinion/Opinion";
+import { Review } from "@/components/Review/Review";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
-import opinions from "../../mocks/opinions.json";
-import { AddOpinionModal } from "@/components/AddOpinionModal";
+import reviews from "../../mocks/reviews.json";
+import { AddReviewModal } from "@/components/AddReviewModal";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -166,7 +166,7 @@ const ProductPage = ({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  const [openOpinionModal, setOpenOpinionModal] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const dispatch = useAppDispatch();
   const {
     loading,
@@ -199,11 +199,11 @@ const ProductPage = ({
     );
   };
 
-  const handleOpenAddOpinionDialog = () => {
-    setOpenOpinionModal(true);
+  const handleOpenAddReviewDialog = () => {
+    setOpenReviewModal(true);
   };
-  const handleCloseAddOpinionDialog = () => {
-    setOpenOpinionModal(false);
+  const handleCloseAddReviewDialog = () => {
+    setOpenReviewModal(false);
   };
 
   if (!data) {
@@ -218,10 +218,10 @@ const ProductPage = ({
   return (
     <Layout>
       <div className="flex-col w-full">
-        <AddOpinionModal
+        <AddReviewModal
           product={product}
-          openOpinionModal={openOpinionModal}
-          handleCloseAddOpinionDialog={handleCloseAddOpinionDialog}
+          openReviewModal={openReviewModal}
+          handleCloseAddReviewDialog={handleCloseAddReviewDialog}
         />
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
           <div className="flex flex-col flex-1">
@@ -356,20 +356,20 @@ const ProductPage = ({
         </div>
         <div>
           <div className="flex flex-row justify-between w-full px-6 my-6">
-            <span className="font-bold">Opinions</span>
-            <Button size="small" onClick={handleOpenAddOpinionDialog}>
-              ADD OPINION
+            <span className="font-bold">Reviews</span>
+            <Button size="small" onClick={handleOpenAddReviewDialog}>
+              ADD REVIEW
             </Button>
           </div>
           <div className="flex flex-col gap-4 p-6 dark:bg-primaryDark h-fit rounded-xl">
-            {opinions.map((opinion) => (
-              <Opinion
-                key={opinion.id}
-                id={opinion.id}
-                user={opinion.user}
-                date={opinion.date}
-                rating={opinion.rating}
-                description={opinion.description}
+            {reviews.map((review) => (
+              <Review
+                key={review.id}
+                id={review.id}
+                user={review.user}
+                date={review.date}
+                rating={review.rating}
+                description={review.description}
               />
             ))}
           </div>
