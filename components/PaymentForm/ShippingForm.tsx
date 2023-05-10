@@ -5,6 +5,9 @@ import * as yup from "yup";
 import { Input } from "./Input";
 import addresses from "@/mocks/shippingAddresses.json";
 import { useCartCount } from "@/hooks/useCartCount";
+import { useState } from "react";
+import { apolloClient } from "@/graphql/apolloClient";
+import { gql } from "@apollo/client";
 
 const schema = yup
   .object({
@@ -20,6 +23,17 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
+const createAddressToOrderMutation = gql`
+  mutation CreateAddressToOrder($address: AddressOrderUpdateOneInlineInput) {
+    updateOrder(
+      data: { orderStatus: Delivered, address: $address }
+      where: { id: "clhhmpy9t5g1t0bw5uwohdsbu" }
+    ) {
+      id
+    }
+  }
+`;
+
 export const ShippingForm = () => {
   const {
     register,
@@ -31,11 +45,12 @@ export const ShippingForm = () => {
     resolver: yupResolver(schema),
   });
   const userId = "123"; //temp for finding user address
-  const onSubmit = (data: FormData) => console.log(data);
   const { cartCount, totalPrice } = useCartCount();
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
+      setSelectedAddress("");
       setValue("fullName", "");
       setValue("email", "");
       setValue("phoneNumber", "");
@@ -45,6 +60,7 @@ export const ShippingForm = () => {
     }
     let address = addresses.find((address) => address.id === addressId);
     if (address) {
+      setSelectedAddress(address.name);
       setValue("fullName", address.fullName);
       setValue("email", address.email);
       setValue("phoneNumber", address.phoneNumber);
@@ -53,6 +69,28 @@ export const ShippingForm = () => {
       setValue("street", address.street);
     }
   };
+
+  const onSubmit = async (data: FormData) => {
+    const response = await apolloClient.mutate({
+      mutation: createAddressToOrderMutation,
+      variables: {
+        address: {
+          create: {
+            addressName: selectedAddress,
+            city: data.city,
+            emailAddress: data.email,
+            fullName: data.fullName,
+            phoneNumber: data.phoneNumber,
+            postCode: data.postCode,
+            streetAddress: data.street,
+          },
+        },
+      },
+    });
+
+    console.log({ response });
+  };
+
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">

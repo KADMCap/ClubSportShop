@@ -20,7 +20,7 @@ export const CartDrawer = () => {
       <div className="flex flex-col gap-1 overflow-y-auto">
         {cart.map((item: any, index: number) => (
           <CartItem
-            key={`${item.id}`}
+            key={`${item.productId}`}
             index={index + 1}
             imageSrc={item.image}
             alt={item.title}
