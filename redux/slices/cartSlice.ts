@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface CartItem {
-  readonly id: string;
+  readonly productId: string;
   readonly price: number;
   readonly title: string;
   readonly image: string;
@@ -24,7 +24,7 @@ const cartSlice = createSlice({
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
       const existingItem = state.items.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.productId === action.payload.productId
       );
 
       if (existingItem !== -1) {
@@ -34,24 +34,27 @@ const cartSlice = createSlice({
         state.items = [...state.items, action.payload];
       }
     },
-    removeItemFromCart: (state, action: PayloadAction<CartItem["id"]>) => {
+    removeItemFromCart: (
+      state,
+      action: PayloadAction<CartItem["productId"]>
+    ) => {
       const existingItem = state.items.findIndex(
-        (item) => item.id === action.payload
+        (item) => item.productId === action.payload
       );
 
       if (existingItem !== -1) {
         const updatedCart = [...state.items];
         if (updatedCart[existingItem].count === 1) {
           state.items = state.items.filter(
-            (item) => item.id !== action.payload
+            (item) => item.productId !== action.payload
           );
         }
         updatedCart[existingItem].count--;
       }
     },
-    addCountToItem: (state, action: PayloadAction<CartItem["id"]>) => {
+    addCountToItem: (state, action: PayloadAction<CartItem["productId"]>) => {
       const existingItem = state.items.findIndex(
-        (item) => item.id === action.payload
+        (item) => item.productId === action.payload
       );
 
       if (existingItem !== -1) {

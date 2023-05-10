@@ -190,7 +190,7 @@ const ProductPage = ({
   const handleAddToCart = () => {
     dispatch(
       addItemToCart({
-        id: product.id,
+        productId: product.id,
         price: product.prices[0].price,
         title: product.title,
         image: product.images[0].image.url,

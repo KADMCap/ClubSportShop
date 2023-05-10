@@ -26,7 +26,7 @@ export const CartDrawer = () => {
             alt={item.title}
             title={item.title}
             size={item.size}
-            productId={item.id}
+            productId={item.productId}
             price={item.price.toString()}
             count={item.count}
           />

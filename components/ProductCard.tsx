@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleAddToCart = () => {
     dispatch(
       addItemToCart({
-        id,
+        productId: id,
         image,
         price,
         title,

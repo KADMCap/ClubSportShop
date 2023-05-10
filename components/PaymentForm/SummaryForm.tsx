@@ -5,12 +5,37 @@ import { CartItem } from "../Cart/CartItem";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
 import { useCartCount } from "@/hooks/useCartCount";
+import { gql } from "@apollo/client";
+import { apolloClient } from "@/graphql/apolloClient";
+
+const createOrderMutation = gql`
+  mutation CreateOrder($order: OrderCreateInput!) {
+    createOrder(data: $order) {
+      id
+    }
+  }
+`;
 
 export const SummaryForm = () => {
   const cart = useAppSelector(cartItems);
   const { cartCount, totalPrice } = useCartCount();
 
-  const handleConfirm = () => {};
+  const handleConfirm = async () => {
+    const data = await apolloClient.mutate({
+      mutation: createOrderMutation,
+      variables: {
+        order: {
+          itemsQty: cartCount,
+          orderStatus: "Shipped",
+          totalPrice,
+          userId: "abc",
+          products: {
+            create: cart,
+          },
+        },
+      },
+    });
+  };
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
@@ -39,7 +64,7 @@ export const SummaryForm = () => {
             alt={item.title}
             title={item.title}
             size={item.size}
-            productId={item.id}
+            productId={item.productId}
             price={item.price.toString()}
             count={item.count}
           />
