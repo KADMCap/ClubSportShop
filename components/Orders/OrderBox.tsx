@@ -3,13 +3,13 @@ import { OrderItem } from "./OrderItem";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
 
 interface Order {
-  imageSrc: string;
+  image: string;
   alt: string;
   title: string;
   size: string;
   id: string;
   price: number;
-  quantity: number;
+  count: number;
 }
 interface OrderBox {
   orderId: string;
@@ -65,8 +65,12 @@ export const OrderBox = ({
       >
         <div className="flex flex-row items-center justify-between flex-1 w-full">
           <p className="font-semibold">
-            Order {orderId}
-            <span className="text-sm text-primaryGray"> / {date}</span>
+            Order
+            <span className="text-xs"> {orderId}</span>
+            <span className="text-sm text-primaryGray">
+              {" "}
+              / {date.slice(0, 10)}
+            </span>
           </p>
           <div className="bg-transparent md:hidden">
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -96,13 +100,13 @@ export const OrderBox = ({
           <OrderItem
             key={item.id}
             index={index + 1}
-            imageSrc={item.imageSrc}
-            alt={item.alt}
+            imageSrc={item.image}
+            alt={item.title}
             title={item.title}
             size={item.size}
             productId={item.id}
             price={item.price}
-            quantity={item.quantity}
+            count={item.count}
           />
         ))}
       </section>
