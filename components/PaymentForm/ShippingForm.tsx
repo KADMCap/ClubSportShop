@@ -8,6 +8,9 @@ import { useCartCount } from "@/hooks/useCartCount";
 import { useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
+import { useAppSelector } from "@/redux/store";
+import { orderData } from "@/redux/slices/cartSlice";
+import { useRouter } from "next/router";
 
 const schema = yup
   .object({
@@ -24,10 +27,13 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 const createAddressToOrderMutation = gql`
-  mutation CreateAddressToOrder($address: AddressOrderUpdateOneInlineInput) {
+  mutation CreateAddressToOrder(
+    $address: AddressOrderUpdateOneInlineInput
+    $id: ID
+  ) {
     updateOrder(
-      data: { orderStatus: Delivered, address: $address }
-      where: { id: "clhhmpy9t5g1t0bw5uwohdsbu" }
+      data: { orderStatus: Shipped, address: $address }
+      where: { id: $id }
     ) {
       id
     }
@@ -47,6 +53,8 @@ export const ShippingForm = () => {
   const userId = "123"; //temp for finding user address
   const { cartCount, totalPrice } = useCartCount();
   const [selectedAddress, setSelectedAddress] = useState("");
+  const orderInfo = useAppSelector(orderData);
+  const router = useRouter();
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
@@ -85,19 +93,25 @@ export const ShippingForm = () => {
             streetAddress: data.street,
           },
         },
+        id: orderInfo.orderId,
       },
     });
-
-    console.log({ response });
+    if (response) {
+      router.push("/payment?step=3");
+    }
   };
 
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
         <div>
-          <p className="font-semibold">
-            Order #10009929{" "}
-            <span className="text-sm text-primaryGray"> / 05.04.2023</span>
+          <p className="items-center font-semibold">
+            Order
+            <span className="text-xs"> {orderInfo.orderId}</span>
+            <span className="text-sm text-primaryGray">
+              {" "}
+              / {orderInfo.date.slice(0, 10)}
+            </span>
           </p>
         </div>
         <div className="flex flex-row gap-2">

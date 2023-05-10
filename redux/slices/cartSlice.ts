@@ -10,12 +10,22 @@ interface CartItem {
   readonly count: number;
 }
 
+interface OrderData {
+  orderId: string;
+  date: string;
+}
+
 type cartInitialState = {
   items: CartItem[];
+  orderData: OrderData;
 };
 
 const initialState: cartInitialState = {
   items: [],
+  orderData: {
+    orderId: "",
+    date: "",
+  },
 };
 
 const cartSlice = createSlice({
@@ -62,12 +72,20 @@ const cartSlice = createSlice({
         updatedCart[existingItem].count++;
       }
     },
+    createOrderData: (state, action: PayloadAction<OrderData>) => {
+      state.orderData = action.payload;
+    },
   },
 });
 
-export const { addItemToCart, addCountToItem, removeItemFromCart } =
-  cartSlice.actions;
+export const {
+  addItemToCart,
+  addCountToItem,
+  removeItemFromCart,
+  createOrderData,
+} = cartSlice.actions;
 
 export const cartItems = (state: RootState) => state.cart.items;
+export const orderData = (state: RootState) => state.cart.orderData;
 
 export default cartSlice.reducer;

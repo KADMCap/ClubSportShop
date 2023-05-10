@@ -1,4 +1,4 @@
-import { cartItems } from "@/redux/slices/cartSlice";
+import { cartItems, createOrderData } from "@/redux/slices/cartSlice";
 import { useAppSelector } from "@/redux/store";
 import { Button, LinkButton } from "../Buttons/Button";
 import { CartItem } from "../Cart/CartItem";
@@ -7,11 +7,13 @@ import { SummaryBox } from "../Cart/SummaryBox";
 import { useCartCount } from "@/hooks/useCartCount";
 import { gql } from "@apollo/client";
 import { apolloClient } from "@/graphql/apolloClient";
+import { useDispatch } from "react-redux";
 
 const createOrderMutation = gql`
   mutation CreateOrder($order: OrderCreateInput!) {
     createOrder(data: $order) {
       id
+      createdAt
     }
   }
 `;
@@ -19,6 +21,7 @@ const createOrderMutation = gql`
 export const SummaryForm = () => {
   const cart = useAppSelector(cartItems);
   const { cartCount, totalPrice } = useCartCount();
+  const dispatch = useDispatch();
 
   const handleConfirm = async () => {
     const data = await apolloClient.mutate({
@@ -26,7 +29,7 @@ export const SummaryForm = () => {
       variables: {
         order: {
           itemsQty: cartCount,
-          orderStatus: "Shipped",
+          orderStatus: "InProgress",
           totalPrice,
           userId: "abc",
           products: {
@@ -35,13 +38,20 @@ export const SummaryForm = () => {
         },
       },
     });
+    console.log(data.data.createOrder.id);
+    dispatch(
+      createOrderData({
+        orderId: data.data.createOrder.id,
+        date: data.data.createOrder.createdAt,
+      })
+    );
   };
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
         <div>
           <p className="font-semibold">
-            Order #10009929{" "}
+            Order{" "}
             <span className="text-sm text-primaryGray"> / 05.04.2023</span>
           </p>
         </div>
