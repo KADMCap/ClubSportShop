@@ -25,7 +25,7 @@ export const CartDrawer = () => {
             imageSrc={item.image}
             alt={item.title}
             title={item.title}
-            size="M"
+            size={item.size}
             productId={item.id}
             price={item.price.toString()}
             count={item.count}

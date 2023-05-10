@@ -6,6 +6,7 @@ interface CartItem {
   readonly price: number;
   readonly title: string;
   readonly image: string;
+  readonly size: string;
   readonly count: number;
 }
 

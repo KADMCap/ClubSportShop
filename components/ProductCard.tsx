@@ -47,6 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         image,
         price,
         title,
+        size: selectedSize,
         count: 1,
       })
     );
