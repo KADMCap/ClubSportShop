@@ -64,14 +64,16 @@ export const OrderBox = ({
         onClick={toogleOpen}
       >
         <div className="flex flex-row items-center justify-between flex-1 w-full">
-          <p className="font-semibold">
-            Order
-            <span className="text-xs"> {orderId}</span>
-            <span className="text-sm text-primaryGray">
+          <div className="flex items-center">
+            <div className="flex flex-col items-start">
+              <p className="font-semibold">Order</p>
+              <p className="text-xs">{orderId}</p>
+            </div>
+            <span className="text-sm font-semibold text-primaryGray">
               {" "}
               / {date.slice(0, 10)}
             </span>
-          </p>
+          </div>
           <div className="bg-transparent md:hidden">
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </div>

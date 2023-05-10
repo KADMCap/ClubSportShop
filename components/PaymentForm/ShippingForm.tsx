@@ -40,6 +40,14 @@ const createAddressToOrderMutation = gql`
   }
 `;
 
+const abandonOrderMutation = gql`
+  mutation AbandonOrder($id: ID) {
+    updateOrder(data: { orderStatus: Abandon }, where: { id: $id }) {
+      id
+    }
+  }
+`;
+
 export const ShippingForm = () => {
   const {
     register,
@@ -101,18 +109,30 @@ export const ShippingForm = () => {
     }
   };
 
+  const declineOrder = async () => {
+    const response = await apolloClient.mutate({
+      mutation: abandonOrderMutation,
+      variables: {
+        id: orderInfo.orderId,
+      },
+    });
+    if (response) {
+      router.push("/orders");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
-        <div>
-          <p className="items-center font-semibold">
-            Order
-            <span className="text-xs"> {orderInfo.orderId}</span>
-            <span className="text-sm text-primaryGray">
-              {" "}
-              / {orderInfo.date.slice(0, 10)}
-            </span>
-          </p>
+        <div className="flex items-center">
+          <div className="flex flex-col items-start">
+            <p className="font-semibold">Order</p>
+            <p className="text-xs">{orderInfo.orderId}</p>
+          </div>
+          <span className="text-sm font-semibold text-primaryGray">
+            {" "}
+            / {orderInfo.date.slice(0, 10)}
+          </span>
         </div>
         <div className="flex flex-row gap-2">
           <p>
@@ -213,7 +233,7 @@ export const ShippingForm = () => {
             </div> */}
           </div>
           <section className="flex flex-row items-center justify-center w-full gap-2">
-            <Button variant="tertiary" onClick={() => {}}>
+            <Button variant="tertiary" onClick={declineOrder}>
               DECLINE
             </Button>
             <SubmitButton value="CONFIRM" />
