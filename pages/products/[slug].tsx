@@ -10,10 +10,12 @@ import Image from "next/image";
 import { useState } from "react";
 import ReactStars from "react-stars";
 
-import { Opinion } from "@/components/Opinion/Opinion";
+import { Review } from "@/components/Review/Review";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
-import opinions from "../../mocks/opinions.json";
+import reviews from "../../mocks/reviews.json";
+import mockedUsers from "../../mocks/users.json";
+import { AddReviewModal } from "@/components/AddReviewModal";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -46,6 +48,7 @@ export interface ProductDetail {
   prices: Price[];
   rating: number[];
   images: ImageElement[];
+  reviews: Review[];
 }
 
 export interface ImageElement {
@@ -62,6 +65,15 @@ export interface Price {
   id: string;
   price: number;
   date: string;
+}
+
+export interface Review {
+  user: string;
+  rating: number;
+  date: string;
+  content: string;
+  updatedAt: string;
+  id: string;
 }
 
 export async function getStaticPaths() {
@@ -125,6 +137,12 @@ export const getStaticProps = async ({
             }
             alt
           }
+          reviews {
+            user
+            content
+            rating
+            updatedAt
+          }
         }
       }
     `,
@@ -167,6 +185,7 @@ const ProductPage = ({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const dispatch = useAppDispatch();
   const {
     loading,
@@ -200,6 +219,13 @@ const ProductPage = ({
     );
   };
 
+  const handleOpenAddReviewDialog = () => {
+    setOpenReviewModal(true);
+  };
+  const handleCloseAddReviewDialog = () => {
+    setOpenReviewModal(false);
+  };
+
   if (!data) {
     console.log("No product found");
     return;
@@ -208,6 +234,8 @@ const ProductPage = ({
   const product = data?.product;
   const tags = product.tags;
   const productsFromTags = { ...ProductsByTagData };
+
+  console.log("reviews arr, ", product.reviews);
 
   return (
     <Layout>
@@ -401,22 +429,34 @@ const ProductPage = ({
         </div>
         <div>
           <div className="flex flex-row justify-between w-full px-6 my-6">
-            <span className="font-bold">Opinions</span>
-            <Button size="small" onClick={() => {}}>
-              ADD OPINION
+            <span className="font-bold">Reviews</span>
+            <Button size="small" onClick={handleOpenAddReviewDialog}>
+              ADD REVIEW
             </Button>
           </div>
+          <AddReviewModal
+            product={product}
+            openReviewModal={openReviewModal}
+            handleCloseAddReviewDialog={handleCloseAddReviewDialog}
+          />
           <div className="flex flex-col gap-4 p-6 dark:bg-primaryDark h-fit rounded-xl">
-            {opinions.map((opinion) => (
-              <Opinion
-                key={opinion.id}
-                id={opinion.id}
-                user={opinion.user}
-                date={opinion.date}
-                rating={opinion.rating}
-                description={opinion.description}
-              />
-            ))}
+            {product.reviews.length === 0 ? (
+              <span className="p-4 text-darkBlue">
+                No reviews yet. You can add the first one by clicking on the
+                button to the right.{" "}
+              </span>
+            ) : (
+              product.reviews.map((review) => (
+                <Review
+                  key={review.id}
+                  id={review.id}
+                  user={mockedUsers[0]}
+                  date={review.date}
+                  rating={review.rating}
+                  description={review.content}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -1,7 +1,26 @@
+mutation CreateProductReview($review: ReviewCreateInput!) {
+  review: createReview(data: $review) {
+    id
+    stage
+    user
+    date
+    rating
+    content
+  }
+}
+
+mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
+  updateProduct(data: { reviews: $reviews }, where: { id: $id }) {
+    id
+    reviews {
+      content
+      createdAt
+      user
+    }
+  }
+}
 mutation CreateOrder($order: OrderCreateInput!) {
-  createOrder(
-    data: $order
-  ) {
+  createOrder(data: $order) {
     id
   }
 }
