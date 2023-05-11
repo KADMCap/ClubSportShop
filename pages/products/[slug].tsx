@@ -13,6 +13,7 @@ import { Review } from "@/components/Review/Review";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
 import reviews from "../../mocks/reviews.json";
+import mockedUsers from "../../mocks/users.json";
 import { AddReviewModal } from "@/components/AddReviewModal";
 
 interface GetProductsSlugsResponse {
@@ -46,6 +47,7 @@ export interface ProductDetail {
   prices: Price[];
   rating: number[];
   images: ImageElement[];
+  reviews: Review[];
 }
 
 export interface ImageElement {
@@ -62,6 +64,15 @@ export interface Price {
   id: string;
   price: number;
   date: string;
+}
+
+export interface Review {
+  user: string;
+  rating: number;
+  date: string;
+  content: string;
+  updatedAt: string;
+  id: string;
 }
 
 export async function getStaticPaths() {
@@ -124,6 +135,13 @@ export const getStaticProps = async ({
               url
             }
             alt
+          }
+          reviews {
+            user
+            content
+            rating
+            date
+            updatedAt
           }
         }
       }
@@ -218,11 +236,6 @@ const ProductPage = ({
   return (
     <Layout>
       <div className="flex-col w-full">
-        <AddReviewModal
-          product={product}
-          openReviewModal={openReviewModal}
-          handleCloseAddReviewDialog={handleCloseAddReviewDialog}
-        />
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
           <div className="flex flex-col flex-1">
             <div className="flex justify-center w-full mb-2 bg-white">
@@ -361,17 +374,29 @@ const ProductPage = ({
               ADD REVIEW
             </Button>
           </div>
+          <AddReviewModal
+            product={product}
+            openReviewModal={openReviewModal}
+            handleCloseAddReviewDialog={handleCloseAddReviewDialog}
+          />
           <div className="flex flex-col gap-4 p-6 dark:bg-primaryDark h-fit rounded-xl">
-            {reviews.map((review) => (
-              <Review
-                key={review.id}
-                id={review.id}
-                user={review.user}
-                date={review.date}
-                rating={review.rating}
-                description={review.description}
-              />
-            ))}
+            {product.reviews.length === 0 ? (
+              <span className="p-4 text-darkBlue">
+                No reviews yet. You can add the first one by clicking on the
+                button to the right.{" "}
+              </span>
+            ) : (
+              product.reviews.map((review) => (
+                <Review
+                  key={review.id}
+                  id={review.id}
+                  user={mockedUsers[0]}
+                  date={review.date}
+                  rating={review.rating}
+                  description={review.content}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

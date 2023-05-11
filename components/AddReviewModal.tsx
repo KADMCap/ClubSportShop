@@ -15,12 +15,36 @@ import { ProductDetail } from "@/pages/products/[slug]";
 import Image from "next/image";
 import ReactStars from "react-stars";
 import { Button } from "./Buttons/Button";
+import { apolloClient } from "@/graphql/apolloClient";
+import { gql } from "@apollo/client";
 
 interface AddReviewModalProps {
   product: ProductDetail;
   openReviewModal: boolean;
   handleCloseAddReviewDialog: () => void;
 }
+
+type CreateProductReviewMutation = {
+  review: {
+    user: string;
+    rating: number;
+    date: string;
+    content: string;
+  };
+};
+
+const CreateProductReviewDocument = gql`
+  mutation CreateProductReview($review: ReviewCreateInput!) {
+    review: createReview(data: $review) {
+      id
+      stage
+      user
+      date
+      rating
+      content
+    }
+  }
+`;
 
 export const AddReviewModal = ({
   product,
@@ -29,13 +53,46 @@ export const AddReviewModal = ({
 }: AddReviewModalProps) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [ratingError, setRatingError] = useState("");
+  const [contentError, setContentError] = useState("");
+
+  const date = new Date();
 
   const handleReviewTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(e.currentTarget.value);
   };
 
-  const onSubmitRating = () => {
+  const onSubmitReview = async () => {
     console.log("on submit Review");
+    if (reviewText === "") {
+      setContentError("Add your review!");
+      return;
+    }
+    if (rating === 0) {
+      setRatingError("Add rating to your review!");
+      return;
+    }
+
+    const data = await apolloClient.mutate<CreateProductReviewMutation>({
+      mutation: CreateProductReviewDocument,
+      variables: {
+        review: {
+          user: "Wojciech Czarnecki",
+          rating: rating,
+          date: date.toISOString(),
+          content: reviewText,
+        },
+      },
+    });
+    console.log("data", data);
+    onCloseAddReviewDialog();
+  };
+
+  const onCloseAddReviewDialog = () => {
+    setReviewText("");
+    setContentError("");
+    setRating(0);
+    setRatingError("");
     handleCloseAddReviewDialog();
   };
 
@@ -44,7 +101,7 @@ export const AddReviewModal = ({
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={handleCloseAddReviewDialog}
+        onClose={onCloseAddReviewDialog}
       >
         <Transition.Child
           as={Fragment}
@@ -76,7 +133,7 @@ export const AddReviewModal = ({
                   </p>
                   <button
                     className="bg-transparent outline-none"
-                    onClick={handleCloseAddReviewDialog}
+                    onClick={onCloseAddReviewDialog}
                   >
                     <CloseIcon />
                   </button>
@@ -111,6 +168,11 @@ export const AddReviewModal = ({
                       value={reviewText}
                       onChange={handleReviewTextChange}
                     />
+                    {contentError && (
+                      <span className="text-red-500 text-sm">
+                        {contentError}
+                      </span>
+                    )}
                   </div>
                   <div>
                     <label
@@ -126,11 +188,16 @@ export const AddReviewModal = ({
                       value={rating}
                       onChange={setRating}
                     />
+                    {ratingError && (
+                      <span className="text-red-500 text-sm">
+                        {ratingError}
+                      </span>
+                    )}
                   </div>
                 </section>
                 <div className="flex items-center justify-around w-full pt-4">
                   <Button
-                    onClick={onSubmitRating}
+                    onClick={onSubmitReview}
                     size="medium"
                     variant="primary"
                   >
@@ -138,7 +205,7 @@ export const AddReviewModal = ({
                   </Button>
 
                   <Button
-                    onClick={handleCloseAddReviewDialog}
+                    onClick={onCloseAddReviewDialog}
                     size="medium"
                     variant="primary"
                   >
