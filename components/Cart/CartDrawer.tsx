@@ -1,15 +1,17 @@
 import { cartItems } from "@/redux/slices/cartSlice";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { LinkButton } from "../Buttons/Button";
 import { CartItem } from "./CartItem";
 import { CouponInput } from "./CouponInput";
 import { SummaryBox } from "./SummaryBox";
 import { cartIsOpen } from "@/redux/slices/headerSlice";
+import { setOpenCart } from "@/redux/slices/headerSlice";
 
 export const CartDrawer = () => {
   // const { openCart } = useContext(HeaderContext);
   const openCart = useAppSelector(cartIsOpen);
   const cart = useAppSelector(cartItems);
+  const dispatch = useAppDispatch();
 
   return (
     <aside
@@ -35,7 +37,11 @@ export const CartDrawer = () => {
       <div className="flex flex-col w-full gap-4 px-2 py-4">
         <CouponInput />
         <SummaryBox />
-        <LinkButton href="/payment?step=1" onClick={() => {}} full>
+        <LinkButton
+          href="/payment?step=1"
+          onClick={() => dispatch(setOpenCart())}
+          full
+        >
           <p className="text-center">Proceed to Pay</p>
         </LinkButton>
       </div>

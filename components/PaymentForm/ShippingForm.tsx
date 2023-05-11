@@ -8,8 +8,8 @@ import { useCartCount } from "@/hooks/useCartCount";
 import { useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
-import { useAppSelector } from "@/redux/store";
-import { orderData } from "@/redux/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { cleanCart, orderData } from "@/redux/slices/cartSlice";
 import { useRouter } from "next/router";
 
 const schema = yup
@@ -63,6 +63,7 @@ export const ShippingForm = () => {
   const [selectedAddress, setSelectedAddress] = useState("");
   const orderInfo = useAppSelector(orderData);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
@@ -105,6 +106,7 @@ export const ShippingForm = () => {
       },
     });
     if (response) {
+      dispatch(cleanCart());
       router.push("/payment?step=3");
     }
   };
@@ -117,6 +119,7 @@ export const ShippingForm = () => {
       },
     });
     if (response) {
+      dispatch(cleanCart());
       router.push("/orders");
     }
   };

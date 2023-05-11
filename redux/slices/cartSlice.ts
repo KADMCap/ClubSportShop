@@ -75,6 +75,13 @@ const cartSlice = createSlice({
     createOrderData: (state, action: PayloadAction<OrderData>) => {
       state.orderData = action.payload;
     },
+    cleanCart: (state) => {
+      state.items = [];
+      state.orderData = {
+        orderId: "",
+        date: "",
+      };
+    },
   },
 });
 
@@ -83,6 +90,7 @@ export const {
   addCountToItem,
   removeItemFromCart,
   createOrderData,
+  cleanCart,
 } = cartSlice.actions;
 
 export const cartItems = (state: RootState) => state.cart.items;
