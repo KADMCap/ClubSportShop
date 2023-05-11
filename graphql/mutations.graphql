@@ -10,12 +10,17 @@ mutation CreateProductReview($review: ReviewCreateInput!) {
 }
 
 mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
-  updateProduct(data: {reviews: $reviews}, where: {id: $id}) {
-    id
-    reviews {
-      content
-      createdAt
-      user
-    }
-  }
+  updateProduct(data: { reviews: $reviews }, where: { id: $id }) {
+    id
+    reviews {
+      content
+      createdAt
+      user
+    }
+  }
+}
+mutation CreateOrder($order: OrderCreateInput!) {
+  createOrder(data: $order) {
+    id
+  }
 }

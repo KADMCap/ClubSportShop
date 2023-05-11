@@ -13,6 +13,7 @@ export default function PaymentPage() {
         <PaymentStep />
         {router.query.step === "1" && <SummaryForm />}
         {router.query.step === "2" && <ShippingForm />}
+        {router.query.step === "3" && <p>Your order is ready to pay</p>}
       </div>
     </Layout>
   );

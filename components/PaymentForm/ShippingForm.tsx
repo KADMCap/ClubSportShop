@@ -5,6 +5,12 @@ import * as yup from "yup";
 import { Input } from "./Input";
 import addresses from "@/mocks/shippingAddresses.json";
 import { useCartCount } from "@/hooks/useCartCount";
+import { useState } from "react";
+import { apolloClient } from "@/graphql/apolloClient";
+import { gql } from "@apollo/client";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { cleanCart, orderData } from "@/redux/slices/cartSlice";
+import { useRouter } from "next/router";
 
 const schema = yup
   .object({
@@ -20,6 +26,28 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
+const createAddressToOrderMutation = gql`
+  mutation CreateAddressToOrder(
+    $address: AddressOrderUpdateOneInlineInput
+    $id: ID
+  ) {
+    updateOrder(
+      data: { orderStatus: Shipped, address: $address }
+      where: { id: $id }
+    ) {
+      id
+    }
+  }
+`;
+
+const abandonOrderMutation = gql`
+  mutation AbandonOrder($id: ID) {
+    updateOrder(data: { orderStatus: Abandon }, where: { id: $id }) {
+      id
+    }
+  }
+`;
+
 export const ShippingForm = () => {
   const {
     register,
@@ -31,11 +59,15 @@ export const ShippingForm = () => {
     resolver: yupResolver(schema),
   });
   const userId = "123"; //temp for finding user address
-  const onSubmit = (data: FormData) => console.log(data);
   const { cartCount, totalPrice } = useCartCount();
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const orderInfo = useAppSelector(orderData);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
+      setSelectedAddress("");
       setValue("fullName", "");
       setValue("email", "");
       setValue("phoneNumber", "");
@@ -45,6 +77,7 @@ export const ShippingForm = () => {
     }
     let address = addresses.find((address) => address.id === addressId);
     if (address) {
+      setSelectedAddress(address.name);
       setValue("fullName", address.fullName);
       setValue("email", address.email);
       setValue("phoneNumber", address.phoneNumber);
@@ -53,14 +86,56 @@ export const ShippingForm = () => {
       setValue("street", address.street);
     }
   };
+
+  const onSubmit = async (data: FormData) => {
+    const response = await apolloClient.mutate({
+      mutation: createAddressToOrderMutation,
+      variables: {
+        address: {
+          create: {
+            addressName: selectedAddress,
+            city: data.city,
+            emailAddress: data.email,
+            fullName: data.fullName,
+            phoneNumber: data.phoneNumber,
+            postCode: data.postCode,
+            streetAddress: data.street,
+          },
+        },
+        id: orderInfo.orderId,
+      },
+    });
+    if (response) {
+      dispatch(cleanCart());
+      router.push("/payment?step=3");
+    }
+  };
+
+  const declineOrder = async () => {
+    const response = await apolloClient.mutate({
+      mutation: abandonOrderMutation,
+      variables: {
+        id: orderInfo.orderId,
+      },
+    });
+    if (response) {
+      dispatch(cleanCart());
+      router.push("/orders");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 px-4 py-2 rounded-md bg-primaryLight dark:bg-primaryDark md:rounded-lg">
       <section className="flex flex-row items-center justify-between">
-        <div>
-          <p className="font-semibold">
-            Order #10009929{" "}
-            <span className="text-sm text-primaryGray"> / 05.04.2023</span>
-          </p>
+        <div className="flex items-center">
+          <div className="flex flex-col items-start">
+            <p className="font-semibold">Order</p>
+            <p className="text-xs">{orderInfo.orderId}</p>
+          </div>
+          <span className="text-sm font-semibold text-primaryGray">
+            {" "}
+            / {orderInfo.date.slice(0, 10)}
+          </span>
         </div>
         <div className="flex flex-row gap-2">
           <p>
@@ -161,7 +236,7 @@ export const ShippingForm = () => {
             </div> */}
           </div>
           <section className="flex flex-row items-center justify-center w-full gap-2">
-            <Button variant="tertiary" onClick={() => {}}>
+            <Button variant="tertiary" onClick={declineOrder}>
               DECLINE
             </Button>
             <SubmitButton value="CONFIRM" />
