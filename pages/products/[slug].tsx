@@ -142,6 +142,7 @@ const tagsQuery = gql`
     products(where: { tags_contains_some: $tags, id_not: $id }) {
       id
       sizes
+      slug
       title
       prices {
         id
@@ -189,10 +190,11 @@ const ProductPage = ({
   const handleAddToCart = () => {
     dispatch(
       addItemToCart({
-        id: product.id,
+        productId: product.id,
         price: product.prices[0].price,
         title: product.title,
         image: product.images[0].image.url,
+        size: selectedSize,
         count: selectedQuantity,
       })
     );
@@ -327,11 +329,22 @@ const ProductPage = ({
               {product.sizes?.map((size: any) => (
                 <Button
                   key={size}
-                  onClick={() => onSelectSize(size)}
+                  onClick={() =>
+                    onSelectSize(
+                      product.category === "Shoes" ? size.substring(1) : size
+                    )
+                  }
                   size="small"
-                  variant={`${selectedSize === size ? "primary" : "secondary"}`}
+                  variant={`${
+                    selectedSize ===
+                    (product.category === "Shoes" ? size.substring(1) : size)
+                      ? "primary"
+                      : "secondary"
+                  }`}
                 >
-                  <span className="text-sm font-bold text-center ">{size}</span>
+                  <span className="text-sm font-bold text-center ">
+                    {product.category === "Shoes" ? size.substring(1) : size}
+                  </span>
                 </Button>
               ))}
             </div>

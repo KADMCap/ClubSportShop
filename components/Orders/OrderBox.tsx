@@ -3,13 +3,13 @@ import { OrderItem } from "./OrderItem";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
 
 interface Order {
-  imageSrc: string;
+  image: string;
   alt: string;
   title: string;
   size: string;
   id: string;
   price: number;
-  quantity: number;
+  count: number;
 }
 interface OrderBox {
   orderId: string;
@@ -64,10 +64,16 @@ export const OrderBox = ({
         onClick={toogleOpen}
       >
         <div className="flex flex-row items-center justify-between flex-1 w-full">
-          <p className="font-semibold">
-            Order {orderId}
-            <span className="text-sm text-primaryGray"> / {date}</span>
-          </p>
+          <div className="flex items-center">
+            <div className="flex flex-col items-start">
+              <p className="font-semibold">Order</p>
+              <p className="text-xs">{orderId}</p>
+            </div>
+            <span className="text-sm font-semibold text-primaryGray">
+              {" "}
+              / {date.slice(0, 10)}
+            </span>
+          </div>
           <div className="bg-transparent md:hidden">
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </div>
@@ -96,13 +102,13 @@ export const OrderBox = ({
           <OrderItem
             key={item.id}
             index={index + 1}
-            imageSrc={item.imageSrc}
-            alt={item.alt}
+            imageSrc={item.image}
+            alt={item.title}
             title={item.title}
             size={item.size}
             productId={item.id}
             price={item.price}
-            quantity={item.quantity}
+            count={item.count}
           />
         ))}
       </section>

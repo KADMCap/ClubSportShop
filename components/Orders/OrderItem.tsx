@@ -8,7 +8,7 @@ interface Props {
   index: number;
   productId: string;
   price: number;
-  quantity: number;
+  count: number;
 }
 
 export const OrderItem = ({
@@ -19,7 +19,7 @@ export const OrderItem = ({
   index,
   productId,
   price,
-  quantity,
+  count,
 }: Props) => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
@@ -33,7 +33,7 @@ export const OrderItem = ({
         </div>
         <div className="flex flex-row gap-2">
           <p>
-            Items: <span className="font-semibold">{quantity}</span>
+            Items: <span className="font-semibold">{count}</span>
           </p>
           <p>
             Size: <span className="font-semibold">{size}</span>
