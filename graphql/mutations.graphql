@@ -8,3 +8,14 @@ mutation CreateProductReview($review: ReviewCreateInput!) {
     content
   }
 }
+
+mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
+  updateProduct(data: {reviews: $reviews}, where: {id: $id}) {
+    id
+    reviews {
+      content
+      createdAt
+      user
+    }
+  }
+}

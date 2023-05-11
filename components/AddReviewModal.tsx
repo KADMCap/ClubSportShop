@@ -34,14 +34,14 @@ type CreateProductReviewMutation = {
 };
 
 const CreateProductReviewDocument = gql`
-  mutation CreateProductReview($review: ReviewCreateInput!) {
-    review: createReview(data: $review) {
+  mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
+    updateProduct(data: { reviews: $reviews }, where: { id: $id }) {
       id
-      stage
-      user
-      date
-      rating
-      content
+      reviews {
+        content
+        createdAt
+        user
+      }
     }
   }
 `;
@@ -76,11 +76,9 @@ export const AddReviewModal = ({
     const data = await apolloClient.mutate<CreateProductReviewMutation>({
       mutation: CreateProductReviewDocument,
       variables: {
-        review: {
-          user: "Wojciech Czarnecki",
-          rating: rating,
-          date: date.toISOString(),
-          content: reviewText,
+        id: product.id,
+        reviews: {
+          create: [{ content: reviewText, rating: rating, user: "John Doe" }],
         },
       },
     });

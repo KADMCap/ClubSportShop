@@ -140,7 +140,6 @@ export const getStaticProps = async ({
             user
             content
             rating
-            date
             updatedAt
           }
         }
@@ -232,6 +231,8 @@ const ProductPage = ({
   const product = data?.product;
   const tags = product.tags;
   const productsFromTags = { ...ProductsByTagData };
+
+  console.log("reviews arr, ", product.reviews);
 
   return (
     <Layout>
