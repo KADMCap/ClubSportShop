@@ -1,0 +1,95 @@
+query GetProductDetailBySlug($slug: String) {
+  product(where: { slug: $slug }) {
+    id
+    sale
+    slug
+    title
+    description
+    sport
+    category
+    tags
+    sizes
+    prices {
+      id
+      price
+      date
+    }
+    rating
+    images {
+      image {
+        id
+        url
+      }
+      alt
+    }
+    reviews {
+      user
+      content
+      rating
+      updatedAt
+    }
+  }
+}
+
+query getProductsByTags($tags: [String!], $id: ID) {
+  products(where: { tags_contains_some: $tags, id_not: $id }) {
+    id
+    sizes
+    slug
+    title
+    prices {
+      id
+      price
+      date
+    }
+    tags
+    images {
+      image {
+        url
+        id
+      }
+    }
+  }
+}
+
+query GetAllProducts(
+  $first: Int
+  $skip: Int
+  $category: [Category]
+  $sport: [Sport]
+) {
+  products(
+    first: $first
+    skip: $skip
+    where: { category_in: $category, sport_in: $sport }
+  ) {
+    createdAt
+    id
+    sale
+    slug
+    title
+    description
+    sport
+    category
+    tags
+    sizes
+    prices {
+      id
+      price
+      date
+    }
+    images {
+      image {
+        id
+        url
+      }
+      alt
+    }
+    rating
+  }
+  productsConnection(where: { category_in: $category, sport_in: $sport }) {
+    aggregate {
+      count
+    }
+  }
+}
