@@ -1,4 +1,3 @@
-import { NextSeo, ProductJsonLd } from "next-seo";
 import { Button } from "@/components/Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
@@ -6,16 +5,25 @@ import ProductCard from "@/components/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql, useQuery } from "@apollo/client";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { NextSeo, ProductJsonLd } from "next-seo";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactStars from "react-stars";
 
+import { AddReviewModal } from "@/components/AddReviewModal";
 import { Review } from "@/components/Review/Review";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
-import reviews from "../../mocks/reviews.json";
+import { Swiper, SwiperSlide } from "swiper/react";
 import mockedUsers from "../../mocks/users.json";
-import { AddReviewModal } from "@/components/AddReviewModal";
+
+import { FreeMode, Navigation, Thumbs, type Swiper as SwiperRef } from "swiper";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 
 interface GetProductsSlugsResponse {
   products: Product[];
@@ -186,6 +194,8 @@ const ProductPage = ({
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const swiperRef = useRef<SwiperRef>();
   const dispatch = useAppDispatch();
   const {
     loading,
@@ -286,8 +296,67 @@ const ProductPage = ({
       />
       <div className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
-          <div className="flex flex-col flex-1">
-            <div className="flex justify-center w-full mb-2 bg-white">
+          <div className="w-1/2 px-12">
+            <Swiper
+              // style={{
+              //   "--swiper-navigation-color": "#fff",
+              //   "--swiper-pagination-color": "#fff",
+              // }}
+              spaceBetween={10}
+              navigation={true}
+              thumbs={{ swiper: thumbsSwiper }}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper2"
+            >
+              {product?.images.map((image) => (
+                <SwiperSlide>
+                  <img src={image.image.url} />
+                </SwiperSlide>
+              ))}
+              {/* <SwiperSlide>
+                <img src={product?.images[0].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={product?.images[1].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={product?.images[2].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+              </SwiperSlide> */}
+            </Swiper>
+            <Swiper
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+                setThumbsSwiper;
+              }}
+              spaceBetween={12}
+              slidesPerView={product?.images.length}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper"
+            >
+              {product?.images.map((image) => (
+                <SwiperSlide>
+                  <img src={image.image.url} />
+                </SwiperSlide>
+              ))}
+              {/* <SwiperSlide>
+                <img src={product?.images[0].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={product?.images[1].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={product?.images[2].image.url} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+              </SwiperSlide> */}
+            </Swiper>
+            {/* <div className="flex justify-center w-full mb-2 bg-white">
               <Image
                 width={500}
                 height={500}
@@ -322,7 +391,7 @@ const ProductPage = ({
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col flex-1 h-full gap-4 px-4">
             <div className="flex flex-row justify-between w-full ">
