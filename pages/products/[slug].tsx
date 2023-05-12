@@ -5,9 +5,13 @@ import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql, useQuery } from "@apollo/client";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import {
+  GetServerSideProps,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ReactStars from "react-stars";
 
 import { Review } from "@/components/Review/Review";
@@ -76,38 +80,90 @@ export interface Review {
   id: string;
 }
 
-export async function getStaticPaths() {
-  const { data } = await apolloClient.query<GetProductsSlugsResponse>({
-    query: gql`
-      query GetProductsSlugs {
-        products(first: 24) {
-          slug
-        }
-      }
-    `,
-  });
+// export async function getStaticPaths() {
+//   const { data } = await apolloClient.query<GetProductsSlugsResponse>({
+//     query: gql`
+//       query GetProductsSlugs {
+//         products(first: 24) {
+//           slug
+//         }
+//       }
+//     `,
+//   });
 
-  return {
-    paths: data.products.map((product) => {
-      return {
-        params: {
-          slug: product.slug,
-        },
-      };
-    }),
-    fallback: false,
-  };
-}
+//   return {
+//     paths: data.products.map((product) => {
+//       return {
+//         params: {
+//           slug: product.slug,
+//         },
+//       };
+//     }),
+//     fallback: false,
+//   };
+// }
 
-export const getStaticProps = async ({
-  params,
-}: GetStaticPropsContext<InferGetStaticPathsType<typeof getStaticPaths>>) => {
-  if (!params?.slug) {
-    return {
-      props: {},
-      notFound: true,
-    };
-  }
+// export const getStaticProps = async ({
+//   params,
+// }: GetStaticPropsContext<InferGetStaticPathsType<typeof getStaticPaths>>) => {
+//   if (!params?.slug) {
+//     return {
+//       props: {},
+//       notFound: true,
+//     };
+//   }
+//   const { data } = await apolloClient.query<GetProductDetailResponse>({
+//     variables: {
+//       slug: params.slug,
+//     },
+//     query: gql`
+//       query GetProductDetailBySlug($slug: String) {
+//         product(where: { slug: $slug }) {
+//           id
+//           sale
+//           slug
+//           title
+//           description
+//           sport
+//           category
+//           tags
+//           sizes
+//           prices {
+//             id
+//             price
+//             date
+//           }
+//           rating
+//           images {
+//             image {
+//               id
+//               url
+//             }
+//             alt
+//           }
+//           reviews {
+//             user
+//             content
+//             rating
+//             updatedAt
+//           }
+//         }
+//       }
+//     `,
+//   });
+
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// };
+
+type Params = {
+  slug: string;
+};
+
+export async function getServerSideProps({ params }: any) {
   const { data } = await apolloClient.query<GetProductDetailResponse>({
     variables: {
       slug: params.slug,
@@ -153,7 +209,7 @@ export const getStaticProps = async ({
       data,
     },
   };
-};
+}
 
 const tagsQuery = gql`
   query getProductsByTags($tags: [String!], $id: ID) {
@@ -178,9 +234,7 @@ const tagsQuery = gql`
   }
 `;
 
-const ProductPage = ({
-  data,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const ProductPage = ({ data }: any) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
@@ -194,6 +248,19 @@ const ProductPage = ({
   } = useQuery(tagsQuery, {
     variables: { tags: data?.product.tags, id: data?.product.id },
   });
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    scrollContainer();
+    //window.scrollTo(0, 0);
+  }, [data]);
+  const scrollContainer = () => {
+    containerRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    //window.scrollTo(0, 0);
+  };
 
   const toggleIsFavourite = () => {
     setIsFavourite((prevState) => !prevState);
@@ -284,7 +351,7 @@ const ProductPage = ({
           },
         ]}
       />
-      <div className="flex-col w-full">
+      <div ref={containerRef} className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
           <div className="flex flex-col flex-1">
             <div className="flex justify-center w-full mb-2 bg-white">
@@ -446,7 +513,7 @@ const ProductPage = ({
                 button to the right.{" "}
               </span>
             ) : (
-              product.reviews.map((review) => (
+              product.reviews.map((review: any) => (
                 <Review
                   key={review.id}
                   id={review.id}
