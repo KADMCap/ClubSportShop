@@ -4,39 +4,28 @@ import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql, useQuery } from "@apollo/client";
-import {
-  GetServerSideProps,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { gql } from "@apollo/client";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactStars from "react-stars";
 
 import { Review } from "@/components/Review/Review";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
-import reviews from "../../mocks/reviews.json";
 import mockedUsers from "../../mocks/users.json";
 import { AddReviewModal } from "@/components/AddReviewModal";
-
-interface GetProductsSlugsResponse {
-  products: Product[];
-}
-
-interface Product {
-  slug: string;
-}
-
-export type InferGetStaticPathsType<T> = T extends () => Promise<{
-  paths: Array<{ params: infer R }>;
-}>
-  ? R
-  : never;
+import {
+  Asset,
+  GetProductDetailBySlugQuery,
+  GetProductsByTagsQueryVariables,
+  Image as ImageType,
+  Product,
+  Sizes,
+} from "@/graphql/generated/graphql";
 
 export interface GetProductDetailResponse {
-  product: ProductDetail;
+  product: Product;
 }
 
 export interface ProductDetail {
@@ -56,13 +45,8 @@ export interface ProductDetail {
 }
 
 export interface ImageElement {
-  image: ImageImage;
+  image: Asset;
   alt: string;
-}
-
-export interface ImageImage {
-  id: string;
-  url: string;
 }
 
 export interface Price {
@@ -74,99 +58,15 @@ export interface Price {
 export interface Review {
   user: string;
   rating: number;
-  date: string;
   content: string;
   updatedAt: string;
   id: string;
 }
 
-// export async function getStaticPaths() {
-//   const { data } = await apolloClient.query<GetProductsSlugsResponse>({
-//     query: gql`
-//       query GetProductsSlugs {
-//         products(first: 24) {
-//           slug
-//         }
-//       }
-//     `,
-//   });
-
-//   return {
-//     paths: data.products.map((product) => {
-//       return {
-//         params: {
-//           slug: product.slug,
-//         },
-//       };
-//     }),
-//     fallback: false,
-//   };
-// }
-
-// export const getStaticProps = async ({
-//   params,
-// }: GetStaticPropsContext<InferGetStaticPathsType<typeof getStaticPaths>>) => {
-//   if (!params?.slug) {
-//     return {
-//       props: {},
-//       notFound: true,
-//     };
-//   }
-//   const { data } = await apolloClient.query<GetProductDetailResponse>({
-//     variables: {
-//       slug: params.slug,
-//     },
-//     query: gql`
-//       query GetProductDetailBySlug($slug: String) {
-//         product(where: { slug: $slug }) {
-//           id
-//           sale
-//           slug
-//           title
-//           description
-//           sport
-//           category
-//           tags
-//           sizes
-//           prices {
-//             id
-//             price
-//             date
-//           }
-//           rating
-//           images {
-//             image {
-//               id
-//               url
-//             }
-//             alt
-//           }
-//           reviews {
-//             user
-//             content
-//             rating
-//             updatedAt
-//           }
-//         }
-//       }
-//     `,
-//   });
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// };
-
-type Params = {
-  slug: string;
-};
-
-export async function getServerSideProps({ params }: any) {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { data } = await apolloClient.query<GetProductDetailResponse>({
     variables: {
-      slug: params.slug,
+      slug: params?.slug,
     },
     query: gql`
       query GetProductDetailBySlug($slug: String) {
@@ -203,52 +103,57 @@ export async function getServerSideProps({ params }: any) {
       }
     `,
   });
-
+  console.log("data1", data);
+  const tagsProducts =
+    await apolloClient.query<GetProductsByTagsQueryVariables>({
+      variables: {
+        tags: data?.product?.tags,
+        id: data?.product?.id,
+      },
+      query: gql`
+        query getProductsByTags($tags: [String!], $id: ID) {
+          products(where: { tags_contains_some: $tags, id_not: $id }) {
+            id
+            sizes
+            slug
+            title
+            prices {
+              id
+              price
+              date
+            }
+            tags
+            images {
+              image {
+                url
+                id
+              }
+            }
+          }
+        }
+      `,
+    });
+  console.log("tags", tagsProducts);
   return {
     props: {
       data,
+      tagsProducts: tagsProducts.data,
     },
   };
-}
+};
 
-const tagsQuery = gql`
-  query getProductsByTags($tags: [String!], $id: ID) {
-    products(where: { tags_contains_some: $tags, id_not: $id }) {
-      id
-      sizes
-      slug
-      title
-      prices {
-        id
-        price
-        date
-      }
-      tags
-      images {
-        image {
-          url
-          id
-        }
-      }
-    }
-  }
-`;
-
-const ProductPage = ({ data }: any) => {
+const ProductPage = ({
+  data,
+  tagsProducts,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const dispatch = useAppDispatch();
-  const {
-    loading,
-    error,
-    data: ProductsByTagData,
-  } = useQuery(tagsQuery, {
-    variables: { tags: data?.product.tags, id: data?.product.id },
-  });
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const product = data?.product;
 
   useEffect(() => {
     scrollContainer();
@@ -297,12 +202,6 @@ const ProductPage = ({ data }: any) => {
     console.log("No product found");
     return;
   }
-
-  const product = data?.product;
-  const tags = product.tags;
-  const productsFromTags = { ...ProductsByTagData };
-
-  console.log("reviews arr, ", product.reviews);
 
   return (
     <Layout>
@@ -367,7 +266,7 @@ const ProductPage = ({ data }: any) => {
               />
             </div>
             <div className="flex gap-4">
-              {product.images.map((image: any, id: any) => (
+              {product.images.map((image: ImageType, id: number) => (
                 <div
                   key={id}
                   className={`border-2 ${
@@ -384,8 +283,8 @@ const ProductPage = ({ data }: any) => {
                       objectFit: "contain",
                       height: "180px",
                     }}
-                    src={image.image.url}
-                    alt={image.alt}
+                    src={image.image?.url || ""}
+                    alt={image.alt || ""}
                   />
                 </div>
               ))}
@@ -421,7 +320,7 @@ const ProductPage = ({ data }: any) => {
             <span>{product.description}</span>
 
             <div className="grid flex-1 w-32 grid-cols-4 gap-1">
-              {product.sizes?.map((size: any) => (
+              {product.sizes?.map((size: Sizes) => (
                 <Button
                   key={size}
                   onClick={() =>
@@ -468,30 +367,22 @@ const ProductPage = ({ data }: any) => {
             <span className="font-bold">Similar Products</span>
           </div>
           <div className="flex flex-row gap-2 overflow-x-scroll w-full min-h-[320px]">
-            {loading ? (
-              <div className="ml-8 text-darkBlue text-md">
-                Loading similar products...
-              </div>
-            ) : (
-              <>
-                {productsFromTags.products
-                  .slice(0, 5)
-                  .map((product: ProductDetail) => (
-                    <div key={product.id} className="flex py-2 min-w-[268px]">
-                      <ProductCard
-                        id={product.id}
-                        title={product.title}
-                        slug={product.slug}
-                        image={product.images[0].image.url}
-                        prices={product.prices}
-                        sale={product.sale}
-                        sizes={product.sizes}
-                        category={product.category}
-                      />
-                    </div>
-                  ))}
-              </>
-            )}
+            {tagsProducts?.products
+              .slice(0, 5)
+              .map((product: ProductDetail) => (
+                <div key={product.id} className="flex py-2 min-w-[268px]">
+                  <ProductCard
+                    id={product.id}
+                    title={product.title}
+                    slug={product.slug}
+                    image={product.images[0].image.url}
+                    prices={product.prices}
+                    sale={product.sale}
+                    sizes={product.sizes}
+                    category={product.category}
+                  />
+                </div>
+              ))}
           </div>
         </div>
         <div>
