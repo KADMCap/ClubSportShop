@@ -1,8 +1,8 @@
 import { HeaderContext } from "@/context/HeaderContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "../../../Icons";
+import React, { useContext, useLayoutEffect, useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@/components/Icons";
 
 interface Props {
   title: string;
@@ -15,30 +15,28 @@ interface Props {
 
 export const AccordionLi = ({ title, icon, links }: Props) => {
   const [active, setActive] = useState(false);
-  const contentRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
 
   const splitPath = (pathname: string) => pathname.split("/")[1];
+  console.log(router.pathname);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.style.maxHeight = active
-        ? `${contentRef.current.scrollHeight}px`
-        : "0px";
-    }
+  useLayoutEffect(() => {
     if (splitPath(router.pathname) === splitPath(links[0].pathname)) {
       setActive(true);
     }
-  }, [contentRef, active, router, links]);
+  }, [router, links]);
 
   const toogleActive = () => {
     setActive(!active);
   };
   return (
     <div
-      className={`flex flex-col w-full rounded-lg transition ease-in ${
-        active && "bg-primaryBlue"
+      className={`flex flex-col w-full rounded-lg transition ease-in 
+      } ${
+        (splitPath(router.pathname) === splitPath(links[0].pathname) ||
+          active) &&
+        "bg-primaryBlue"
       }`}
     >
       <button
@@ -55,8 +53,9 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
       </button>
 
       <div
-        ref={contentRef}
-        className="flex flex-col px-4 overflow-hidden transition-all ease-in"
+        className={`${
+          !active && "hidden"
+        } flex-col flex px-4 overflow-hidden h-auto"`}
       >
         {links.map(({ title, pathname }, index) => (
           <Link

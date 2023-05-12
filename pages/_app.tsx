@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { DefaultSeo } from "next-seo";
+import React from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ const russo = Russo_One({
 });
 
 const client = new QueryClient();
+if (typeof window === "undefined") React.useLayoutEffect = React.useEffect; // for Tickets dropdown (useLayoutEffect has warning on ssr site i.e products/slug but withour useLayoutEffect Tickets dropdown are blinking because of re-render sidebar)
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
