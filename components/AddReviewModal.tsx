@@ -140,6 +140,7 @@ export const AddReviewModal = ({
                   <div className="flex justify-center w-full mb-2 bg-white">
                     {product.images.slice(0, 2).map((product) => (
                       <Image
+                        key={product.image.url}
                         width={400}
                         height={400}
                         style={{

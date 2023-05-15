@@ -5,26 +5,34 @@ import ProductCard from "@/components/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReactStars from "react-stars";
 
 import { AddReviewModal } from "@/components/AddReviewModal";
 import { Review } from "@/components/Review/Review";
-import { addItemToCart } from "@/redux/slices/cartSlice";
-import { useAppDispatch } from "@/redux/store";
-import mockedUsers from "../../mocks/users.json";
 import {
   Asset,
-  GetProductDetailBySlugQuery,
   GetProductsByTagsQueryVariables,
-  Image as ImageType,
   Product,
   Sizes,
 } from "@/graphql/generated/graphql";
+import { addItemToCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/redux/store";
 import { NextSeo, ProductJsonLd } from "next-seo";
-import Swiper, { FreeMode, Navigation, Thumbs } from "swiper";
-import { SwiperRef, SwiperSlide } from "swiper/react";
+import { type Swiper as SwiperRef } from "swiper";
+import mockedUsers from "../../mocks/users.json";
+
+// Import Swiper React components
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+
+import { ImageSwiper } from "@/components/ImageSwiper";
+
+// import required modules
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -256,7 +264,9 @@ const ProductPage = ({
       />
       <div ref={containerRef} className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
-          <div className="w-1/2 px-12"></div>
+          <div className="w-1/2 px-12">
+            <ImageSwiper images={product.images} />
+          </div>
           <div className="flex flex-col flex-1 h-full gap-4 px-4">
             <div className="flex flex-row justify-between w-full ">
               <span className="font-bold">{product.title}</span>
