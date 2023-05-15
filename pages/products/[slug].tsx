@@ -1,4 +1,3 @@
-import { NextSeo, ProductJsonLd } from "next-seo";
 import { Button } from "@/components/Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
@@ -6,23 +5,34 @@ import ProductCard from "@/components/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReactStars from "react-stars";
 
-import { Review } from "@/components/Review/Review";
-import { addItemToCart } from "@/redux/slices/cartSlice";
-import { useAppDispatch } from "@/redux/store";
-import mockedUsers from "../../mocks/users.json";
 import { AddReviewModal } from "@/components/AddReviewModal";
+import { Review } from "@/components/Review/Review";
 import {
   Asset,
-  GetProductDetailBySlugQuery,
   GetProductsByTagsQueryVariables,
-  Image as ImageType,
   Product,
   Sizes,
 } from "@/graphql/generated/graphql";
+import { addItemToCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/redux/store";
+import { NextSeo, ProductJsonLd } from "next-seo";
+import { type Swiper as SwiperRef } from "swiper";
+import mockedUsers from "../../mocks/users.json";
+
+// Import Swiper React components
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+
+import { ImageSwiper } from "@/components/ImageSwiper";
+
+// import required modules
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -151,6 +161,8 @@ const ProductPage = ({
   const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const swiperRef = useRef<SwiperRef>();
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
@@ -252,43 +264,8 @@ const ProductPage = ({
       />
       <div ref={containerRef} className="flex-col w-full">
         <div className="flex flex-col p-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
-          <div className="flex flex-col flex-1">
-            <div className="flex justify-center w-full mb-2 bg-white">
-              <Image
-                width={500}
-                height={500}
-                style={{
-                  objectFit: "contain",
-                  height: "350px",
-                }}
-                src={product.images[selectedImageNumber].image.url}
-                alt={product.images[selectedImageNumber].alt}
-              />
-            </div>
-            <div className="flex gap-4">
-              {product.images.map((image: ImageType, id: number) => (
-                <div
-                  key={id}
-                  className={`border-2 ${
-                    id === selectedImageNumber
-                      ? `border-blue-400`
-                      : "border-white"
-                  }`}
-                  onClick={() => onSelectImage(id)}
-                >
-                  <Image
-                    width={180}
-                    height={180}
-                    style={{
-                      objectFit: "contain",
-                      height: "180px",
-                    }}
-                    src={image.image?.url || ""}
-                    alt={image.alt || ""}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="w-1/2 px-12">
+            <ImageSwiper images={product.images} />
           </div>
           <div className="flex flex-col flex-1 h-full gap-4 px-4">
             <div className="flex flex-row justify-between w-full ">
