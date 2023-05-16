@@ -1,11 +1,11 @@
 import { ThemeContext } from "@/context/ThemeContext";
 import React, { useContext, useState } from "react";
-import { NotificationPopup } from "../NotificationPopup";
+import { NotificationPopup } from "../Modals/NotificationPopup";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { CartDrawer } from "../Cart/CartDrawer";
-import { FavoriteModal } from "../FavoriteModal";
+import { FavoriteModal } from "../Modals/FavoriteModal";
 import { useAppSelector } from "@/redux/store";
 import { selectedTheme } from "@/redux/slices/themeSlice";
 

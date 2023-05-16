@@ -1,6 +1,6 @@
 import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { Layout } from "@/components/Layout";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/Products/ProductCard";
 import { useQuery, gql } from "@apollo/client";
 
 export default function SalesPage() {

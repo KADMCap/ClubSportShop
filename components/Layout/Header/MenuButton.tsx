@@ -8,8 +8,6 @@ export const MenuButton = () => {
   const openSidebar = useAppSelector(sidebarIsOpen);
   const dispatch = useAppDispatch();
 
-  console.log(openSidebar);
-
   const handleToggleSidebarClick = () => {
     dispatch(setOpenSidebar());
   };

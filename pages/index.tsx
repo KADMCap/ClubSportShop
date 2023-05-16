@@ -1,6 +1,6 @@
 import { Banner } from "@/components/Banner/Banner";
 import { Layout } from "@/components/Layout";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/Products/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
 import { InferGetServerSidePropsType } from "next";
@@ -105,7 +105,6 @@ export default function Home({
           </section>
           <section className="flex flex-col py-4">
             <p className="font-semibold text-md">Trending</p>
-            {/* <div className="grid grid-flow-row grid-rows-1 gap-2 overflow-x-scroll auto-cols-auto"> */}
             <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px]">
               {popular?.products.map((product: any) => (
                 <div key={product.id} className="flex py-2 grow min-w-[268px]">

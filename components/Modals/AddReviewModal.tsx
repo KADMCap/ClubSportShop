@@ -8,13 +8,13 @@ import {
   ChangeEvent,
 } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CloseIcon } from "./Icons";
+import { CloseIcon } from "../Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import cartSlice from "@/redux/slices/cartSlice";
 import { ProductDetail } from "@/pages/products/[slug]";
 import Image from "next/image";
 import ReactStars from "react-stars";
-import { Button } from "./Buttons/Button";
+import { Button } from "../Buttons/Button";
 import { apolloClient } from "@/graphql/apolloClient";
 import { gql } from "@apollo/client";
 
@@ -63,7 +63,6 @@ export const AddReviewModal = ({
   };
 
   const onSubmitReview = async () => {
-    console.log("on submit Review");
     if (reviewText === "") {
       setContentError("Add your review!");
       return;
@@ -82,7 +81,7 @@ export const AddReviewModal = ({
         },
       },
     });
-    console.log("data", data);
+
     onCloseAddReviewDialog();
   };
 

@@ -1,6 +1,6 @@
 import { Logo } from "./Logo";
 import { MenuButton } from "./MenuButton";
-import { RightSide } from "./RightSide";
+import { HeaderActions } from "./HeaderActions";
 import { Search } from "./Search";
 import { SearchMobile } from "./SearchMobile";
 
@@ -16,7 +16,7 @@ export const Header = () => {
         <Search />
       </div>
       <div className="flex flex-row items-center -z-10 sm:z-1">
-        <RightSide />
+        <HeaderActions />
       </div>
     </header>
   );

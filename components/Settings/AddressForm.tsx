@@ -55,9 +55,7 @@ export const AddressForm = ({
     setValue("street", street);
   }, []);
 
-  const onSubmit = () => {
-    console.log("onSubmit");
-  };
+  const onSubmit = () => {};
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" value="10009929" {...register("orderId")} />

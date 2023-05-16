@@ -33,7 +33,7 @@ import {
   OtherIcon,
   AllIcon,
 } from "@/components/Icons";
-import { NotificationPopup } from "@/components/NotificationPopup";
+import { NotificationPopup } from "@/components/Modals/NotificationPopup";
 
 const IconsPage = () => {
   return (

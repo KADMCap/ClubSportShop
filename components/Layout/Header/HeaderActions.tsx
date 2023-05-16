@@ -5,7 +5,6 @@ import {
   SearchIcon,
 } from "@/components/Icons";
 import { useCartCount } from "@/hooks/useCartCount";
-import { cartItems } from "@/redux/slices/cartSlice";
 import {
   setOpenCart,
   setOpenFavoriteModal,
@@ -14,7 +13,7 @@ import {
 } from "@/redux/slices/headerSlice";
 import { useAppDispatch } from "@/redux/store";
 
-export const RightSide = () => {
+export const HeaderActions = () => {
   const dispatch = useAppDispatch();
   const { cartCount } = useCartCount();
 

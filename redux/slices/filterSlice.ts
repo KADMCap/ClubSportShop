@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import React from "react";
 import { RootState } from "../store";
 
 type filterState = {

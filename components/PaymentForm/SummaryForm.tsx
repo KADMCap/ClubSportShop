@@ -43,7 +43,7 @@ export const SummaryForm = () => {
         },
       },
     });
-    console.log(response.data.createOrder.id);
+
     if (response) {
       router.push("/payment?step=2");
       dispatch(
