@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "generate-graphql": "graphql-codegen --config codegen.yml"
+    "generate-graphql": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=./.env.local"
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",
@@ -43,6 +43,9 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/client-preset": "3.0.1",
+    "@graphql-codegen/introspection": "3.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@types/react-stars": "^2.2.1",
     "autoprefixer": "^10.4.14",
     "eslint-config-prettier": "^8.8.0",
@@ -50,9 +53,7 @@
     "lint-staged": "^13.2.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.6",
-    "tailwindcss": "^3.2.7",
-    "@graphql-codegen/introspection": "3.0.1",
-    "@graphql-codegen/client-preset": "3.0.1"
+    "tailwindcss": "^3.2.7"
   },
   "lint-staged": {
     "*.{js, jsx, ts, tsx}": "eslint --cache --fix",
