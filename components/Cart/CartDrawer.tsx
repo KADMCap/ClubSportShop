@@ -8,7 +8,6 @@ import { cartIsOpen } from "@/redux/slices/headerSlice";
 import { setOpenCart } from "@/redux/slices/headerSlice";
 
 export const CartDrawer = () => {
-  // const { openCart } = useContext(HeaderContext);
   const openCart = useAppSelector(cartIsOpen);
   const cart = useAppSelector(cartItems);
   const dispatch = useAppDispatch();

@@ -3,7 +3,7 @@ import { useCartCount } from "@/hooks/useCartCount";
 export const SummaryBox = () => {
   const { totalPrice } = useCartCount();
 
-  const discout = 0; // to change coupon code value
+  const discout = 0;
 
   return (
     <div>

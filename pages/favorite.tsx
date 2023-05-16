@@ -41,7 +41,6 @@ export default function FavoritePage() {
     const data = await apolloClient.mutate({
       mutation: createOrderMutation,
     });
-    console.log("mutation", data);
   };
   return (
     <Layout>

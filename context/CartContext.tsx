@@ -26,7 +26,6 @@ const getCartItemsFromStorage = () => {
     const items = JSON.parse(itemsFromLocalStorage);
     return items;
   } catch (error) {
-    console.log(error);
     return;
   }
 };

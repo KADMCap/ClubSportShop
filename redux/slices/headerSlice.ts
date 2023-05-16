@@ -22,7 +22,6 @@ const headerSlice = createSlice({
   initialState,
   reducers: {
     setOpenCart: (state, action: PayloadAction<string | undefined>) => {
-      console.log("setopencart");
       state.openCart = !state.openCart;
     },
     setOpenSidebar: (state, action: PayloadAction<string | undefined>) => {

@@ -19,7 +19,6 @@ export const AccordionLi = ({ title, icon, links }: Props) => {
   const { openSidebar, setOpenSidebar } = useContext(HeaderContext);
 
   const splitPath = (pathname: string) => pathname.split("/")[1];
-  console.log(router.pathname);
 
   useLayoutEffect(() => {
     if (splitPath(router.pathname) === splitPath(links[0].pathname)) {

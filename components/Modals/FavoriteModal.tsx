@@ -1,9 +1,9 @@
 import { useState, Fragment, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { HeaderContext } from "@/context/HeaderContext";
-import ProductCard from "./ProductCard";
+import ProductCard from "../Products/ProductCard";
 import { useQuery } from "react-query";
-import { CloseIcon } from "./Icons";
+import { CloseIcon } from "../Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   favoriteModalIsOpen,

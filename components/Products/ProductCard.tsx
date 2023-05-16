@@ -2,8 +2,8 @@ import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
 import React, { useState } from "react";
-import { Button, LinkButton } from "./Buttons/Button";
-import { HeartIcon, HeartOutlinedIcon } from "./Icons";
+import { Button, LinkButton } from "../Buttons/Button";
+import { HeartIcon, HeartOutlinedIcon } from "../Icons";
 
 type ProductCardProps = {
   id: string;
@@ -54,7 +54,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const onSelectSize = (size: string) => {
-    console.log({ size });
     setSelectedSize(size);
   };
 
@@ -114,7 +113,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="grid w-full grid-cols-2 gap-2">
         <LinkButton href={`/products/${slug}`} variant="secondary" full>
           <p className="text-sm font-bold text-center">DETAILS</p>
-          {/* <p className="flex text-sm font-bold md:hidden">D</p> */}
         </LinkButton>
         <Button onClick={handleAddToCart} full className="">
           <p className="text-sm font-bold">ADD TO CART</p>

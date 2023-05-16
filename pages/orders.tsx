@@ -1,7 +1,5 @@
 import { Layout } from "@/components/Layout";
 import { OrderBox } from "@/components/Orders/OrderBox";
-import React from "react";
-import orders from "@/mocks/orders.json";
 import { gql, useQuery } from "@apollo/client";
 
 interface Order {
@@ -45,8 +43,6 @@ const query = gql`
 
 export default function OrdersPage() {
   const { loading, error, data } = useQuery(query);
-
-  console.log({ data });
 
   if (loading) {
     return (

@@ -1,16 +1,13 @@
+import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
-import ProductCard from "@/components/ProductCard";
-import { InferGetStaticPropsType } from "next";
-import Link from "next/link";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { FiltersContainer } from "@/components/Filters/FiltersContainer";
-import { gql, useQuery } from "@apollo/client";
-import { FilterContext } from "@/context/FilterContext";
-import { useAppSelector } from "@/redux/store";
+import ProductCard from "@/components/Products/ProductCard";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
+import { useAppSelector } from "@/redux/store";
+import { gql, useQuery } from "@apollo/client";
 import { NextSeo } from "next-seo";
+import { useRef, useState } from "react";
+import ReactPaginate from "react-paginate";
 
 const query = gql`
   query GetAllProducts(
@@ -128,20 +125,6 @@ export default function ProductsPage() {
             ))}
           </div>
 
-          {/* {currentPage === 1 && (
-            <div className="flex items-center justify-center p-4">
-              <p>Products on page:</p>
-              <select
-                defaultValue={itemsPerPage}
-                onChange={(e: any) => setItemsPerPage(e.target.value)}
-              >
-                <option>12</option>
-                <option>24</option>
-                <option>36</option>
-              </select>
-            </div>
-          )} */}
-
           <div className="flex items-center justify-center p-4">
             <ReactPaginate
               breakLabel="..."
@@ -153,7 +136,6 @@ export default function ProductsPage() {
               pageRangeDisplayed={3}
               pageCount={Math.ceil(items / 24)}
               previousLabel={<ChevronLeftIcon />}
-              //renderOnZeroPageCount={null}
             />
           </div>
         </div>
