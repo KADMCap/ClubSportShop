@@ -1,4 +1,4 @@
-import { Product, Sizes } from "@/graphql/generated/graphql";
+import { Product, Sizes } from "@/generated/graphql";
 import ReactStars from "react-stars";
 import { HeartIcon, HeartOutlinedIcon } from "../Icons";
 import { ImageSwiper } from "../ImageSwiper";
