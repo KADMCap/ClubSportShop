@@ -12,10 +12,9 @@ import {
   Asset,
   GetProductsByTagsQueryVariables,
   Product,
-} from "@/graphql/generated/graphql";
+} from "@/generated/graphql";
 
 import { NextSeo, ProductJsonLd } from "next-seo";
-import { type Swiper as SwiperRef } from "swiper";
 import mockedUsers from "../../mocks/users.json";
 
 import "swiper/css";
@@ -25,6 +24,7 @@ import "swiper/css/thumbs";
 
 import ProductDetails from "@/components/Products/ProductDetails";
 import { Sizes } from "@/generated/graphql";
+import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -148,11 +148,7 @@ const ProductPage = ({
   data,
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [selectedImageNumber, setSelectedImageNumber] = useState<number>(0);
-
   const [openReviewModal, setOpenReviewModal] = useState(false);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const swiperRef = useRef<SwiperRef>();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
 
@@ -164,10 +160,6 @@ const ProductPage = ({
       behavior: "smooth",
       block: "start",
     });
-  };
-
-  const onSelectImage = (id: number) => {
-    setSelectedImageNumber(id);
   };
 
   const handleOpenAddReviewDialog = () => {

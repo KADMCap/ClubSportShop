@@ -2,6 +2,8 @@ import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
+import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
+import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
 import { useAppSelector } from "@/redux/store";
 import { gql, useQuery } from "@apollo/client";
@@ -80,24 +82,7 @@ export default function ProductsPage() {
       block: "start",
     });
   };
-  if (loading) {
-    return (
-      <Layout>
-        <NextSeo
-          title="Products | ClubSportStore"
-          description="Sports clothes for Football, Basketball, Volleyball, Tennis and Running"
-          canonical="http://localhost:3000/products/"
-        />
-        <div className="flex flex-col w-full">
-          <FiltersContainer />
-          <p>All products: {items}</p>
-          <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-            <p>Loading...</p>;
-          </div>
-        </div>
-      </Layout>
-    );
-  }
+
   return (
     <>
       <Layout>
@@ -110,19 +95,23 @@ export default function ProductsPage() {
           <FiltersContainer />
           <span className="pb-1 text-sm">All products: {items}</span>
           <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-            {data?.products.map((product: any) => (
-              <ProductCard
-                key={product.id}
-                id={product.id.toString()}
-                title={product.title}
-                slug={product.slug}
-                image={product.images[0].image?.url}
-                prices={product.prices}
-                sale={product.sale}
-                sizes={product.sizes}
-                category={product.category}
-              />
-            ))}
+            {loading ? (
+              <ProductCardSkeletonGroup />
+            ) : (
+              data?.products.map((product: any) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id.toString()}
+                  title={product.title}
+                  slug={product.slug}
+                  image={product.images[0].image?.url}
+                  prices={product.prices}
+                  sale={product.sale}
+                  sizes={product.sizes}
+                  category={product.category}
+                />
+              ))
+            )}
           </div>
 
           <div className="flex items-center justify-center p-4">

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
+import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
 import { useQuery, gql } from "@apollo/client";
 
 export default function AuctionsPage() {
@@ -32,18 +33,6 @@ export default function AuctionsPage() {
       }
     }
   `);
-  if (loading) {
-    return (
-      <Layout>
-        <div className="flex flex-col">
-          <div className="text-xl">Auctions Page</div>
-          <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-            <p>Loading...</p>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
 
   if (error) {
     return (
@@ -63,21 +52,25 @@ export default function AuctionsPage() {
       <div className="flex flex-col w-full">
         <div className="text-xl">Auctions Page</div>
         <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-          {data.products.map((product: any) => {
-            return (
-              <ProductCard
-                key={product.id}
-                id={product.id.toString()}
-                title={product.title}
-                slug={product.slug}
-                image={product.images[0].image?.url}
-                prices={product.prices}
-                sale={product.sale}
-                sizes={product.sizes}
-                category={product.category}
-              />
-            );
-          })}
+          {!data ? (
+            <ProductCardSkeletonGroup />
+          ) : (
+            data.products.map((product: any) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  id={product.id.toString()}
+                  title={product.title}
+                  slug={product.slug}
+                  image={product.images[0].image?.url}
+                  prices={product.prices}
+                  sale={product.sale}
+                  sizes={product.sizes}
+                  category={product.category}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </Layout>
