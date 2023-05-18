@@ -24,7 +24,6 @@ import "swiper/css/thumbs";
 
 import ProductDetails from "@/components/Products/ProductDetails";
 import { Sizes } from "@/generated/graphql";
-import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -149,12 +148,32 @@ const ProductPage = ({
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
+  const [roundedAverageRating, setRoundedAverageRating] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
 
   useEffect(() => {
     scrollContainer();
   }, [data]);
+
+  useEffect(() => {
+    const sum = product.reviews.reduce(
+      (total: number, product: any) => total + product.rating,
+      0
+    );
+    console.log("useEffect, ", sum);
+    if (sum === 0) {
+      setAverageRating(0);
+      setRoundedAverageRating(0);
+    } else {
+      const averageRating = sum / product.reviews.length;
+      const roundedAverageRating = Math.round(averageRating * 2) / 2;
+      setAverageRating(averageRating);
+      setRoundedAverageRating(roundedAverageRating);
+    }
+  }, [averageRating, roundedAverageRating, product]);
+
   const scrollContainer = () => {
     containerRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -204,8 +223,8 @@ const ProductPage = ({
         brand="Nike"
         color="white"
         aggregateRating={{
-          ratingValue: product.rating[0],
-          reviewCount: product.rating.length,
+          ratingValue: averageRating,
+          reviewCount: product.reviews.length,
         }}
         offers={[
           {
@@ -221,7 +240,10 @@ const ProductPage = ({
         ]}
       />
       <div ref={containerRef} className="flex-col w-full">
-        <ProductDetails product={product} />
+        <ProductDetails
+          product={product}
+          roundedAverageRating={roundedAverageRating}
+        />
         <div>
           <div className="m-6">
             <span className="font-bold">Similar Products</span>
