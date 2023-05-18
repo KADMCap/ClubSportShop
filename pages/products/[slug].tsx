@@ -135,6 +135,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       `,
     });
 
+  if (!data.product) {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       data,
@@ -187,9 +196,9 @@ const ProductPage = ({
     setOpenReviewModal(false);
   };
 
-  if (!data) {
-    return;
-  }
+  // if (!product) {
+  //   return <p>coś coś</p>;
+  // }
 
   return (
     <Layout>
