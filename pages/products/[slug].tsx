@@ -24,6 +24,7 @@ import "swiper/css/thumbs";
 
 import ProductDetails from "@/components/Products/ProductDetails";
 import { Sizes } from "@/generated/graphql";
+import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -253,10 +254,8 @@ const ProductPage = ({
           roundedAverageRating={roundedAverageRating}
         />
         <div>
-          <div className="m-6">
-            <span className="font-bold">Similar Products</span>
-          </div>
-          <div className="flex flex-row gap-2 overflow-x-scroll w-full min-h-[320px]">
+          <p className="pt-4 font-semibold text-md">Similar Products</p>
+          <ProductContainerScroll>
             {tagsProducts?.products
               .slice(0, 5)
               .map((product: ProductDetail) => (
@@ -273,10 +272,10 @@ const ProductPage = ({
                   />
                 </div>
               ))}
-          </div>
+          </ProductContainerScroll>
         </div>
         <div>
-          <div className="flex flex-row justify-between w-full px-6 my-6">
+          <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
             <Button size="small" onClick={handleOpenAddReviewDialog}>
               ADD REVIEW
@@ -287,7 +286,7 @@ const ProductPage = ({
             openReviewModal={openReviewModal}
             handleCloseAddReviewDialog={handleCloseAddReviewDialog}
           />
-          <div className="flex flex-col gap-4 p-6 dark:bg-primaryDark h-fit rounded-xl">
+          <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {product.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">
                 No reviews yet. You can add the first one by clicking on the
