@@ -10,9 +10,13 @@ import { Button } from "../Buttons/Button";
 
 interface productDetailsProps {
   product: ProductDetail;
+  roundedAverageRating: number;
 }
 
-const ProductDetails = ({ product }: productDetailsProps) => {
+const ProductDetails = ({
+  product,
+  roundedAverageRating,
+}: productDetailsProps) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
@@ -39,6 +43,8 @@ const ProductDetails = ({ product }: productDetailsProps) => {
     );
   };
 
+  console.log(roundedAverageRating);
+
   return (
     <div className="flex flex-col pt-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
       <div className="w-1/2 px-12">
@@ -55,10 +61,10 @@ const ProductDetails = ({ product }: productDetailsProps) => {
           </div>
         </div>
         <div className="flex flex-row items-center gap-1">
-          <span className="text-sm">{product.rating}/5</span>{" "}
-          <ReactStars edit={false} value={product.rating[0]} />
+          <span className="text-sm">{roundedAverageRating}/5</span>{" "}
+          <ReactStars half edit={false} value={roundedAverageRating} />
           <span className="text-sm text-primaryGray">
-            ({`${product.rating.length} reviews`})
+            ({`${product.reviews.length} reviews`})
           </span>
         </div>
         <div className="flex flex-row items-center flex-1 gap-2">
