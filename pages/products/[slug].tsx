@@ -159,10 +159,9 @@ const ProductPage = ({
 
   useEffect(() => {
     const sum = product.reviews.reduce(
-      (total: number, product: any) => total + product.rating,
+      (total: number, review: Review) => total + review.rating,
       0
     );
-    console.log("useEffect, ", sum);
     if (sum === 0) {
       setAverageRating(0);
       setRoundedAverageRating(0);

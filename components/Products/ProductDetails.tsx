@@ -43,8 +43,6 @@ const ProductDetails = ({
     );
   };
 
-  console.log(roundedAverageRating);
-
   return (
     <div className="flex flex-col pt-6 bg-white rounded-xl md:flex-row dark:bg-primaryDark h-fit">
       <div className="w-1/2 px-12">
