@@ -23,7 +23,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
       <FavoriteModal />
       <div className="flex flex-row justify-between w-full h-full">
         <Sidebar />
-        <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] bg-secondaryLight overflow-auto dark:text-white dark:bg-secondaryDark">
+        <main className="flex w-full p-4 text-black h-[calc(100vh_-_64px)] scrollbar-thin scrollbar-track-white scrollbar-thumb-primaryBlue bg-secondaryLight dark:scrollbar-track-primaryDark dark:scrollbar-thumb-darkBlue overflow-auto dark:text-white dark:bg-secondaryDark">
           {children}
         </main>
         <CartDrawer />
