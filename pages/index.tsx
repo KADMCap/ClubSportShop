@@ -86,7 +86,7 @@ export default function Home({
           <section className="flex flex-col py-4">
             <p className="font-semibold text-md">Special offers</p>
             {/* <div className="grid grid-flow-row grid-rows-1 gap-2 overflow-x-scroll auto-cols-auto"> */}
-            <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px]">
+            <div className="flex flex-row gap-2 overflow-x-scroll min-h-[320px] scrollbar-thin scrollbar-track-white scrollbar-thumb-primaryBlue dark:scrollbar-track-primaryDark dark:scrollbar-thumb-darkBlue">
               {special?.products.map((product: any) => (
                 <div key={product.id} className="flex py-2 min-w-[268px]">
                   <ProductCard
