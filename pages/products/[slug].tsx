@@ -10,6 +10,8 @@ import { AddReviewModal } from "@/components/Modals/AddReviewModal";
 import { Review } from "@/components/Review/Review";
 import {
   Asset,
+  GetProductDetailBySlugDocument,
+  GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
   Product,
 } from "@/generated/graphql";
@@ -22,7 +24,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import ProductDetails from "@/components/Products/ProductDetails";
+import { ProductDetails } from "@/components/Products/ProductDetails";
 import { Sizes } from "@/generated/graphql";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 
@@ -70,40 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     variables: {
       slug: params?.slug,
     },
-    query: gql`
-      query GetProductDetailBySlug($slug: String) {
-        product(where: { slug: $slug }) {
-          id
-          sale
-          slug
-          title
-          description
-          sport
-          category
-          tags
-          sizes
-          prices {
-            id
-            price
-            date
-          }
-          rating
-          images {
-            image {
-              id
-              url
-            }
-            alt
-          }
-          reviews {
-            user
-            content
-            rating
-            updatedAt
-          }
-        }
-      }
-    `,
+    query: GetProductDetailBySlugDocument,
   });
 
   const productsByTags =
@@ -112,28 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         tags: data?.product?.tags,
         id: data?.product?.id,
       },
-      query: gql`
-        query getProductsByTags($tags: [String!], $id: ID) {
-          products(where: { tags_contains_some: $tags, id_not: $id }) {
-            id
-            sizes
-            slug
-            title
-            prices {
-              id
-              price
-              date
-            }
-            tags
-            images {
-              image {
-                url
-                id
-              }
-            }
-          }
-        }
-      `,
+      query: GetProductsByTagsDocument,
     });
 
   if (!data.product) {
@@ -196,10 +144,6 @@ const ProductPage = ({
   const handleCloseAddReviewDialog = () => {
     setOpenReviewModal(false);
   };
-
-  // if (!product) {
-  //   return <p>coś coś</p>;
-  // }
 
   return (
     <Layout>
