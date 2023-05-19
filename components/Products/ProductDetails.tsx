@@ -2,7 +2,7 @@ import { Product, Sizes } from "@/generated/graphql";
 import ReactStars from "react-stars";
 import { HeartIcon, HeartOutlinedIcon } from "../Icons";
 import { ImageSwiper } from "../ImageSwiper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
 import { ProductDetail } from "@/pages/products/[slug]";
@@ -18,8 +18,14 @@ export const ProductDetails = ({
   roundedAverageRating,
 }: productDetailsProps) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+
+  useEffect(() => {
+    const sizeFormat = (category: string, size: string) =>
+      category === "Shoes" ? size?.substring(1) : size;
+    setSelectedSize(sizeFormat(product.category, product.sizes[0]));
+  }, [product]);
 
   const dispatch = useAppDispatch();
 
