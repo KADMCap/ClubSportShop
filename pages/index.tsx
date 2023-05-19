@@ -41,7 +41,7 @@ export async function getServerSideProps() {
 
   const popular = await apolloClient.query({
     query: gql`
-      query GetProductByTags {
+      query GetMostSoldProducts {
         products(orderBy: bought_DESC, where: { bought_gt: 0 }) {
           createdAt
           id

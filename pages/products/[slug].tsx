@@ -2,7 +2,6 @@ import { Button } from "@/components/Buttons/Button";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql } from "@apollo/client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useRef, useState } from "react";
 
