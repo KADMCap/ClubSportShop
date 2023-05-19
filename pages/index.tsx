@@ -2,74 +2,20 @@ import { Banner } from "@/components/Banner/Banner";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
+import {
+  GetMostSoldProductsDocument,
+  GetSalesProductsDocument,
+} from "@/generated/graphql";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql } from "@apollo/client";
 import { InferGetServerSidePropsType } from "next";
 
 export async function getServerSideProps() {
   const specialOffers = await apolloClient.query({
-    query: gql`
-      query GetSpecialOffersProducts {
-        products(first: 8, where: { sale: true }) {
-          createdAt
-          id
-          sale
-          slug
-          title
-          description
-          sport
-          category
-          tags
-          sizes
-          prices {
-            id
-            price
-            date
-          }
-          images {
-            image {
-              id
-              url
-            }
-            alt
-          }
-          rating
-        }
-      }
-    `,
+    query: GetSalesProductsDocument,
   });
 
   const popular = await apolloClient.query({
-    query: gql`
-      query GetProductByTags {
-        products(orderBy: bought_DESC, where: { bought_gt: 0 }) {
-          createdAt
-          id
-          sale
-          slug
-          title
-          description
-          sport
-          category
-          tags
-          sizes
-          prices {
-            id
-            price
-            date
-          }
-          images {
-            image {
-              id
-              url
-            }
-            alt
-          }
-          bought
-          rating
-        }
-      }
-    `,
+    query: GetMostSoldProductsDocument,
   });
 
   return { props: { special: specialOffers.data, popular: popular.data } };

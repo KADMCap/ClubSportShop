@@ -4,71 +4,32 @@ import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
 import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
+import { GetAllProductsQuery } from "@/generated/graphql";
+import { GetAllProductsDocument } from "@/generated/graphql";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
 import { useAppSelector } from "@/redux/store";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { NextSeo } from "next-seo";
 import { useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
-
-const query = gql`
-  query GetAllProducts(
-    $first: Int
-    $skip: Int
-    $category: [Category]
-    $sport: [Sport]
-  ) {
-    products(
-      first: $first
-      skip: $skip
-      where: { category_in: $category, sport_in: $sport }
-    ) {
-      createdAt
-      id
-      sale
-      slug
-      title
-      description
-      sport
-      category
-      tags
-      sizes
-      prices {
-        id
-        price
-        date
-      }
-      images {
-        image {
-          id
-          url
-        }
-        alt
-      }
-      rating
-    }
-    productsConnection(where: { category_in: $category, sport_in: $sport }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
 
 export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const sport = useAppSelector(selectedSports);
   const category = useAppSelector(selectedCategory);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { loading, error, data } = useQuery(query, {
-    variables: {
-      first: 24,
-      skip: (currentPage - 1) * 24,
-      category,
-      sport,
-    },
-  });
-  const items = data?.productsConnection.aggregate.count;
+  const { loading, error, data } = useQuery<GetAllProductsQuery>(
+    GetAllProductsDocument,
+    {
+      variables: {
+        first: 24,
+        skip: (currentPage - 1) * 24,
+        category,
+        sport,
+      },
+    }
+  );
+  const items = data?.productsConnection.aggregate.count || 0;
 
   const handlePageClick = (event: any) => {
     window.scrollTo(0, 0);

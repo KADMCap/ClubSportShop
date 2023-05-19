@@ -1,50 +1,21 @@
-import {
-  useState,
-  Fragment,
-  useContext,
-  Dispatch,
-  SetStateAction,
-  ChangeEventHandler,
-  ChangeEvent,
-} from "react";
+import { useState, Fragment, ChangeEvent } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseIcon } from "../Icons";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import cartSlice from "@/redux/slices/cartSlice";
 import { ProductDetail } from "@/pages/products/[slug]";
 import Image from "next/image";
 import ReactStars from "react-stars";
 import { Button } from "../Buttons/Button";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql } from "@apollo/client";
+import {
+  CreateProductReviewMutationResult,
+  CreateReviewDocument,
+} from "@/generated/graphql";
 
 interface AddReviewModalProps {
   product: ProductDetail;
   openReviewModal: boolean;
   handleCloseAddReviewDialog: () => void;
 }
-
-type CreateProductReviewMutation = {
-  review: {
-    user: string;
-    rating: number;
-    date: string;
-    content: string;
-  };
-};
-
-const CreateProductReviewDocument = gql`
-  mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
-    updateProduct(data: { reviews: $reviews }, where: { id: $id }) {
-      id
-      reviews {
-        content
-        createdAt
-        user
-      }
-    }
-  }
-`;
 
 export const AddReviewModal = ({
   product,
@@ -72,8 +43,8 @@ export const AddReviewModal = ({
       return;
     }
 
-    const data = await apolloClient.mutate<CreateProductReviewMutation>({
-      mutation: CreateProductReviewDocument,
+    const data = await apolloClient.mutate<CreateProductReviewMutationResult>({
+      mutation: CreateReviewDocument,
       variables: {
         id: product.id,
         reviews: {
@@ -125,7 +96,7 @@ export const AddReviewModal = ({
             >
               <Dialog.Panel className="w-full max-w-[800px] p-6 overflow-hidden text-left align-middle transition-all transform bg-secondaryLight dark:bg-secondaryDark shadow-xl rounded-2xl">
                 <section className="flex flex-row items-center justify-between pb-4">
-                  <p className="text-lg font-medium leading-6 pl-4 text-black dark:text-white">
+                  <p className="pl-4 text-lg font-medium leading-6 text-black dark:text-white">
                     {product.title}
                   </p>
                   <button
@@ -154,7 +125,7 @@ export const AddReviewModal = ({
                   <div>
                     <label
                       htmlFor="review"
-                      className="block mt-4 mb-2 text-md font-medium text-gray-900 dark:text-white"
+                      className="block mt-4 mb-2 font-medium text-gray-900 text-md dark:text-white"
                     >
                       Add your review
                     </label>
@@ -167,7 +138,7 @@ export const AddReviewModal = ({
                       onChange={handleReviewTextChange}
                     />
                     {contentError && (
-                      <span className="text-red-500 text-sm">
+                      <span className="text-sm text-red-500">
                         {contentError}
                       </span>
                     )}
@@ -175,7 +146,7 @@ export const AddReviewModal = ({
                   <div>
                     <label
                       htmlFor="rating"
-                      className="block mt-4 mb-2  text-md font-medium text-gray-900 dark:text-white"
+                      className="block mt-4 mb-2 font-medium text-gray-900 text-md dark:text-white"
                     >
                       Add your rating
                     </label>
@@ -187,7 +158,7 @@ export const AddReviewModal = ({
                       onChange={setRating}
                     />
                     {ratingError && (
-                      <span className="text-red-500 text-sm">
+                      <span className="text-sm text-red-500">
                         {ratingError}
                       </span>
                     )}

@@ -93,3 +93,108 @@ query GetAllProducts(
     }
   }
 }
+
+query GetSalesProducts {
+  products(first: 24, where: { sale: true }) {
+    createdAt
+    id
+    sale
+    slug
+    title
+    description
+    sport
+    category
+    tags
+    sizes
+    prices {
+      id
+      price
+      date
+    }
+    images {
+      image {
+        id
+        url
+      }
+      alt
+    }
+    rating
+  }
+}
+
+query GetSpecialOffersProducts {
+  products(first: 8, where: { sale: true }) {
+    createdAt
+    id
+    sale
+    slug
+    title
+    description
+    sport
+    category
+    tags
+    sizes
+    prices {
+      id
+      price
+      date
+    }
+    images {
+      image {
+        id
+        url
+      }
+      alt
+    }
+    rating
+  }
+}
+
+query GetMostSoldProducts {
+  products(orderBy: bought_DESC, where: { bought_gt: 0 }) {
+    createdAt
+    id
+    sale
+    slug
+    title
+    description
+    sport
+    category
+    tags
+    sizes
+    prices {
+      id
+      price
+      date
+    }
+    images {
+      image {
+        id
+        url
+      }
+      alt
+    }
+    bought
+    rating
+  }
+}
+
+#ORDERS
+query GetOrders {
+  orders {
+    id
+    createdAt
+    itemsQty
+    orderStatus
+    totalPrice
+    products {
+      id
+      image
+      title
+      size
+      productId
+      price
+      count
+    }
+  }
+}

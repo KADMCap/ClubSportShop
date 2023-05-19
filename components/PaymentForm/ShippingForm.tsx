@@ -7,10 +7,13 @@ import addresses from "@/mocks/shippingAddresses.json";
 import { useCartCount } from "@/hooks/useCartCount";
 import { useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
-import { gql } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { cleanCart, orderData } from "@/redux/slices/cartSlice";
 import { useRouter } from "next/router";
+import {
+  AbandonOrderDocument,
+  CreateAddressToOrderDocument,
+} from "@/generated/graphql";
 
 const schema = yup
   .object({
@@ -25,28 +28,6 @@ const schema = yup
   .required();
 
 type FormData = yup.InferType<typeof schema>;
-
-const createAddressToOrderMutation = gql`
-  mutation CreateAddressToOrder(
-    $address: AddressOrderUpdateOneInlineInput
-    $id: ID
-  ) {
-    updateOrder(
-      data: { orderStatus: Shipped, address: $address }
-      where: { id: $id }
-    ) {
-      id
-    }
-  }
-`;
-
-const abandonOrderMutation = gql`
-  mutation AbandonOrder($id: ID) {
-    updateOrder(data: { orderStatus: Abandon }, where: { id: $id }) {
-      id
-    }
-  }
-`;
 
 export const ShippingForm = () => {
   const {
@@ -89,7 +70,7 @@ export const ShippingForm = () => {
 
   const onSubmit = async (data: FormData) => {
     const response = await apolloClient.mutate({
-      mutation: createAddressToOrderMutation,
+      mutation: CreateAddressToOrderDocument,
       variables: {
         address: {
           create: {
@@ -113,7 +94,7 @@ export const ShippingForm = () => {
 
   const declineOrder = async () => {
     const response = await apolloClient.mutate({
-      mutation: abandonOrderMutation,
+      mutation: AbandonOrderDocument,
       variables: {
         id: orderInfo.orderId,
       },

@@ -13,7 +13,7 @@ interface productDetailsProps {
   roundedAverageRating: number;
 }
 
-const ProductDetails = ({
+export const ProductDetails = ({
   product,
   roundedAverageRating,
 }: productDetailsProps) => {
@@ -120,5 +120,3 @@ const ProductDetails = ({
     </div>
   );
 };
-
-export default ProductDetails;

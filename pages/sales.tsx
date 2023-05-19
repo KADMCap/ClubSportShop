@@ -2,38 +2,11 @@ import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
-import { gql, useQuery } from "@apollo/client";
+import { GetSalesProductsDocument } from "@/generated/graphql";
+import { useQuery } from "@apollo/client";
 
 export default function SalesPage() {
-  const { loading, error, data } = useQuery(gql`
-    query GetSalesProducts {
-      products(first: 24, where: { sale: true }) {
-        createdAt
-        id
-        sale
-        slug
-        title
-        description
-        sport
-        category
-        tags
-        sizes
-        prices {
-          id
-          price
-          date
-        }
-        images {
-          image {
-            id
-            url
-          }
-          alt
-        }
-        rating
-      }
-    }
-  `);
+  const { loading, error, data } = useQuery(GetSalesProductsDocument);
 
   if (error) {
     return (
