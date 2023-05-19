@@ -1,7 +1,8 @@
 import { Layout } from "@/components/Layout";
 import { OrderBox } from "@/components/Orders/OrderBox";
 import OrderSkeletonGroup from "@/components/Skeletons/Orders/OrderSkeletonGroup";
-import { gql, useQuery } from "@apollo/client";
+import { GetOrdersDocument } from "@/generated/graphql";
+import { useQuery } from "@apollo/client";
 
 interface Order {
   imageSrc: string;
@@ -21,29 +22,8 @@ interface OrderBox {
   items: Order[];
 }
 
-const query = gql`
-  query GetOrders {
-    orders {
-      id
-      createdAt
-      itemsQty
-      orderStatus
-      totalPrice
-      products {
-        id
-        image
-        title
-        size
-        productId
-        price
-        count
-      }
-    }
-  }
-`;
-
 export default function OrdersPage() {
-  const { loading, error, data } = useQuery(query);
+  const { loading, error, data } = useQuery(GetOrdersDocument);
 
   return (
     <>

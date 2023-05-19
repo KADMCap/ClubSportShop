@@ -5,19 +5,10 @@ import { CartItem } from "../Cart/CartItem";
 import { CouponInput } from "../Cart/CouponInput";
 import { SummaryBox } from "../Cart/SummaryBox";
 import { useCartCount } from "@/hooks/useCartCount";
-import { gql } from "@apollo/client";
 import { apolloClient } from "@/graphql/apolloClient";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-
-const createOrderMutation = gql`
-  mutation CreateOrder($order: OrderCreateInput!) {
-    createOrder(data: $order) {
-      id
-      createdAt
-    }
-  }
-`;
+import { CreateOrderDocument } from "@/generated/graphql";
 
 export const SummaryForm = () => {
   const cart = useAppSelector(cartItems);
@@ -30,7 +21,7 @@ export const SummaryForm = () => {
       return router.push("/products");
     }
     const response = await apolloClient.mutate({
-      mutation: createOrderMutation,
+      mutation: CreateOrderDocument,
       variables: {
         order: {
           itemsQty: cartCount,
