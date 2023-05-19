@@ -21,6 +21,9 @@ type Prices = {
   date: string;
 };
 
+const sizeFormat = (category: string, size: string) =>
+  category === "Shoes" ? size?.substring(1) : size;
+
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   title,
@@ -32,7 +35,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
 }) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
-  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>(
+    sizeFormat(category, sizes[0])
+  );
   const price = prices[0]?.price;
   const dispatch = useAppDispatch();
 
@@ -104,6 +109,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <label className="text-xs text-primaryGray">Size</label>
           <select
             className="flex flex-row items-center justify-center text-sm font-semibold outline-none dark:bg-primaryDark"
+            defaultValue={sizeFormat(category, sizes[0])}
             onChange={(e) => onSelectSize(e.target.value)}
           >
             {sizeOptions}
