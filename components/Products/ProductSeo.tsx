@@ -1,9 +1,9 @@
-import { ProductDetail } from "@/pages/products/[slug]";
+import { Product } from "@/generated/graphql";
 import { NextSeo, ProductJsonLd } from "next-seo";
 import React from "react";
 
 interface Props {
-  product: ProductDetail;
+  product: Product;
   averageRating: number;
 }
 
@@ -20,8 +20,8 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
           description: product?.description,
           images: [
             {
-              url: product.images[0].image.url,
-              alt: product.images[0].alt,
+              url: product.images[0].image!.url,
+              alt: product.images[0].alt!,
               type: "image/jpeg",
             },
           ],
@@ -31,9 +31,9 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
       <ProductJsonLd
         productName={product?.title}
         images={[
-          product.images[0].image.url,
-          product.images[1]?.image.url,
-          product.images[2]?.image.url,
+          product.images[0].image!.url,
+          product.images[1]?.image!.url,
+          product.images[2]?.image!.url,
         ]}
         description={product?.description}
         brand="Nike"
@@ -49,7 +49,7 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
             priceValidUntil: "2020-11-05",
           },
           {
-            price: product.prices[0].price * 4.2,
+            price: product.prices[0].price! * 4.2,
             priceCurrency: "PLN",
             priceValidUntil: "2020-09-05",
           },

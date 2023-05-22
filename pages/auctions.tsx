@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
+import { Product } from "@/generated/graphql";
 import { useQuery, gql } from "@apollo/client";
 
 export default function AuctionsPage() {
@@ -26,6 +27,7 @@ export default function AuctionsPage() {
           image {
             id
             url
+            stage
           }
           alt
         }
@@ -55,14 +57,14 @@ export default function AuctionsPage() {
           {!data ? (
             <ProductCardSkeletonGroup />
           ) : (
-            data.products.map((product: any) => {
+            data.products.map((product: Product) => {
               return (
                 <ProductCard
                   key={product.id}
                   id={product.id.toString()}
                   title={product.title}
                   slug={product.slug}
-                  image={product.images[0].image?.url}
+                  image={product.images[0].image!.url}
                   prices={product.prices}
                   sale={product.sale}
                   sizes={product.sizes}

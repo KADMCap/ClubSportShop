@@ -1,15 +1,14 @@
 import { Product, Sizes } from "@/generated/graphql";
-import ReactStars from "react-stars";
-import { HeartIcon, HeartOutlinedIcon } from "../Icons";
-import { ImageSwiper } from "../ImageSwiper";
-import { useEffect, useState } from "react";
 import { addItemToCart } from "@/redux/slices/cartSlice";
 import { useAppDispatch } from "@/redux/store";
-import { ProductDetail } from "@/pages/products/[slug]";
+import { useEffect, useState } from "react";
+import ReactStars from "react-stars";
 import { Button } from "../Buttons/Button";
+import { HeartIcon, HeartOutlinedIcon } from "../Icons";
+import { ImageSwiper } from "../ImageSwiper";
 
 interface productDetailsProps {
-  product: ProductDetail;
+  product: Product;
   roundedAverageRating: number;
 }
 
@@ -40,9 +39,9 @@ export const ProductDetails = ({
     dispatch(
       addItemToCart({
         productId: product.id,
-        price: product.prices[0].price,
+        price: product.prices[0].price!,
         title: product.title,
-        image: product.images[0].image.url,
+        image: product.images[0].image!.url,
         size: selectedSize,
         count: selectedQuantity,
       })
@@ -76,7 +75,7 @@ export const ProductDetails = ({
             ${product.prices[0]?.price?.toFixed(2)}
           </span>
           <span className="text-sm text-primaryGray">
-            <s>{product.sale && "$" + product.prices[1]?.price.toFixed(2)}</s>
+            <s>{product.sale && "$" + product.prices[1].price!.toFixed(2)}</s>
           </span>
         </div>
         <span>{product.description}</span>

@@ -7,8 +7,13 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import SwiperClass from "swiper/types/swiper-class";
 import SwiperCore, { FreeMode, Navigation, Thumbs, Controller } from "swiper";
+import { Image } from "@/generated/graphql";
 
-export function ImageSwiper(images: any) {
+interface ImageSwiperProps {
+  images: Image[];
+}
+
+export function ImageSwiper(images: ImageSwiperProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore>();
   const [firstSwiper, setFirstSwiper] = useState<SwiperClass>();
   const [secondSwiper, setSecondSwiper] = useState<SwiperClass>();
@@ -40,9 +45,9 @@ export function ImageSwiper(images: any) {
         modules={[FreeMode, Navigation, Thumbs, Controller]}
         className="mb-2"
       >
-        {images.images.map((image: any) => (
-          <SwiperSlide key={image.image.url}>
-            <img src={image.image.url} />
+        {images.images.map((image: Image) => (
+          <SwiperSlide key={image.image!.url}>
+            <img src={image.image!.url} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -57,9 +62,9 @@ export function ImageSwiper(images: any) {
         onSwiper={setThumbsSwiper}
         modules={[Navigation, Thumbs, Controller]}
       >
-        {images.images.map((image: any) => (
-          <SwiperSlide className="w-52 flex" key={image.image.url}>
-            <img src={image.image.url} className="h-52" />
+        {images.images.map((image: Image) => (
+          <SwiperSlide className="w-52 flex" key={image.image!.url}>
+            <img src={image.image!.url} className="h-52" />
           </SwiperSlide>
         ))}
       </Swiper>

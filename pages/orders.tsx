@@ -1,18 +1,18 @@
 import { Layout } from "@/components/Layout";
 import { OrderBox } from "@/components/Orders/OrderBox";
 import OrderSkeletonGroup from "@/components/Skeletons/Orders/OrderSkeletonGroup";
-import { GetOrdersDocument } from "@/generated/graphql";
+import { GetOrdersDocument, Order } from "@/generated/graphql";
 import { useQuery } from "@apollo/client";
 
-interface Order {
-  imageSrc: string;
-  alt: string;
-  title: string;
-  size: string;
-  productId: string;
-  price: string;
-  quantity: number;
-}
+// interface Order {
+//   imageSrc: string;
+//   alt: string;
+//   title: string;
+//   size: string;
+//   productId: string;
+//   price: string;
+//   quantity: number;
+// }
 interface OrderBox {
   orderId: string;
   date: string;
@@ -25,6 +25,7 @@ interface OrderBox {
 export default function OrdersPage() {
   const { loading, error, data } = useQuery(GetOrdersDocument);
 
+  console.log("orders data", data);
   return (
     <>
       <Layout>
@@ -34,14 +35,14 @@ export default function OrdersPage() {
             {!data ? (
               <OrderSkeletonGroup />
             ) : (
-              data?.orders?.map((order: any) => (
+              data.orders.map((order: Order) => (
                 <OrderBox
                   key={order.id}
                   orderId={order.id}
                   date={order.createdAt}
-                  itemsQty={order.itemsQty}
-                  totalPrice={order.totalPrice}
-                  status={order.orderStatus}
+                  itemsQty={order.itemsQty!}
+                  totalPrice={order.totalPrice!}
+                  status={order.orderStatus!}
                   items={order.products}
                 />
               ))
