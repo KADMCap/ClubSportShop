@@ -4,13 +4,14 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Button, LinkButton } from "../Buttons/Button";
 import { HeartIcon, HeartOutlinedIcon } from "../Icons";
+import { Price } from "@/generated/graphql";
 
 type ProductCardProps = {
   id: string;
   title: string;
   slug: string;
   image: string;
-  prices: Prices[];
+  prices: Price[] | undefined;
   sale: boolean;
   sizes: string[];
   category: string;
@@ -46,6 +47,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleAddToCart = () => {
+    if (!price) {
+      return;
+    }
     dispatch(
       addItemToCart({
         productId: id,
@@ -102,7 +106,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-row items-center flex-1 gap-2">
           <span className="font-semibold">${price?.toFixed(2)}</span>
           <span className="text-sm text-primaryGray">
-            <s>{sale && "$" + prices[1]?.price.toFixed(2)}</s>
+            <s>{sale && "$" + prices[1].price!.toFixed(2)}</s>
           </span>
         </div>
         <div className="flex flex-col items-center py-1 border rounded-md border-primaryBlue">
@@ -128,7 +132,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="absolute left-0 p-2 rounded-r-md bg-primaryBlue top-1/2">
           <div className="flex flex-col items-center justify-center font-semibold text-white ">
             <p className="text-sm">Sale </p>
-            <p>${(prices[1]?.price - price).toFixed(2)}</p>
+            <p>${(prices[1].price! - price!).toFixed(2)}</p>
           </div>
         </div>
       )}

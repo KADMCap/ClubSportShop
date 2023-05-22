@@ -1,4 +1,4 @@
-import { cartItems } from "@/redux/slices/cartSlice";
+import { cartItem, cartItems } from "@/redux/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { LinkButton } from "../Buttons/Button";
 import { CartItem } from "./CartItem";
@@ -19,7 +19,7 @@ export const CartDrawer = () => {
       } `}
     >
       <div className="flex flex-col gap-1 overflow-y-auto">
-        {cart.map((item: any, index: number) => (
+        {cart.map((item: cartItem, index: number) => (
           <CartItem
             key={`${item.productId}`}
             index={index + 1}

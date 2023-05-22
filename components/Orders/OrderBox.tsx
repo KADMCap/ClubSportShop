@@ -1,23 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { OrderItem } from "./OrderItem";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
+import { OrderStatus, ProductsOrder } from "@/generated/graphql";
 
-interface Order {
-  image: string;
-  alt: string;
-  title: string;
-  size: string;
-  id: string;
-  price: number;
-  count: number;
-}
-interface OrderBox {
+interface OrderBoxProps {
   orderId: string;
   date: string;
   itemsQty: number;
   totalPrice: number;
-  status: "Delivered" | "InProgress" | "Shipped" | "Abandon" | string;
-  items: Order[];
+  status: OrderStatus;
+  items: ProductsOrder[];
 }
 
 export const OrderBox = ({
@@ -27,7 +19,7 @@ export const OrderBox = ({
   totalPrice,
   status,
   items,
-}: OrderBox) => {
+}: OrderBoxProps) => {
   const [open, setOpen] = useState(false);
   const ordersRef = useRef<HTMLDivElement | null>(null);
 
@@ -104,13 +96,13 @@ export const OrderBox = ({
           <OrderItem
             key={item.id}
             index={index + 1}
-            imageSrc={item.image}
-            alt={item.title}
-            title={item.title}
-            size={item.size}
+            imageSrc={item.image!}
+            alt={item.title!}
+            title={item.title!}
+            size={item.size!}
             productId={item.id}
-            price={item.price}
-            count={item.count}
+            price={item.price!}
+            count={item.count!}
           />
         ))}
       </section>

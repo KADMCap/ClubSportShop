@@ -5662,6 +5662,7 @@ export type Review = Node & {
   createdAt: Scalars["DateTime"];
   /** User that created this document */
   createdBy?: Maybe<User>;
+  date: Scalars["Date"];
   /** Get the document in other stages */
   documentInStages: Array<Review>;
   /** List of Review versions */
@@ -5742,6 +5743,7 @@ export type ReviewCreateInput = {
   clhg9a6fo05z201uo5g9xg13i?: InputMaybe<ProductCreateManyInlineInput>;
   content: Scalars["String"];
   createdAt?: InputMaybe<Scalars["DateTime"]>;
+  date: Scalars["Date"];
   rating: Scalars["Int"];
   updatedAt?: InputMaybe<Scalars["DateTime"]>;
   user: Scalars["String"];
@@ -5815,6 +5817,21 @@ export type ReviewManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  date?: InputMaybe<Scalars["Date"]>;
+  /** All values greater than the given value. */
+  date_gt?: InputMaybe<Scalars["Date"]>;
+  /** All values greater than or equal the given value. */
+  date_gte?: InputMaybe<Scalars["Date"]>;
+  /** All values that are contained in given list. */
+  date_in?: InputMaybe<Array<InputMaybe<Scalars["Date"]>>>;
+  /** All values less than the given value. */
+  date_lt?: InputMaybe<Scalars["Date"]>;
+  /** All values less than or equal the given value. */
+  date_lte?: InputMaybe<Scalars["Date"]>;
+  /** Any other value that exists and is not equal to the given value. */
+  date_not?: InputMaybe<Scalars["Date"]>;
+  /** All values that are not contained in given list. */
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars["Date"]>>>;
   documentInStages_every?: InputMaybe<ReviewWhereStageInput>;
   documentInStages_none?: InputMaybe<ReviewWhereStageInput>;
   documentInStages_some?: InputMaybe<ReviewWhereStageInput>;
@@ -5913,6 +5930,8 @@ export enum ReviewOrderByInput {
   ContentDesc = "content_DESC",
   CreatedAtAsc = "createdAt_ASC",
   CreatedAtDesc = "createdAt_DESC",
+  DateAsc = "date_ASC",
+  DateDesc = "date_DESC",
   IdAsc = "id_ASC",
   IdDesc = "id_DESC",
   PublishedAtAsc = "publishedAt_ASC",
@@ -5928,6 +5947,7 @@ export enum ReviewOrderByInput {
 export type ReviewUpdateInput = {
   clhg9a6fo05z201uo5g9xg13i?: InputMaybe<ProductUpdateManyInlineInput>;
   content?: InputMaybe<Scalars["String"]>;
+  date?: InputMaybe<Scalars["Date"]>;
   rating?: InputMaybe<Scalars["Int"]>;
   user?: InputMaybe<Scalars["String"]>;
 };
@@ -5951,6 +5971,7 @@ export type ReviewUpdateManyInlineInput = {
 
 export type ReviewUpdateManyInput = {
   content?: InputMaybe<Scalars["String"]>;
+  date?: InputMaybe<Scalars["Date"]>;
   rating?: InputMaybe<Scalars["Int"]>;
   user?: InputMaybe<Scalars["String"]>;
 };
@@ -6049,6 +6070,21 @@ export type ReviewWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  date?: InputMaybe<Scalars["Date"]>;
+  /** All values greater than the given value. */
+  date_gt?: InputMaybe<Scalars["Date"]>;
+  /** All values greater than or equal the given value. */
+  date_gte?: InputMaybe<Scalars["Date"]>;
+  /** All values that are contained in given list. */
+  date_in?: InputMaybe<Array<InputMaybe<Scalars["Date"]>>>;
+  /** All values less than the given value. */
+  date_lt?: InputMaybe<Scalars["Date"]>;
+  /** All values less than or equal the given value. */
+  date_lte?: InputMaybe<Scalars["Date"]>;
+  /** Any other value that exists and is not equal to the given value. */
+  date_not?: InputMaybe<Scalars["Date"]>;
+  /** All values that are not contained in given list. */
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars["Date"]>>>;
   documentInStages_every?: InputMaybe<ReviewWhereStageInput>;
   documentInStages_none?: InputMaybe<ReviewWhereStageInput>;
   documentInStages_some?: InputMaybe<ReviewWhereStageInput>;
@@ -7731,6 +7767,7 @@ export type CreateProductReviewMutation = {
     id: string;
     stage: Stage;
     user: string;
+    date: any;
     rating: number;
     content: string;
   } | null;
@@ -7761,26 +7798,7 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = {
   __typename?: "Mutation";
-  createOrder?: { __typename?: "Order"; id: string; createdAt: any } | null;
-};
-
-export type CreateAddressToOrderMutationVariables = Exact<{
-  address?: InputMaybe<AddressOrderUpdateOneInlineInput>;
-  id?: InputMaybe<Scalars["ID"]>;
-}>;
-
-export type CreateAddressToOrderMutation = {
-  __typename?: "Mutation";
-  updateOrder?: { __typename?: "Order"; id: string } | null;
-};
-
-export type AbandonOrderMutationVariables = Exact<{
-  id?: InputMaybe<Scalars["ID"]>;
-}>;
-
-export type AbandonOrderMutation = {
-  __typename?: "Mutation";
-  updateOrder?: { __typename?: "Order"; id: string } | null;
+  createOrder?: { __typename?: "Order"; id: string } | null;
 };
 
 export type GetProductDetailBySlugQueryVariables = Exact<{
@@ -7889,132 +7907,13 @@ export type GetAllProductsQuery = {
   };
 };
 
-export type GetSalesProductsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetSalesProductsQuery = {
-  __typename?: "Query";
-  products: Array<{
-    __typename?: "Product";
-    createdAt: any;
-    id: string;
-    sale: boolean;
-    slug: string;
-    title: string;
-    description: string;
-    sport: Sport;
-    category: Category;
-    tags: Array<string>;
-    sizes: Array<Sizes>;
-    rating: Array<number>;
-    prices: Array<{
-      __typename?: "Price";
-      id: string;
-      price?: number | null;
-      date?: any | null;
-    }>;
-    images: Array<{
-      __typename?: "Image";
-      alt?: string | null;
-      image?: { __typename?: "Asset"; id: string; url: string } | null;
-    }>;
-  }>;
-};
-
-export type GetSpecialOffersProductsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetSpecialOffersProductsQuery = {
-  __typename?: "Query";
-  products: Array<{
-    __typename?: "Product";
-    createdAt: any;
-    id: string;
-    sale: boolean;
-    slug: string;
-    title: string;
-    description: string;
-    sport: Sport;
-    category: Category;
-    tags: Array<string>;
-    sizes: Array<Sizes>;
-    rating: Array<number>;
-    prices: Array<{
-      __typename?: "Price";
-      id: string;
-      price?: number | null;
-      date?: any | null;
-    }>;
-    images: Array<{
-      __typename?: "Image";
-      alt?: string | null;
-      image?: { __typename?: "Asset"; id: string; url: string } | null;
-    }>;
-  }>;
-};
-
-export type GetMostSoldProductsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMostSoldProductsQuery = {
-  __typename?: "Query";
-  products: Array<{
-    __typename?: "Product";
-    createdAt: any;
-    id: string;
-    sale: boolean;
-    slug: string;
-    title: string;
-    description: string;
-    sport: Sport;
-    category: Category;
-    tags: Array<string>;
-    sizes: Array<Sizes>;
-    bought: number;
-    rating: Array<number>;
-    prices: Array<{
-      __typename?: "Price";
-      id: string;
-      price?: number | null;
-      date?: any | null;
-    }>;
-    images: Array<{
-      __typename?: "Image";
-      alt?: string | null;
-      image?: { __typename?: "Asset"; id: string; url: string } | null;
-    }>;
-  }>;
-};
-
-export type GetOrdersQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetOrdersQuery = {
-  __typename?: "Query";
-  orders: Array<{
-    __typename?: "Order";
-    id: string;
-    createdAt: any;
-    itemsQty?: number | null;
-    orderStatus?: OrderStatus | null;
-    totalPrice?: number | null;
-    products: Array<{
-      __typename?: "ProductsOrder";
-      id: string;
-      image?: string | null;
-      title?: string | null;
-      size?: string | null;
-      productId?: string | null;
-      price?: number | null;
-      count?: number | null;
-    }>;
-  }>;
-};
-
 export const CreateProductReviewDocument = gql`
   mutation CreateProductReview($review: ReviewCreateInput!) {
     review: createReview(data: $review) {
       id
       stage
       user
+      date
       rating
       content
     }
@@ -8123,7 +8022,6 @@ export const CreateOrderDocument = gql`
   mutation CreateOrder($order: OrderCreateInput!) {
     createOrder(data: $order) {
       id
-      createdAt
     }
   }
 `;
@@ -8169,113 +8067,6 @@ export type CreateOrderMutationResult =
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<
   CreateOrderMutation,
   CreateOrderMutationVariables
->;
-export const CreateAddressToOrderDocument = gql`
-  mutation CreateAddressToOrder(
-    $address: AddressOrderUpdateOneInlineInput
-    $id: ID
-  ) {
-    updateOrder(
-      data: { orderStatus: Shipped, address: $address }
-      where: { id: $id }
-    ) {
-      id
-    }
-  }
-`;
-export type CreateAddressToOrderMutationFn = Apollo.MutationFunction<
-  CreateAddressToOrderMutation,
-  CreateAddressToOrderMutationVariables
->;
-
-/**
- * __useCreateAddressToOrderMutation__
- *
- * To run a mutation, you first call `useCreateAddressToOrderMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateAddressToOrderMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createAddressToOrderMutation, { data, loading, error }] = useCreateAddressToOrderMutation({
- *   variables: {
- *      address: // value for 'address'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useCreateAddressToOrderMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateAddressToOrderMutation,
-    CreateAddressToOrderMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateAddressToOrderMutation,
-    CreateAddressToOrderMutationVariables
-  >(CreateAddressToOrderDocument, options);
-}
-export type CreateAddressToOrderMutationHookResult = ReturnType<
-  typeof useCreateAddressToOrderMutation
->;
-export type CreateAddressToOrderMutationResult =
-  Apollo.MutationResult<CreateAddressToOrderMutation>;
-export type CreateAddressToOrderMutationOptions = Apollo.BaseMutationOptions<
-  CreateAddressToOrderMutation,
-  CreateAddressToOrderMutationVariables
->;
-export const AbandonOrderDocument = gql`
-  mutation AbandonOrder($id: ID) {
-    updateOrder(data: { orderStatus: Abandon }, where: { id: $id }) {
-      id
-    }
-  }
-`;
-export type AbandonOrderMutationFn = Apollo.MutationFunction<
-  AbandonOrderMutation,
-  AbandonOrderMutationVariables
->;
-
-/**
- * __useAbandonOrderMutation__
- *
- * To run a mutation, you first call `useAbandonOrderMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAbandonOrderMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [abandonOrderMutation, { data, loading, error }] = useAbandonOrderMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAbandonOrderMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AbandonOrderMutation,
-    AbandonOrderMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AbandonOrderMutation,
-    AbandonOrderMutationVariables
-  >(AbandonOrderDocument, options);
-}
-export type AbandonOrderMutationHookResult = ReturnType<
-  typeof useAbandonOrderMutation
->;
-export type AbandonOrderMutationResult =
-  Apollo.MutationResult<AbandonOrderMutation>;
-export type AbandonOrderMutationOptions = Apollo.BaseMutationOptions<
-  AbandonOrderMutation,
-  AbandonOrderMutationVariables
 >;
 export const GetProductDetailBySlugDocument = gql`
   query GetProductDetailBySlug($slug: String) {
@@ -8367,7 +8158,6 @@ export const GetProductsByTagsDocument = gql`
     products(where: { tags_contains_some: $tags, id_not: $id }) {
       id
       sizes
-      category
       slug
       title
       prices {
@@ -8533,307 +8323,4 @@ export type GetAllProductsLazyQueryHookResult = ReturnType<
 export type GetAllProductsQueryResult = Apollo.QueryResult<
   GetAllProductsQuery,
   GetAllProductsQueryVariables
->;
-export const GetSalesProductsDocument = gql`
-  query GetSalesProducts {
-    products(first: 24, where: { sale: true }) {
-      createdAt
-      id
-      sale
-      slug
-      title
-      description
-      sport
-      category
-      tags
-      sizes
-      prices {
-        id
-        price
-        date
-      }
-      images {
-        image {
-          id
-          url
-        }
-        alt
-      }
-      rating
-    }
-  }
-`;
-
-/**
- * __useGetSalesProductsQuery__
- *
- * To run a query within a React component, call `useGetSalesProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSalesProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSalesProductsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetSalesProductsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetSalesProductsQuery,
-    GetSalesProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetSalesProductsQuery, GetSalesProductsQueryVariables>(
-    GetSalesProductsDocument,
-    options
-  );
-}
-export function useGetSalesProductsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetSalesProductsQuery,
-    GetSalesProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetSalesProductsQuery,
-    GetSalesProductsQueryVariables
-  >(GetSalesProductsDocument, options);
-}
-export type GetSalesProductsQueryHookResult = ReturnType<
-  typeof useGetSalesProductsQuery
->;
-export type GetSalesProductsLazyQueryHookResult = ReturnType<
-  typeof useGetSalesProductsLazyQuery
->;
-export type GetSalesProductsQueryResult = Apollo.QueryResult<
-  GetSalesProductsQuery,
-  GetSalesProductsQueryVariables
->;
-export const GetSpecialOffersProductsDocument = gql`
-  query GetSpecialOffersProducts {
-    products(first: 8, where: { sale: true }) {
-      createdAt
-      id
-      sale
-      slug
-      title
-      description
-      sport
-      category
-      tags
-      sizes
-      prices {
-        id
-        price
-        date
-      }
-      images {
-        image {
-          id
-          url
-        }
-        alt
-      }
-      rating
-    }
-  }
-`;
-
-/**
- * __useGetSpecialOffersProductsQuery__
- *
- * To run a query within a React component, call `useGetSpecialOffersProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSpecialOffersProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSpecialOffersProductsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetSpecialOffersProductsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetSpecialOffersProductsQuery,
-    GetSpecialOffersProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetSpecialOffersProductsQuery,
-    GetSpecialOffersProductsQueryVariables
-  >(GetSpecialOffersProductsDocument, options);
-}
-export function useGetSpecialOffersProductsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetSpecialOffersProductsQuery,
-    GetSpecialOffersProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetSpecialOffersProductsQuery,
-    GetSpecialOffersProductsQueryVariables
-  >(GetSpecialOffersProductsDocument, options);
-}
-export type GetSpecialOffersProductsQueryHookResult = ReturnType<
-  typeof useGetSpecialOffersProductsQuery
->;
-export type GetSpecialOffersProductsLazyQueryHookResult = ReturnType<
-  typeof useGetSpecialOffersProductsLazyQuery
->;
-export type GetSpecialOffersProductsQueryResult = Apollo.QueryResult<
-  GetSpecialOffersProductsQuery,
-  GetSpecialOffersProductsQueryVariables
->;
-export const GetMostSoldProductsDocument = gql`
-  query GetMostSoldProducts {
-    products(orderBy: bought_DESC, where: { bought_gt: 0 }) {
-      createdAt
-      id
-      sale
-      slug
-      title
-      description
-      sport
-      category
-      tags
-      sizes
-      prices {
-        id
-        price
-        date
-      }
-      images {
-        image {
-          id
-          url
-        }
-        alt
-      }
-      bought
-      rating
-    }
-  }
-`;
-
-/**
- * __useGetMostSoldProductsQuery__
- *
- * To run a query within a React component, call `useGetMostSoldProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMostSoldProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetMostSoldProductsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetMostSoldProductsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetMostSoldProductsQuery,
-    GetMostSoldProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetMostSoldProductsQuery,
-    GetMostSoldProductsQueryVariables
-  >(GetMostSoldProductsDocument, options);
-}
-export function useGetMostSoldProductsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetMostSoldProductsQuery,
-    GetMostSoldProductsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetMostSoldProductsQuery,
-    GetMostSoldProductsQueryVariables
-  >(GetMostSoldProductsDocument, options);
-}
-export type GetMostSoldProductsQueryHookResult = ReturnType<
-  typeof useGetMostSoldProductsQuery
->;
-export type GetMostSoldProductsLazyQueryHookResult = ReturnType<
-  typeof useGetMostSoldProductsLazyQuery
->;
-export type GetMostSoldProductsQueryResult = Apollo.QueryResult<
-  GetMostSoldProductsQuery,
-  GetMostSoldProductsQueryVariables
->;
-export const GetOrdersDocument = gql`
-  query GetOrders {
-    orders {
-      id
-      createdAt
-      itemsQty
-      orderStatus
-      totalPrice
-      products {
-        id
-        image
-        title
-        size
-        productId
-        price
-        count
-      }
-    }
-  }
-`;
-
-/**
- * __useGetOrdersQuery__
- *
- * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOrdersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetOrdersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(
-    GetOrdersDocument,
-    options
-  );
-}
-export function useGetOrdersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetOrdersQuery,
-    GetOrdersQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(
-    GetOrdersDocument,
-    options
-  );
-}
-export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
-export type GetOrdersLazyQueryHookResult = ReturnType<
-  typeof useGetOrdersLazyQuery
->;
-export type GetOrdersQueryResult = Apollo.QueryResult<
-  GetOrdersQuery,
-  GetOrdersQueryVariables
 >;

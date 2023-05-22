@@ -4,7 +4,7 @@ import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
 import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
 import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
-import { GetAllProductsQuery } from "@/generated/graphql";
+import { GetAllProductsQuery, Product } from "@/generated/graphql";
 import { GetAllProductsDocument } from "@/generated/graphql";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
 import { useAppSelector } from "@/redux/store";
@@ -31,7 +31,7 @@ export default function ProductsPage() {
   );
   const items = data?.productsConnection.aggregate.count || 0;
 
-  const handlePageClick = (event: any) => {
+  const handlePageClick = (event: any): void => {
     window.scrollTo(0, 0);
     scrollContainer();
     setCurrentPage(event.selected + 1);
@@ -43,6 +43,12 @@ export default function ProductsPage() {
       block: "start",
     });
   };
+
+  console.log(data);
+
+  if (!data) {
+    return;
+  }
 
   return (
     <>
@@ -59,13 +65,13 @@ export default function ProductsPage() {
             {loading ? (
               <ProductCardSkeletonGroup />
             ) : (
-              data?.products.map((product: any) => (
+              data?.products.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id.toString()}
                   title={product.title}
                   slug={product.slug}
-                  image={product.images[0].image?.url}
+                  image={product.images[0].image!.url}
                   prices={product.prices}
                   sale={product.sale}
                   sizes={product.sizes}

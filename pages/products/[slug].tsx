@@ -12,6 +12,7 @@ import {
   GetProductDetailBySlugDocument,
   GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
+  Image,
   Product,
 } from "@/generated/graphql";
 
@@ -38,14 +39,14 @@ export interface ProductDetail {
   sizes: Sizes[];
   prices: Price[];
   rating: number[];
-  images: ImageElement[];
+  images: Image[];
   reviews: Review[];
 }
 
-export interface ImageElement {
-  image: Asset;
-  alt: string;
-}
+// export interface ImageElement {
+//   image: Asset;
+//   alt: string;
+// }
 
 export interface Price {
   id: string;
@@ -59,6 +60,7 @@ export interface Review {
   content: string;
   updatedAt: string;
   id: string;
+  date: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -150,22 +152,20 @@ const ProductPage = ({
         <div>
           <p className="pt-4 font-semibold text-md">Similar Products</p>
           <ProductContainerScroll>
-            {tagsProducts?.products
-              .slice(0, 5)
-              .map((product: ProductDetail) => (
-                <div key={product.id} className="flex py-2 min-w-[268px]">
-                  <ProductCard
-                    id={product.id}
-                    title={product.title}
-                    slug={product.slug}
-                    image={product.images[0].image.url}
-                    prices={product.prices}
-                    sale={product.sale}
-                    sizes={product.sizes}
-                    category={product.category}
-                  />
-                </div>
-              ))}
+            {tagsProducts?.products.slice(0, 5).map((product: Product) => (
+              <div key={product.id} className="flex py-2 min-w-[268px]">
+                <ProductCard
+                  id={product.id}
+                  title={product.title}
+                  slug={product.slug}
+                  image={product.images[0].image!.url}
+                  prices={product.prices}
+                  sale={product.sale}
+                  sizes={product.sizes}
+                  category={product.category}
+                />
+              </div>
+            ))}
           </ProductContainerScroll>
         </div>
         <div>
@@ -187,7 +187,7 @@ const ProductPage = ({
                 button to the right.{" "}
               </span>
             ) : (
-              product.reviews.map((review: any) => (
+              product.reviews.map((review: Review) => (
                 <Review
                   key={review.id}
                   id={review.id}

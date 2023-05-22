@@ -5,6 +5,7 @@ import { ProductContainerScroll } from "@/components/Products/ProductContainerSc
 import {
   GetMostSoldProductsDocument,
   GetSalesProductsDocument,
+  Product,
 } from "@/generated/graphql";
 import { apolloClient } from "@/graphql/apolloClient";
 import { InferGetServerSidePropsType } from "next";
@@ -33,13 +34,13 @@ export default function Home({
           <section className="flex flex-col py-4">
             <p className="font-semibold text-md">Special offers</p>
             <ProductContainerScroll>
-              {special?.products.map((product: any) => (
+              {special?.products.map((product: Product) => (
                 <div key={product.id} className="flex py-2 min-w-[268px]">
                   <ProductCard
                     id={product.id.toString()}
                     title={product.title}
                     slug={product.slug}
-                    image={product.images[0].image?.url}
+                    image={product.images[0].image!.url}
                     prices={product.prices}
                     sale={product.sale}
                     sizes={product.sizes}
@@ -52,13 +53,13 @@ export default function Home({
           <section className="flex flex-col py-4">
             <p className="font-semibold text-md">Trending</p>
             <ProductContainerScroll>
-              {popular?.products.map((product: any) => (
+              {popular?.products.map((product: Product) => (
                 <div key={product.id} className="flex py-2 grow min-w-[268px]">
                   <ProductCard
                     id={product.id.toString()}
                     title={product.title}
                     slug={product.slug}
-                    image={product.images[0].image?.url}
+                    image={product.images[0].image!.url}
                     prices={product.prices}
                     sale={product.sale}
                     sizes={product.sizes}

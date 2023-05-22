@@ -1,9 +1,10 @@
 import { selectedCategory, setCategory } from "@/redux/slices/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { ReactNode } from "react";
 
 interface Props {
   title: "Shirts" | "Shorts" | "Shoes" | "Other";
-  icon: any;
+  icon: ReactNode;
 }
 
 export const CategotyItem = ({ title, icon }: Props) => {
