@@ -8,7 +8,6 @@ import { Fragment } from "react";
 import { useQuery } from "react-query";
 import { CloseIcon } from "../Icons";
 import ProductCard from "../Products/ProductCard";
-import { Product } from "@/generated/graphql";
 
 export const FavoriteModal = () => {
   const dispatch = useAppDispatch();
@@ -62,24 +61,17 @@ export const FavoriteModal = () => {
                   </button>
                 </section>
                 <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-                  {data?.map((product: Product) => {
+                  {data?.map((product: any, index: any) => {
                     return (
                       <ProductCard
                         key={product.id}
                         id={product.id.toString()}
                         title={product.title}
-                        image={product.images[0].image!.url}
+                        image={product.image}
                         slug={"test"}
                         sale={false}
                         sizes={["xl"]}
-                        prices={[
-                          {
-                            date: "12-12-2022",
-                            price: 129,
-                            id: "id-2",
-                            stage: product.stage,
-                          },
-                        ]}
+                        prices={[{ date: "12-12-2022", price: 129 }]}
                         category={product.category}
                       />
                     );
