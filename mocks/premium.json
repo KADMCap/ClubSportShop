@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "title": "Free",
+        "pricePerMonth": "0",
+        "pricePerYear": "0",
+        "options": [
+            "buying 5 tickets at once",
+            "Free Shipping above 100$",
+            "Normal shipping time",
+            "Normal coupons"
+        ]
+    },
+    {
+        "id": "2",
+        "title": "Plus",
+        "pricePerMonth": "10",
+        "pricePerYear": "100",
+        "options": [
+            "buying 10 tickets at once",
+            "Free Shipping above 50$",
+            "Fast shipping time",
+            "Plus coupons"
+        ]
+    },
+    {
+        "id": "3",
+        "title": "Super",
+        "pricePerMonth": "20",
+        "pricePerYear": "200",
+        "options": [
+            "buying 20 tickets at once",
+            "All Shippings for free",
+            "One day shipping",
+            "Super coupons"
+        ]
+    }
+]
