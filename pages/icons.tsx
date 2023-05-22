@@ -32,6 +32,7 @@ import {
   VolleyballIcon,
   OtherIcon,
   AllIcon,
+  CheckIcon,
 } from "@/components/Icons";
 import { NotificationPopup } from "@/components/Modals/NotificationPopup";
 
@@ -134,6 +135,9 @@ const IconsPage = () => {
         </div>
         <div className="flex flex-col">
           <CloseIcon /> <div>CloseIcon</div>
+        </div>
+        <div className="flex flex-col">
+          <CheckIcon /> <div>CheckIcon</div>
         </div>
       </div>
       <div className="flex gap-2">
