@@ -1,18 +1,16 @@
-import { useState, Fragment, useContext } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { HeaderContext } from "@/context/HeaderContext";
-import ProductCard from "../Products/ProductCard";
-import { useQuery } from "react-query";
-import { CloseIcon } from "../Icons";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   favoriteModalIsOpen,
   setOpenFavoriteModal,
 } from "@/redux/slices/headerSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { useQuery } from "react-query";
+import { CloseIcon } from "../Icons";
+import ProductCard from "../Products/ProductCard";
+import { Product } from "@/generated/graphql";
 
 export const FavoriteModal = () => {
-  // const { openFavoriteModal, setOpenFavoriteModal } = useContext(HeaderContext);
-
   const dispatch = useAppDispatch();
   const openFavoriteModal = useAppSelector(favoriteModalIsOpen);
   const { data } = useQuery(["favProducts"], () =>
@@ -64,17 +62,24 @@ export const FavoriteModal = () => {
                   </button>
                 </section>
                 <div className="grid grid-cols-2 gap-2 pb-4 lg:grid-cols-3 xl:grid-cols-4">
-                  {data?.map((product: any, index: any) => {
+                  {data?.map((product: Product) => {
                     return (
                       <ProductCard
                         key={product.id}
                         id={product.id.toString()}
                         title={product.title}
-                        image={product.image}
+                        image={product.images[0].image!.url}
                         slug={"test"}
                         sale={false}
                         sizes={["xl"]}
-                        prices={[{ date: "12-12-2022", price: 129 }]}
+                        prices={[
+                          {
+                            date: "12-12-2022",
+                            price: 129,
+                            id: "id-2",
+                            stage: product.stage,
+                          },
+                        ]}
                         category={product.category}
                       />
                     );

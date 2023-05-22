@@ -1,7 +1,6 @@
 import { useState, Fragment, ChangeEvent } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CloseIcon } from "../Icons";
-import { ProductDetail } from "@/pages/products/[slug]";
 import Image from "next/image";
 import ReactStars from "react-stars";
 import { Button } from "../Buttons/Button";
@@ -9,10 +8,11 @@ import { apolloClient } from "@/graphql/apolloClient";
 import {
   CreateProductReviewMutationResult,
   CreateReviewDocument,
+  Product,
 } from "@/generated/graphql";
 
 interface AddReviewModalProps {
-  product: ProductDetail;
+  product: Product;
   openReviewModal: boolean;
   handleCloseAddReviewDialog: () => void;
 }
@@ -110,15 +110,15 @@ export const AddReviewModal = ({
                   <div className="flex justify-center w-full mb-2 bg-white">
                     {product.images.slice(0, 2).map((product) => (
                       <Image
-                        key={product.image.url}
+                        key={product.image!.url}
                         width={400}
                         height={400}
                         style={{
                           objectFit: "contain",
                           height: "250px",
                         }}
-                        src={product.image.url}
-                        alt={product.alt}
+                        src={product.image!.url}
+                        alt={product.alt!}
                       />
                     ))}
                   </div>

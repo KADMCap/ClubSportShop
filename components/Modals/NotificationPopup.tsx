@@ -1,11 +1,10 @@
-import { HeaderContext } from "@/context/HeaderContext";
 import {
   notificationIsOpen,
   setOpenNotification,
 } from "@/redux/slices/headerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React from "react";
 
 export const NotificationPopup = () => {
   const openNotification = useAppSelector(notificationIsOpen);
