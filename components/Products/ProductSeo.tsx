@@ -1,9 +1,9 @@
-import { ProductDetail } from "@/pages/products/[slug]";
+import { Product } from "@/generated/graphql";
 import { NextSeo, ProductJsonLd } from "next-seo";
 import React from "react";
 
 interface Props {
-  product: ProductDetail;
+  product: Product;
   averageRating: number;
 }
 
@@ -49,7 +49,7 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
             priceValidUntil: "2020-11-05",
           },
           {
-            price: product.prices[0].price * 4.2,
+            price: product.prices[0].price! * 4.2,
             priceCurrency: "PLN",
             priceValidUntil: "2020-09-05",
           },
