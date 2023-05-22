@@ -8,59 +8,21 @@ import { useEffect, useRef, useState } from "react";
 import { AddReviewModal } from "@/components/Modals/AddReviewModal";
 import { Review } from "@/components/Review/Review";
 import {
-  Asset,
   GetProductDetailBySlugDocument,
   GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
-  Image,
   Product,
+  Review as ReviewType,
 } from "@/generated/graphql";
 
 import mockedUsers from "../../mocks/users.json";
 
-import { ProductDetails } from "@/components/Products/ProductDetails";
-import { Sizes } from "@/generated/graphql";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
+import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
 
 export interface GetProductDetailResponse {
   product: Product;
-}
-
-export interface ProductDetail {
-  id: string;
-  sale: boolean;
-  slug: string;
-  title: string;
-  description: string;
-  sport: string;
-  category: string;
-  tags: string[];
-  sizes: Sizes[];
-  prices: Price[];
-  rating: number[];
-  images: Image[];
-  reviews: Review[];
-}
-
-// export interface ImageElement {
-//   image: Asset;
-//   alt: string;
-// }
-
-export interface Price {
-  id: string;
-  price: number;
-  date: string;
-}
-
-export interface Review {
-  user: string;
-  rating: number;
-  content: string;
-  updatedAt: string;
-  id: string;
-  date: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -113,7 +75,7 @@ const ProductPage = ({
 
   useEffect(() => {
     const sum = product.reviews.reduce(
-      (total: number, review: Review) => total + review.rating,
+      (total: number, review: ReviewType) => total + review.rating,
       0
     );
     if (sum === 0) {
@@ -187,12 +149,12 @@ const ProductPage = ({
                 button to the right.{" "}
               </span>
             ) : (
-              product.reviews.map((review: Review) => (
+              product.reviews.map((review: ReviewType) => (
                 <Review
                   key={review.id}
                   id={review.id}
                   user={mockedUsers[0]}
-                  date={review.date}
+                  date={review.publishedAt}
                   rating={review.rating}
                   description={review.content}
                 />

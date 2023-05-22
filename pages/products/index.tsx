@@ -2,10 +2,8 @@ import { FiltersContainer } from "@/components/Filters/FiltersContainer";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { Layout } from "@/components/Layout";
 import ProductCard from "@/components/Products/ProductCard";
-import ProductCardSkeleton from "@/components/Skeletons/ProductCard/ProductCardSkeleton";
 import ProductCardSkeletonGroup from "@/components/Skeletons/ProductCard/ProductCardSkeletonGroup";
-import { GetAllProductsQuery, Product } from "@/generated/graphql";
-import { GetAllProductsDocument } from "@/generated/graphql";
+import { GetAllProductsDocument, Product } from "@/generated/graphql";
 import { selectedCategory, selectedSports } from "@/redux/slices/filterSlice";
 import { useAppSelector } from "@/redux/store";
 import { useQuery } from "@apollo/client";
@@ -18,17 +16,14 @@ export default function ProductsPage() {
   const sport = useAppSelector(selectedSports);
   const category = useAppSelector(selectedCategory);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { loading, error, data } = useQuery<GetAllProductsQuery>(
-    GetAllProductsDocument,
-    {
-      variables: {
-        first: 24,
-        skip: (currentPage - 1) * 24,
-        category,
-        sport,
-      },
-    }
-  );
+  const { loading, error, data } = useQuery(GetAllProductsDocument, {
+    variables: {
+      first: 24,
+      skip: (currentPage - 1) * 24,
+      category,
+      sport,
+    },
+  });
   const items = data?.productsConnection.aggregate.count || 0;
 
   const handlePageClick = (event: any): void => {
@@ -43,12 +38,6 @@ export default function ProductsPage() {
       block: "start",
     });
   };
-
-  console.log(data);
-
-  if (!data) {
-    return;
-  }
 
   return (
     <>
@@ -65,7 +54,7 @@ export default function ProductsPage() {
             {loading ? (
               <ProductCardSkeletonGroup />
             ) : (
-              data?.products.map((product) => (
+              data?.products.map((product: Product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id.toString()}

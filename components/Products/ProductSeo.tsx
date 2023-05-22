@@ -20,8 +20,8 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
           description: product?.description,
           images: [
             {
-              url: product.images[0].image.url,
-              alt: product.images[0].alt,
+              url: product.images[0].image!.url,
+              alt: product.images[0].alt!,
               type: "image/jpeg",
             },
           ],
@@ -31,9 +31,9 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
       <ProductJsonLd
         productName={product?.title}
         images={[
-          product.images[0].image.url,
-          product.images[1]?.image.url,
-          product.images[2]?.image.url,
+          product.images[0].image!.url,
+          product.images[1]?.image!.url,
+          product.images[2]?.image!.url,
         ]}
         description={product?.description}
         brand="Nike"

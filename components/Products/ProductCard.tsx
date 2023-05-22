@@ -11,15 +11,10 @@ type ProductCardProps = {
   title: string;
   slug: string;
   image: string;
-  prices: Price[] | undefined;
+  prices: Price[];
   sale: boolean;
   sizes: string[];
   category: string;
-};
-
-type Prices = {
-  price: number;
-  date: string;
 };
 
 const sizeFormat = (category: string, size: string) =>
