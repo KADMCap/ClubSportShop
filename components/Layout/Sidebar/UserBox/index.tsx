@@ -1,5 +1,6 @@
 import { LogoutIcon } from "@/components/Icons";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export const UserBox = () => {
   return (
@@ -16,7 +17,9 @@ export const UserBox = () => {
           </p>
         </div>
       </Link>
-      <LogoutIcon />
+      <button onClick={() => signOut()}>
+        <LogoutIcon />
+      </button>
     </div>
   );
 };
