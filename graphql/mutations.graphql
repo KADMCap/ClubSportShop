@@ -46,8 +46,19 @@ mutation AbandonOrder($id: ID) {
   }
 }
 
+#AUTH
 mutation CreateAccount($email: String!, $password: String!) {
   createAccount(data: { email: $email, password: $password }) {
+    id
+  }
+}
+
+mutation CreateAccountByGoogle(
+  $email: String!
+  $fullName: String!
+  $avatar: String!
+) {
+  createAccount(data: { email: $email, fullName: $fullName, avatar: $avatar }) {
     id
   }
 }

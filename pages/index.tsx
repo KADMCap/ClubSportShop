@@ -9,6 +9,7 @@ import {
 } from "@/generated/graphql";
 import { apolloClient } from "@/graphql/apolloClient";
 import { InferGetServerSidePropsType } from "next";
+import { useSession } from "next-auth/react";
 
 export async function getServerSideProps() {
   const specialOffers = await apolloClient.query({
@@ -26,6 +27,9 @@ export default function Home({
   special,
   popular,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const session = useSession();
+
+  console.log({ session });
   return (
     <>
       <Layout>
