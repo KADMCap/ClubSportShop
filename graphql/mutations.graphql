@@ -62,3 +62,9 @@ mutation CreateAccountByGoogle(
     id
   }
 }
+
+mutation UpdateAccountData($newUserName: String, $id: ID) {
+  updateAccount(data: { fullName: $newUserName }, where: { id: $id }) {
+    id
+  }
+}

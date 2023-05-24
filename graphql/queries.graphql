@@ -206,3 +206,14 @@ query GetAccountByEmail($email: String!) {
     password
   }
 }
+
+query GetUserData($email: String) {
+  account(where: { email: $email }, stage: DRAFT) {
+    avatar
+    createdAt
+    email
+    fullName
+    id
+    updatedAt
+  }
+}

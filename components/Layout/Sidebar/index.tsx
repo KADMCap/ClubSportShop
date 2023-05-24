@@ -16,6 +16,7 @@ import { UserBox } from "./UserBox";
 import { sidebarIsOpen } from "@/redux/slices/headerSlice";
 import { useAppSelector } from "@/redux/store";
 import { Button } from "@/components/Buttons/Button";
+import { Session } from "next-auth";
 
 export const Sidebar = () => {
   const openSidebar = useAppSelector(sidebarIsOpen);
@@ -54,7 +55,7 @@ export const Sidebar = () => {
         <div className="flex flex-col w-full gap-4 py-4">
           <ThemeToggle />
           {session.status === "authenticated" ? (
-            <UserBox />
+            <UserBox session={session.data} />
           ) : (
             <Button onClick={() => signIn()}>Login</Button>
           )}
