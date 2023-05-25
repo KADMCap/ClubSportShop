@@ -19,10 +19,15 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "jsmith@mail.com",
+        },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log({ credentials });
         if (!credentials) {
           return null;
         }
@@ -32,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         >({
           query: GetAccountByEmailDocument,
           variables: {
-            email: credentials.username,
+            email: credentials.email,
           },
         });
 
@@ -100,6 +105,9 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, user }) {
       return session;
     },
+  },
+  pages: {
+    signIn: "/auth/signin",
   },
 };
 

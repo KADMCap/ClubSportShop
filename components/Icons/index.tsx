@@ -718,3 +718,63 @@ export const CheckIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
     </svg>
   );
 };
+
+export const GoogleIcon = ({ size = "md", color = "darkBlue" }: IconProps) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 48 48"
+      className={classNames(sizeClass[size])}
+    >
+      <defs>
+        <path
+          id="a"
+          d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"
+        />
+      </defs>
+      <clipPath id="b">
+        <use xlinkHref="#a" overflow="visible" />
+      </clipPath>
+      <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+      <path
+        clipPath="url(#b)"
+        fill="#EA4335"
+        d="M0 11l17 13 7-6.1L48 14V0H0z"
+      />
+      <path
+        clipPath="url(#b)"
+        fill="#34A853"
+        d="M0 37l30-23 7.9 1L48 0v48H0z"
+      />
+      <path clipPath="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z" />
+    </svg>
+  );
+};
+
+export const FacebookIcon = ({
+  size = "md",
+  color = "darkBlue",
+}: IconProps) => {
+  return (
+    <svg
+      className={classNames(sizeClass[size])}
+      height="800px"
+      width="800px"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      xmlSpace="preserve"
+    >
+      <path
+        fill="#385C8E"
+        d="M134.941,272.691h56.123v231.051c0,4.562,3.696,8.258,8.258,8.258h95.159
+   c4.562,0,8.258-3.696,8.258-8.258V273.78h64.519c4.195,0,7.725-3.148,8.204-7.315l9.799-85.061c0.269-2.34-0.472-4.684-2.038-6.44
+   c-1.567-1.757-3.81-2.763-6.164-2.763h-74.316V118.88c0-16.073,8.654-24.224,25.726-24.224c2.433,0,48.59,0,48.59,0
+   c4.562,0,8.258-3.698,8.258-8.258V8.319c0-4.562-3.696-8.258-8.258-8.258h-66.965C309.622,0.038,308.573,0,307.027,0
+   c-11.619,0-52.006,2.281-83.909,31.63c-35.348,32.524-30.434,71.465-29.26,78.217v62.352h-58.918c-4.562,0-8.258,3.696-8.258,8.258
+   v83.975C126.683,268.993,130.379,272.691,134.941,272.691z"
+      />
+    </svg>
+  );
+};

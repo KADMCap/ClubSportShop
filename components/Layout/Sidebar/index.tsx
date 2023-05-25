@@ -15,7 +15,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserBox } from "./UserBox";
 import { sidebarIsOpen } from "@/redux/slices/headerSlice";
 import { useAppSelector } from "@/redux/store";
-import { Button } from "@/components/Buttons/Button";
+import { Button, LinkButton } from "@/components/Buttons/Button";
 import { Session } from "next-auth";
 
 export const Sidebar = () => {
@@ -57,7 +57,9 @@ export const Sidebar = () => {
           {session.status === "authenticated" ? (
             <UserBox session={session.data} />
           ) : (
-            <Button onClick={() => signIn()}>Login</Button>
+            <LinkButton href="/auth/signin">
+              <p className="text-center">Signin</p>
+            </LinkButton>
           )}
         </div>
       </div>
