@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form";
 import { SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
 import { UpdateAccountDataDocument } from "@/generated/graphql";
+import { ChangePersonalDataModal } from "../Modals/ChangePersonalDataModal";
 
 const schema = yup
   .object({
     userName: yup.string().required(),
     // email: yup.string().email().required(),
-    avatar: yup.string().required(),
+    //avatar: yup.string().required(),
   })
   .required();
 
@@ -33,32 +34,46 @@ export const PersonalData = ({ id, email, userName, avatar }: Props) => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+  const [dataIsChanged, setDataIsChanged] = useState(false);
 
   useEffect(() => {
     userName && setValue("userName", userName);
-    avatar && setValue("avatar", avatar);
+    //avatar && setValue("avatar", avatar);
   }, [userName, avatar, setValue]);
 
-  const onSubmit = async (data: FormData) => {
-    const response = await apolloClient.mutate({
-      mutation: UpdateAccountDataDocument,
-      variables: {
-        id: id,
-        newUserName: data.userName,
+  const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
+    const payload = {
+      id,
+      userName: data.userName,
+    };
+    const response = await fetch("/api/updateUser/personalData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify(payload),
     });
-    if (response) {
-      console.log("GOOD");
+    console.log(response);
+    if (response.ok) {
+      setDataIsChanged(true);
     }
-  };
+  });
 
   return (
     <div className="flex flex-col justify-start flex-1 w-full">
+      <ChangePersonalDataModal
+        isOpen={dataIsChanged}
+        setIsOpen={setDataIsChanged}
+      />
       <p className="font-semibold">Personal Data</p>
-      <form
-        className="flex flex-col w-full gap-2 mt-2"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="flex flex-col w-full gap-2 mt-2" onSubmit={onSubmit}>
+        <div>
+          <label className="block mb-1 text-sm font-semibold dark:text-white">
+            Id
+          </label>
+          {id}
+        </div>
         <div>
           <label className="block mb-1 text-sm font-semibold dark:text-white">
             User Name
