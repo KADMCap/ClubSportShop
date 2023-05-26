@@ -7,6 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { GoogleIcon } from "@/components/Icons";
+import { useState } from "react";
 
 const signupFormSchema = yup
   .object({
@@ -30,6 +31,8 @@ const SignupPage = () => {
   } = useForm<SignUpFormData>({
     resolver: yupResolver(signupFormSchema),
   });
+  const [wrongCredentials, setWrongCrerdentials] = useState(false);
+  const [accountCreated, setAccountCreated] = useState(false);
 
   if (session.status === "authenticated") {
     router.push("/");
@@ -37,19 +40,39 @@ const SignupPage = () => {
   }
 
   const onSubmit = handleSubmit(async (data) => {
-    await fetch("/api/signup", {
+    const response = await fetch("/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+    if (!response?.ok) {
+      setWrongCrerdentials(true);
+      setAccountCreated(false);
+    } else {
+      setWrongCrerdentials(false);
+      setAccountCreated(true);
+    }
   });
   return (
     <Layout>
       <div className="flex justify-center w-full">
         <section className="flex flex-col justify-center items-center w-full max-w-[400px] bg-primaryLight dark:bg-primaryDark rounded-md p-4 gap-2">
           <h2>Register new account</h2>
+          {accountCreated && (
+            <div className="flex justify-center w-full p-2 text-green-900 bg-green-400 rounded-md">
+              Your account is created. Please singin.{" "}
+              <Link href="/auth/signin" className="underline text-primaryBlue">
+                Sign in
+              </Link>
+            </div>
+          )}
+          {wrongCredentials && (
+            <div className="flex justify-center w-full p-2 text-red-900 bg-red-400 rounded-md">
+              This account is already registered
+            </div>
+          )}
           <form className="flex flex-col w-full gap-2" onSubmit={onSubmit}>
             <div>
               <label className="block mb-2 text-sm dark:text-white">

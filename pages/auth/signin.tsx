@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -43,6 +43,7 @@ const SignInPage = ({
   } = useForm<SignUpFormData>({
     resolver: yupResolver(signupFormSchema),
   });
+  const [wrongCredentials, setWrongCrerdentials] = useState(false);
 
   if (session.status === "authenticated") {
     router.push("/");
@@ -50,14 +51,18 @@ const SignInPage = ({
   }
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     const response = await signIn("credentials", {
       redirect: false,
       csrfToken: csrfToken,
       email: data.email,
       password: data.password,
     });
-    console.log({ response });
+
+    if (!response?.ok) {
+      setWrongCrerdentials(true);
+    } else {
+      setWrongCrerdentials(false);
+    }
   });
 
   return (
@@ -65,6 +70,11 @@ const SignInPage = ({
       <div className="flex justify-center w-full">
         <section className="flex flex-col justify-center items-center w-full max-w-[400px] bg-primaryLight dark:bg-primaryDark rounded-md p-4 gap-2">
           <h2>Login to your account</h2>
+          {wrongCredentials && (
+            <div className="flex justify-center w-full p-2 text-red-900 bg-red-400 rounded-md">
+              Invalid email or password
+            </div>
+          )}
           <form className="flex flex-col w-full gap-2" onSubmit={onSubmit}>
             <div>
               <label className="block mb-2 text-sm dark:text-white">
