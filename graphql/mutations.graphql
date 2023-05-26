@@ -47,8 +47,14 @@ mutation AbandonOrder($id: ID) {
 }
 
 #AUTH
-mutation CreateAccount($email: String!, $password: String!) {
-  createAccount(data: { email: $email, password: $password }) {
+mutation CreateAccount(
+  $email: String!
+  $password: String!
+  $fullName: String!
+) {
+  createAccount(
+    data: { email: $email, password: $password, fullName: $fullName }
+  ) {
     id
   }
 }

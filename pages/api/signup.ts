@@ -8,7 +8,7 @@ import {
 } from "@/generated/graphql";
 
 const SignupHandler: NextApiHandler = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, fullName } = req.body;
 
   const passwordHash = await bcrypt.hash(password, 12);
 
@@ -21,6 +21,7 @@ const SignupHandler: NextApiHandler = async (req, res) => {
     variables: {
       email: email,
       password: passwordHash,
+      fullName: fullName,
     },
   });
 

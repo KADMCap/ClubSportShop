@@ -12,10 +12,10 @@ export const UserBox = ({ session }: Props) => {
     <div className="flex items-center justify-between w-full gap-2">
       <Link href="/settings" passHref className="flex items-center gap-2">
         <div className="flex-shrink-0">
-          {session.user.image ? (
+          {session.user.avatar ? (
             <img
               className="w-8 h-8 rounded-full"
-              src={session.user.image}
+              src={session.user.avatar}
               alt="avatar"
             />
           ) : (
@@ -24,7 +24,7 @@ export const UserBox = ({ session }: Props) => {
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-medium truncate dark:text-white">
-            {session.user.name}
+            {session.user.fullName}
           </p>
           <p className="text-sm text-gray-500 truncate dark:text-gray-400">
             {session.user.email}

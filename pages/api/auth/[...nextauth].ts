@@ -5,6 +5,8 @@ import {
   GetAccountByEmailDocument,
   GetAccountByEmailQuery,
   GetAccountByEmailQueryVariables,
+  GetUserDataDocument,
+  GetUserDataQuery,
 } from "@/generated/graphql";
 import { authorizedApolloClient } from "@/graphql/apolloClient";
 import NextAuth from "next-auth/next";
@@ -100,9 +102,24 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ token, user, account, profile }) {
+      console.log({ token });
       return token;
     },
     async session({ session, token, user }) {
+      if (session.user.email) {
+        const userByEmail =
+          await authorizedApolloClient.query<GetUserDataQuery>({
+            query: GetUserDataDocument,
+            variables: {
+              email: session.user.email,
+            },
+          });
+        console.log("userByEmail in session", userByEmail);
+        session.user.id = userByEmail.data.account?.id;
+        session.user.email = userByEmail.data.account?.email;
+        session.user.fullName = userByEmail.data.account?.fullName;
+        session.user.avatar = userByEmail.data.account?.avatar;
+      }
       return session;
     },
   },
