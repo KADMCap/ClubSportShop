@@ -14,7 +14,6 @@ interface Props {
 }
 
 export const Layout: React.FC<Props> = ({ children }) => {
-  // const { theme } = useContext(ThemeContext);
   const theme = useAppSelector(selectedTheme);
   return (
     <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
