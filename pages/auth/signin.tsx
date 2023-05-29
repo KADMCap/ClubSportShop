@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { getCsrfToken } from "next-auth/react";
 import Link from "next/link";
-import { FacebookIcon, GoogleIcon } from "@/components/Icons";
+import { FacebookIcon, GithubIcon, GoogleIcon } from "@/components/Icons";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
@@ -110,6 +110,15 @@ const SignInPage = ({
           >
             <GoogleIcon />
             Sign in with Google
+          </Button>
+          <Button
+            className="flex flex-row items-center justify-center gap-2"
+            onClick={() => signIn("github")}
+            full
+            variant={"secondary"}
+          >
+            <GithubIcon />
+            Sign in with Github
           </Button>
           <p className="pt-4">
             You do not have an account?{" "}

@@ -6,7 +6,7 @@ import { Button, SubmitButton } from "@/components/Buttons/Button";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { GoogleIcon } from "@/components/Icons";
+import { GithubIcon, GoogleIcon } from "@/components/Icons";
 import { useState } from "react";
 
 const signupFormSchema = yup
@@ -122,7 +122,15 @@ const SignupPage = () => {
             <GoogleIcon />
             Sign in with Google
           </Button>
-
+          <Button
+            className="flex flex-row items-center justify-center gap-2"
+            onClick={() => signIn("github")}
+            full
+            variant={"secondary"}
+          >
+            <GithubIcon />
+            Sign in with Github
+          </Button>
           <p className="pt-4">
             You already have an account?{" "}
             <Link href="/auth/signin" className="underline text-primaryBlue">

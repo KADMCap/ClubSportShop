@@ -12,10 +12,12 @@ import { authorizedApolloClient } from "@/graphql/apolloClient";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 import * as bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 
 const { GOOGLE_CLIENT_ID = "", GOOGLE_CLIENT_SECRET = "" } = process.env;
+const { GITHUB_ID = "", GITHUB_SECRET = "" } = process.env;
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -65,6 +67,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+    }),
+    GitHubProvider({
+      clientId: GITHUB_ID,
+      clientSecret: GITHUB_SECRET,
     }),
   ],
   secret: process.env.JWT_SECRET,
