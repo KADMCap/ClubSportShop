@@ -33,9 +33,6 @@ import {
   OtherIcon,
   AllIcon,
   CheckIcon,
-  GoogleIcon,
-  FacebookIcon,
-  GithubIcon,
 } from "@/components/Icons";
 import { NotificationPopup } from "@/components/Modals/NotificationPopup";
 
@@ -141,15 +138,6 @@ const IconsPage = () => {
         </div>
         <div className="flex flex-col">
           <CheckIcon /> <div>CheckIcon</div>
-        </div>
-        <div className="flex flex-col">
-          <GoogleIcon /> <div>GoogleIcon</div>
-        </div>
-        <div className="flex flex-col">
-          <FacebookIcon /> <div>FbIcon</div>
-        </div>
-        <div className="flex flex-col">
-          <GithubIcon /> <div>GhIcon</div>
         </div>
       </div>
       <div className="flex gap-2">

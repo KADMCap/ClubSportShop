@@ -198,22 +198,3 @@ query GetOrders {
     }
   }
 }
-
-query GetAccountByEmail($email: String!) {
-  account(where: { email: $email }, stage: DRAFT) {
-    id
-    email
-    password
-  }
-}
-
-query GetUserData($email: String) {
-  account(where: { email: $email }, stage: DRAFT) {
-    avatar
-    createdAt
-    email
-    fullName
-    id
-    updatedAt
-  }
-}

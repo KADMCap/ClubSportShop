@@ -1,4 +1,5 @@
-import { useSession, signIn } from "next-auth/react";
+import { HeaderContext } from "@/context/HeaderContext";
+import { useContext } from "react";
 import {
   AuctionIcon,
   HeartIcon,
@@ -15,12 +16,9 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserBox } from "./UserBox";
 import { sidebarIsOpen } from "@/redux/slices/headerSlice";
 import { useAppSelector } from "@/redux/store";
-import { Button, LinkButton } from "@/components/Buttons/Button";
-import { Session } from "next-auth";
 
 export const Sidebar = () => {
   const openSidebar = useAppSelector(sidebarIsOpen);
-  const session = useSession();
 
   return (
     <nav className="relative z-10">
@@ -54,13 +52,7 @@ export const Sidebar = () => {
         </ul>
         <div className="flex flex-col w-full gap-4 py-4">
           <ThemeToggle />
-          {session.status === "authenticated" ? (
-            <UserBox session={session.data} />
-          ) : (
-            <LinkButton href="/auth/signin">
-              <p className="text-center">Signin</p>
-            </LinkButton>
-          )}
+          <UserBox />
         </div>
       </div>
     </nav>
