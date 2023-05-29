@@ -31,7 +31,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log({ credentials });
         if (!credentials) {
           return null;
         }
@@ -76,7 +75,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log("signIn", user, account, profile);
       if (!user.email) {
         return false;
       }
@@ -89,9 +87,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
         },
       });
-      console.log("FIND USER", userByEmail);
       if (!userByEmail.data.account) {
-        console.log("CREATING USER");
         const res = await authorizedApolloClient.mutate<
           CreateAccountByGoogleMutation,
           CreateAccountByGoogleMutationVariables
@@ -108,7 +104,6 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ token, user, account, profile }) {
-      console.log({ token });
       return token;
     },
     async session({ session, token, user }) {
@@ -120,7 +115,6 @@ export const authOptions: NextAuthOptions = {
               email: session.user.email,
             },
           });
-        console.log("userByEmail in session", userByEmail);
         session.user.id = userByEmail.data.account?.id;
         session.user.email = userByEmail.data.account?.email;
         session.user.fullName = userByEmail.data.account?.fullName;
