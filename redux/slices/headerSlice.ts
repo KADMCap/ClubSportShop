@@ -27,8 +27,8 @@ const headerSlice = createSlice({
     setOpenSidebar: (state, action: PayloadAction<string | undefined>) => {
       state.openSidebar = !state.openSidebar;
     },
-    setOpenNotification: (state, action: PayloadAction<string | undefined>) => {
-      state.openNotification = !state.openNotification;
+    setOpenNotification: (state, action: PayloadAction<boolean>) => {
+      state.openNotification = action.payload;
     },
     setOpenFavoriteModal: (
       state,

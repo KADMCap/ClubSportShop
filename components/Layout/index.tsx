@@ -1,5 +1,4 @@
-import { ThemeContext } from "@/context/ThemeContext";
-import React, { useContext, useState } from "react";
+import React from "react";
 import { NotificationPopup } from "../Modals/NotificationPopup";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const Layout: React.FC<Props> = ({ children }) => {
-  // const { theme } = useContext(ThemeContext);
   const theme = useAppSelector(selectedTheme);
   return (
     <div className={`flex flex-col ${theme === "dark" ? "dark" : ""}`}>
