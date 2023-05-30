@@ -1,5 +1,4 @@
-import { ThemeContext } from "@/context/ThemeContext";
-import React, { useContext, useState } from "react";
+import React from "react";
 import { NotificationPopup } from "../Modals/NotificationPopup";
 import { Footer } from "./Footer";
 import { Header } from "./Header";

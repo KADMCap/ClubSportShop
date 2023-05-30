@@ -6,19 +6,25 @@ import {
 } from "@/components/Icons";
 import { useCartCount } from "@/hooks/useCartCount";
 import {
+  notificationIsOpen,
   setOpenCart,
   setOpenFavoriteModal,
   setOpenNotification,
   setOpenSearchBar,
 } from "@/redux/slices/headerSlice";
-import { useAppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 export const HeaderActions = () => {
   const dispatch = useAppDispatch();
   const { cartCount } = useCartCount();
+  const openNotification = useAppSelector(notificationIsOpen);
 
   const toggleNotification = () => {
-    dispatch(setOpenNotification());
+    if (openNotification) {
+      dispatch(setOpenNotification(false));
+    } else {
+      dispatch(setOpenNotification(true));
+    }
   };
   const toggleFavouriteModal = () => {
     dispatch(setOpenFavoriteModal());

@@ -29,7 +29,7 @@ export const FavoriteModal = () => {
     <>
       <div
         id="background"
-        className="fixed inset-0 z-50 flex h-full overflow-hidden outline-none focus:outline-none"
+        className="fixed inset-0 z-50 flex justify-center h-full overflow-hidden outline-none focus:outline-none"
         onClick={(e: any) => onUserAction(e)}
       >
         <div className="w-full h-auto max-w-[1200px] m-6 ">
