@@ -1,8 +1,8 @@
 import {
-  CreateProductReviewMutationResult,
+  CreateReviewMutationResult,
   CreateReviewDocument,
 } from "@/generated/graphql";
-import { apolloClient } from "@/graphql/apolloClient";
+import { apolloClient, authorizedApolloClient } from "@/graphql/apolloClient";
 import { useForm } from "react-hook-form";
 import { Button, SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,9 +11,12 @@ import { User } from "@/mocks/users";
 import Image from "next/image";
 import React, { useState } from "react";
 import ReactStars from "react-stars";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth/core/types";
 
 export interface Props {
   productId: string;
+  userData: Session | null;
 }
 
 const schema = yup
@@ -24,7 +27,8 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
-export const NewReview = ({ productId }: Props) => {
+export const NewReview = ({ productId, userData }: Props) => {
+  const session = useSession();
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [ratingError, setRatingError] = useState("");
@@ -40,24 +44,43 @@ export const NewReview = ({ productId }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (data: FormData) => {
-    if (reviewText === "") {
-      setContentError("Add your review!");
-      return;
-    }
+    console.log("Comment");
     if (rating === 0) {
       setRatingError("Add rating to your review!");
       return;
     }
 
-    await apolloClient.mutate<CreateProductReviewMutationResult>({
-      mutation: CreateReviewDocument,
-      variables: {
-        id: productId,
-        reviews: {
-          create: [{ content: data.content, rating: rating, user: "John Doe" }],
-        },
-      },
-    });
+    const payload = {
+      productId,
+      content: data.content,
+      rating,
+      userData,
+    };
+    // await apolloClient.mutate<CreateReviewMutationResult>({
+    //   mutation: CreateReviewDocument,
+    //   variables: {
+    //     id: productId,
+    //     reviews: {
+    //       create: [
+    //         {
+    //           content: data.content,
+    //           rating: rating,
+    //         },
+    //       ],
+    //     },
+    //   },
+    // });
+    // const response = await fetch("/api/reviews/add", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(payload),
+    // });
+    // console.log(response);
+    // if (response.ok) {
+    //   console.log("review added");
+    // }
   });
 
   return (

@@ -23,10 +23,14 @@ query GetProductDetailBySlug($slug: String) {
       alt
     }
     reviews {
-      user
       content
       rating
       updatedAt
+      userData {
+        usrId
+        name
+        avatar
+      }
     }
   }
 }

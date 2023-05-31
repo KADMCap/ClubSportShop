@@ -20,7 +20,8 @@ import mockedUsers from "../../mocks/users.json";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
-import { NewReview } from "@/components/Review/NewReview";
+// import { NewReview } from "@/components/Review/NewReview";
+import { useSession } from "next-auth/react";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -64,6 +65,7 @@ const ProductPage = ({
   data,
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const session = useSession();
   const [openNewReview, setOpenNewReview] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
   const [roundedAverageRating, setRoundedAverageRating] = useState(0);
@@ -100,7 +102,7 @@ const ProductPage = ({
   const handleAddNewReview = () => {
     setOpenNewReview((prev) => !prev);
   };
-
+  console.log(session);
   return (
     <Layout>
       <ProductSeo product={product} averageRating={averageRating} />
@@ -131,16 +133,20 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
-            <Button size="small" onClick={handleAddNewReview}>
-              {openNewReview ? "Close Review" : "Add Review"}
-            </Button>
+            {session.data && (
+              <Button size="small" onClick={handleAddNewReview}>
+                {openNewReview ? "Close Review" : "Add Review"}
+              </Button>
+            )}
           </div>
           {/* <AddReviewModal
             product={product}
             openReviewModal={openReviewModal}
             handleCloseAddReviewDialog={handleCloseAddReviewDialog}
           /> */}
-          {openNewReview && <NewReview productId={product.id} />}
+          {/* {openNewReview && (
+            <NewReview productId={product.id} userData={session.data} />
+          )} */}
           <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {product.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">
