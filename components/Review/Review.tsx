@@ -16,19 +16,19 @@ export const Review = (review: ReviewProps) => {
     <div className="flex flex-row">
       <div>
         <Image
-          width={70}
-          height={70}
+          width={40}
+          height={40}
           src={review.user.avatar}
           alt={review.user.name}
           style={{
-            borderRadius: "999999px",
+            borderRadius: "100%",
             objectFit: "cover",
-            height: "70px",
-            width: "70px",
+            height: "40px",
+            width: "40px",
           }}
         />
       </div>
-      <div className="flex bg-white rounded-xl w-full ml-2 p-2 dark:bg-black">
+      <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
         <div className="flex flex-col">
           <span>{review.user.name}</span>
           <span className="text-sm text-primaryGray">{review.date}</span>

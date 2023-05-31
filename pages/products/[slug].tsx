@@ -20,6 +20,7 @@ import mockedUsers from "../../mocks/users.json";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
+import { NewReview } from "@/components/Review/NewReview";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -63,7 +64,7 @@ const ProductPage = ({
   data,
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [openNewReview, setOpenNewReview] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
   const [roundedAverageRating, setRoundedAverageRating] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -96,11 +97,8 @@ const ProductPage = ({
     });
   };
 
-  const handleOpenAddReviewDialog = () => {
-    setOpenReviewModal(true);
-  };
-  const handleCloseAddReviewDialog = () => {
-    setOpenReviewModal(false);
+  const handleAddNewReview = () => {
+    setOpenNewReview((prev) => !prev);
   };
 
   return (
@@ -133,15 +131,16 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
-            <Button size="small" onClick={handleOpenAddReviewDialog}>
-              ADD REVIEW
+            <Button size="small" onClick={handleAddNewReview}>
+              {openNewReview ? "Close Review" : "Add Review"}
             </Button>
           </div>
-          <AddReviewModal
+          {/* <AddReviewModal
             product={product}
             openReviewModal={openReviewModal}
             handleCloseAddReviewDialog={handleCloseAddReviewDialog}
-          />
+          /> */}
+          {openNewReview && <NewReview productId={product.id} />}
           <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {product.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">
