@@ -56,20 +56,15 @@ export const NewReview = ({ productId, userData }: Props) => {
       rating,
       userData,
     };
-    // await apolloClient.mutate<CreateReviewMutationResult>({
-    //   mutation: CreateReviewDocument,
-    //   variables: {
-    //     id: productId,
-    //     reviews: {
-    //       create: [
-    //         {
-    //           content: data.content,
-    //           rating: rating,
-    //         },
-    //       ],
-    //     },
-    //   },
-    // });
+    await apolloClient.mutate<CreateReviewMutationResult>({
+      mutation: CreateReviewDocument,
+      variables: {
+        productId: productId,
+
+        content: data.content,
+        rating: rating,
+      },
+    });
     // const response = await fetch("/api/reviews/add", {
     //   method: "POST",
     //   headers: {

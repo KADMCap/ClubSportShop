@@ -4827,7 +4827,7 @@ export type Product = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   rating: Array<Scalars['Float']>;
-  reviews: Array<Review>;
+  reviews: Array<ProductReviews>;
   sale: Scalars['Boolean'];
   scheduledIn: Array<ScheduledOperation>;
   sizes: Array<Sizes>;
@@ -4906,9 +4906,7 @@ export type ProductReviewsArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']>;
   last?: InputMaybe<Scalars['Int']>;
   locales?: InputMaybe<Array<Locale>>;
-  orderBy?: InputMaybe<ReviewOrderByInput>;
   skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ReviewWhereInput>;
 };
 
 
@@ -4954,7 +4952,7 @@ export type ProductCreateInput = {
   images?: InputMaybe<ImageCreateManyInlineInput>;
   prices?: InputMaybe<PriceCreateManyInlineInput>;
   rating: Array<Scalars['Float']>;
-  reviews?: InputMaybe<ReviewCreateManyInlineInput>;
+  reviews?: InputMaybe<ProductReviewsCreateManyInlineInput>;
   sale: Scalars['Boolean'];
   sizes?: InputMaybe<Array<Sizes>>;
   slug: Scalars['String'];
@@ -5109,9 +5107,10 @@ export type ProductManyWhereInput = {
   rating_contains_some?: InputMaybe<Array<Scalars['Float']>>;
   /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
   rating_not?: InputMaybe<Array<Scalars['Float']>>;
-  reviews_every?: InputMaybe<ReviewWhereInput>;
-  reviews_none?: InputMaybe<ReviewWhereInput>;
-  reviews_some?: InputMaybe<ReviewWhereInput>;
+  /** All values in which the union is empty */
+  reviews_empty?: InputMaybe<Scalars['Boolean']>;
+  /** Matches if the union contains at least one connection to the provided item to the filter */
+  reviews_some?: InputMaybe<ProductReviewsWhereInput>;
   sale?: InputMaybe<Scalars['Boolean']>;
   /** Any other value that exists and is not equal to the given value. */
   sale_not?: InputMaybe<Scalars['Boolean']>;
@@ -5249,6 +5248,86 @@ export enum ProductOrderByInput {
   ViewsDesc = 'views_DESC'
 }
 
+export type ProductReviews = Review;
+
+export type ProductReviewsConnectInput = {
+  Review?: InputMaybe<ReviewConnectInput>;
+};
+
+export type ProductReviewsCreateInput = {
+  Review?: InputMaybe<ReviewCreateInput>;
+};
+
+export type ProductReviewsCreateManyInlineInput = {
+  /** Connect multiple existing ProductReviews documents */
+  connect?: InputMaybe<Array<ProductReviewsWhereUniqueInput>>;
+  /** Create and connect multiple existing ProductReviews documents */
+  create?: InputMaybe<Array<ProductReviewsCreateInput>>;
+};
+
+export type ProductReviewsCreateOneInlineInput = {
+  /** Connect one existing ProductReviews document */
+  connect?: InputMaybe<ProductReviewsWhereUniqueInput>;
+  /** Create and connect one ProductReviews document */
+  create?: InputMaybe<ProductReviewsCreateInput>;
+};
+
+export type ProductReviewsUpdateInput = {
+  Review?: InputMaybe<ReviewUpdateInput>;
+};
+
+export type ProductReviewsUpdateManyInlineInput = {
+  /** Connect multiple existing ProductReviews documents */
+  connect?: InputMaybe<Array<ProductReviewsConnectInput>>;
+  /** Create and connect multiple ProductReviews documents */
+  create?: InputMaybe<Array<ProductReviewsCreateInput>>;
+  /** Delete multiple ProductReviews documents */
+  delete?: InputMaybe<Array<ProductReviewsWhereUniqueInput>>;
+  /** Disconnect multiple ProductReviews documents */
+  disconnect?: InputMaybe<Array<ProductReviewsWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing ProductReviews documents */
+  set?: InputMaybe<Array<ProductReviewsWhereUniqueInput>>;
+  /** Update multiple ProductReviews documents */
+  update?: InputMaybe<Array<ProductReviewsUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple ProductReviews documents */
+  upsert?: InputMaybe<Array<ProductReviewsUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type ProductReviewsUpdateManyWithNestedWhereInput = {
+  Review?: InputMaybe<ReviewUpdateManyWithNestedWhereInput>;
+};
+
+export type ProductReviewsUpdateOneInlineInput = {
+  /** Connect existing ProductReviews document */
+  connect?: InputMaybe<ProductReviewsWhereUniqueInput>;
+  /** Create and connect one ProductReviews document */
+  create?: InputMaybe<ProductReviewsCreateInput>;
+  /** Delete currently connected ProductReviews document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected ProductReviews document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single ProductReviews document */
+  update?: InputMaybe<ProductReviewsUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single ProductReviews document */
+  upsert?: InputMaybe<ProductReviewsUpsertWithNestedWhereUniqueInput>;
+};
+
+export type ProductReviewsUpdateWithNestedWhereUniqueInput = {
+  Review?: InputMaybe<ReviewUpdateWithNestedWhereUniqueInput>;
+};
+
+export type ProductReviewsUpsertWithNestedWhereUniqueInput = {
+  Review?: InputMaybe<ReviewUpsertWithNestedWhereUniqueInput>;
+};
+
+export type ProductReviewsWhereInput = {
+  Review?: InputMaybe<ReviewWhereInput>;
+};
+
+export type ProductReviewsWhereUniqueInput = {
+  Review?: InputMaybe<ReviewWhereUniqueInput>;
+};
+
 export type ProductUpdateInput = {
   bought?: InputMaybe<Scalars['Int']>;
   category?: InputMaybe<Category>;
@@ -5256,7 +5335,7 @@ export type ProductUpdateInput = {
   images?: InputMaybe<ImageUpdateManyInlineInput>;
   prices?: InputMaybe<PriceUpdateManyInlineInput>;
   rating?: InputMaybe<Array<Scalars['Float']>>;
-  reviews?: InputMaybe<ReviewUpdateManyInlineInput>;
+  reviews?: InputMaybe<ProductReviewsUpdateManyInlineInput>;
   sale?: InputMaybe<Scalars['Boolean']>;
   sizes?: InputMaybe<Array<Sizes>>;
   slug?: InputMaybe<Scalars['String']>;
@@ -5466,9 +5545,10 @@ export type ProductWhereInput = {
   rating_contains_some?: InputMaybe<Array<Scalars['Float']>>;
   /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
   rating_not?: InputMaybe<Array<Scalars['Float']>>;
-  reviews_every?: InputMaybe<ReviewWhereInput>;
-  reviews_none?: InputMaybe<ReviewWhereInput>;
-  reviews_some?: InputMaybe<ReviewWhereInput>;
+  /** All values in which the union is empty */
+  reviews_empty?: InputMaybe<Scalars['Boolean']>;
+  /** Matches if the union contains at least one connection to the provided item to the filter */
+  reviews_some?: InputMaybe<ProductReviewsWhereInput>;
   sale?: InputMaybe<Scalars['Boolean']>;
   /** Any other value that exists and is not equal to the given value. */
   sale_not?: InputMaybe<Scalars['Boolean']>;
@@ -6555,7 +6635,7 @@ export type RgbaInput = {
 
 export type Review = Node & {
   __typename?: 'Review';
-  content: Scalars['String'];
+  content?: Maybe<Scalars['String']>;
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -6566,11 +6646,12 @@ export type Review = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID'];
+  product?: Maybe<Product>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  rating: Scalars['Int'];
+  rating?: Maybe<Scalars['Float']>;
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -6599,6 +6680,12 @@ export type ReviewHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type ReviewProductArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -6649,10 +6736,10 @@ export type ReviewConnection = {
 };
 
 export type ReviewCreateInput = {
-  clhg9a6fo05z201uo5g9xg13i?: InputMaybe<ProductCreateManyInlineInput>;
-  content: Scalars['String'];
+  content?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
-  rating: Scalars['Int'];
+  product?: InputMaybe<ProductCreateOneInlineInput>;
+  rating?: InputMaybe<Scalars['Float']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   userData?: InputMaybe<UserDataCreateOneInlineInput>;
 };
@@ -6747,6 +6834,7 @@ export type ReviewManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  product?: InputMaybe<ProductWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -6763,21 +6851,21 @@ export type ReviewManyWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
-  rating?: InputMaybe<Scalars['Int']>;
+  rating?: InputMaybe<Scalars['Float']>;
   /** All values greater than the given value. */
-  rating_gt?: InputMaybe<Scalars['Int']>;
+  rating_gt?: InputMaybe<Scalars['Float']>;
   /** All values greater than or equal the given value. */
-  rating_gte?: InputMaybe<Scalars['Int']>;
+  rating_gte?: InputMaybe<Scalars['Float']>;
   /** All values that are contained in given list. */
-  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   /** All values less than the given value. */
-  rating_lt?: InputMaybe<Scalars['Int']>;
+  rating_lt?: InputMaybe<Scalars['Float']>;
   /** All values less than or equal the given value. */
-  rating_lte?: InputMaybe<Scalars['Int']>;
+  rating_lte?: InputMaybe<Scalars['Float']>;
   /** Any other value that exists and is not equal to the given value. */
-  rating_not?: InputMaybe<Scalars['Int']>;
+  rating_not?: InputMaybe<Scalars['Float']>;
   /** All values that are not contained in given list. */
-  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -6816,9 +6904,9 @@ export enum ReviewOrderByInput {
 }
 
 export type ReviewUpdateInput = {
-  clhg9a6fo05z201uo5g9xg13i?: InputMaybe<ProductUpdateManyInlineInput>;
   content?: InputMaybe<Scalars['String']>;
-  rating?: InputMaybe<Scalars['Int']>;
+  product?: InputMaybe<ProductUpdateOneInlineInput>;
+  rating?: InputMaybe<Scalars['Float']>;
   userData?: InputMaybe<UserDataUpdateOneInlineInput>;
 };
 
@@ -6841,7 +6929,7 @@ export type ReviewUpdateManyInlineInput = {
 
 export type ReviewUpdateManyInput = {
   content?: InputMaybe<Scalars['String']>;
-  rating?: InputMaybe<Scalars['Int']>;
+  rating?: InputMaybe<Scalars['Float']>;
 };
 
 export type ReviewUpdateManyWithNestedWhereInput = {
@@ -6960,6 +7048,7 @@ export type ReviewWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  product?: InputMaybe<ProductWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -6976,21 +7065,21 @@ export type ReviewWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
-  rating?: InputMaybe<Scalars['Int']>;
+  rating?: InputMaybe<Scalars['Float']>;
   /** All values greater than the given value. */
-  rating_gt?: InputMaybe<Scalars['Int']>;
+  rating_gt?: InputMaybe<Scalars['Float']>;
   /** All values greater than or equal the given value. */
-  rating_gte?: InputMaybe<Scalars['Int']>;
+  rating_gte?: InputMaybe<Scalars['Float']>;
   /** All values that are contained in given list. */
-  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  rating_in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   /** All values less than the given value. */
-  rating_lt?: InputMaybe<Scalars['Int']>;
+  rating_lt?: InputMaybe<Scalars['Float']>;
   /** All values less than or equal the given value. */
-  rating_lte?: InputMaybe<Scalars['Int']>;
+  rating_lte?: InputMaybe<Scalars['Float']>;
   /** Any other value that exists and is not equal to the given value. */
-  rating_not?: InputMaybe<Scalars['Int']>;
+  rating_not?: InputMaybe<Scalars['Float']>;
   /** All values that are not contained in given list. */
-  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  rating_not_in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -9011,12 +9100,13 @@ export enum _SystemDateTimeFieldVariation {
 }
 
 export type CreateReviewMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  reviews?: InputMaybe<ReviewUpdateManyInlineInput>;
+  content?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Float']>;
+  productId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type CreateReviewMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, reviews: Array<{ __typename?: 'Review', content: string, rating: number, createdAt: any, userData?: { __typename?: 'UserData', usrId?: string | null, name?: string | null, avatar?: string | null } | null }> } | null };
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string, content?: string | null } | null };
 
 export type CreateOrderMutationVariables = Exact<{
   order: OrderCreateInput;
@@ -9071,7 +9161,7 @@ export type GetProductDetailBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductDetailBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, sale: boolean, slug: string, title: string, description: string, sport: Sport, category: Category, tags: Array<string>, sizes: Array<Sizes>, rating: Array<number>, prices: Array<{ __typename?: 'Price', id: string, price?: number | null, date?: any | null }>, images: Array<{ __typename?: 'Image', alt?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, reviews: Array<{ __typename?: 'Review', content: string, rating: number, updatedAt: any, userData?: { __typename?: 'UserData', usrId?: string | null, name?: string | null, avatar?: string | null } | null }> } | null };
+export type GetProductDetailBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, sale: boolean, slug: string, title: string, description: string, sport: Sport, category: Category, tags: Array<string>, sizes: Array<Sizes>, rating: Array<number>, prices: Array<{ __typename?: 'Price', id: string, price?: number | null, date?: any | null }>, images: Array<{ __typename?: 'Image', alt?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, reviews: Array<{ __typename?: 'Review', id: string, content?: string | null, documentInStages: Array<{ __typename?: 'Review', id: string }> }> } | null };
 
 export type GetProductsByTagsQueryVariables = Exact<{
   tags?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -9127,19 +9217,12 @@ export type GetUserDataQuery = { __typename?: 'Query', account?: { __typename?: 
 
 
 export const CreateReviewDocument = gql`
-    mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
-  updateProduct(data: {reviews: $reviews}, where: {id: $id}) {
+    mutation CreateReview($content: String, $rating: Float, $productId: ID) {
+  createReview(
+    data: {content: $content, rating: $rating, product: {connect: {id: $productId}}}
+  ) {
     id
-    reviews {
-      content
-      rating
-      createdAt
-      userData {
-        usrId
-        name
-        avatar
-      }
-    }
+    content
   }
 }
     `;
@@ -9158,8 +9241,9 @@ export type CreateReviewMutationFn = Apollo.MutationFunction<CreateReviewMutatio
  * @example
  * const [createReviewMutation, { data, loading, error }] = useCreateReviewMutation({
  *   variables: {
- *      id: // value for 'id'
- *      reviews: // value for 'reviews'
+ *      content: // value for 'content'
+ *      rating: // value for 'rating'
+ *      productId: // value for 'productId'
  *   },
  * });
  */
@@ -9401,13 +9485,12 @@ export const GetProductDetailBySlugDocument = gql`
       alt
     }
     reviews {
-      content
-      rating
-      updatedAt
-      userData {
-        usrId
-        name
-        avatar
+      ... on Review {
+        id
+        content
+        documentInStages(stages: DRAFT) {
+          id
+        }
       }
     }
   }

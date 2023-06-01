@@ -6,13 +6,13 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useRef, useState } from "react";
 
 import { AddReviewModal } from "@/components/Modals/AddReviewModal";
-import { Review } from "@/components/Review/Review";
+//import { Review } from "@/components/Review/Review";
 import {
   GetProductDetailBySlugDocument,
   GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
   Product,
-  Review as ReviewType,
+  //Review as ReviewType,
 } from "@/generated/graphql";
 
 import mockedUsers from "../../mocks/users.json";
@@ -22,6 +22,7 @@ import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
 // import { NewReview } from "@/components/Review/NewReview";
 import { useSession } from "next-auth/react";
+import { NewReview } from "@/components/Review/NewReview";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -71,26 +72,27 @@ const ProductPage = ({
   const [roundedAverageRating, setRoundedAverageRating] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
+  console.log({ product });
 
   useEffect(() => {
     scrollContainer();
   }, [data]);
 
-  useEffect(() => {
-    const sum = product.reviews.reduce(
-      (total: number, review: ReviewType) => total + review.rating,
-      0
-    );
-    if (sum === 0) {
-      setAverageRating(0);
-      setRoundedAverageRating(0);
-    } else {
-      const averageRating = sum / product.reviews.length;
-      const roundedAverageRating = Math.round(averageRating * 2) / 2;
-      setAverageRating(averageRating);
-      setRoundedAverageRating(roundedAverageRating);
-    }
-  }, [averageRating, roundedAverageRating, product]);
+  // useEffect(() => {
+  //   const sum = product.reviews.reduce(
+  //     (total: number, review: ReviewType) => total + review.rating,
+  //     0
+  //   );
+  //   if (sum === 0) {
+  //     setAverageRating(0);
+  //     setRoundedAverageRating(0);
+  //   } else {
+  //     const averageRating = sum / product.reviews.length;
+  //     const roundedAverageRating = Math.round(averageRating * 2) / 2;
+  //     setAverageRating(averageRating);
+  //     setRoundedAverageRating(roundedAverageRating);
+  //   }
+  // }, [averageRating, roundedAverageRating, product]);
 
   const scrollContainer = () => {
     containerRef.current?.scrollIntoView({
@@ -105,7 +107,7 @@ const ProductPage = ({
   console.log(session);
   return (
     <Layout>
-      <ProductSeo product={product} averageRating={averageRating} />
+      {/* <ProductSeo product={product} averageRating={averageRating} /> */}
       <div ref={containerRef} className="flex-col w-full">
         <ProductDetails
           product={product}
@@ -133,21 +135,21 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
-            {session.data && (
-              <Button size="small" onClick={handleAddNewReview}>
-                {openNewReview ? "Close Review" : "Add Review"}
-              </Button>
-            )}
+            {/* {session.data && ( */}
+            <Button size="small" onClick={handleAddNewReview}>
+              {openNewReview ? "Close Review" : "Add Review"}
+            </Button>
+            {/* )} */}
           </div>
           {/* <AddReviewModal
             product={product}
             openReviewModal={openReviewModal}
             handleCloseAddReviewDialog={handleCloseAddReviewDialog}
           /> */}
-          {/* {openNewReview && (
+          {openNewReview && (
             <NewReview productId={product.id} userData={session.data} />
-          )} */}
-          <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
+          )}
+          {/* <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {product.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">
                 No reviews yet. You can add the first one by clicking on the
@@ -165,7 +167,7 @@ const ProductPage = ({
                 />
               ))
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </Layout>

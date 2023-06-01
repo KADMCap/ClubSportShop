@@ -23,15 +23,24 @@ query GetProductDetailBySlug($slug: String) {
       alt
     }
     reviews {
-      content
-      rating
-      updatedAt
-      userData {
-        usrId
-        name
-        avatar
+      ... on Review {
+        id
+        content
+        documentInStages(stages: DRAFT) {
+          id
+        }
       }
     }
+    # reviews {
+    #   content
+    #   rating
+    #   updatedAt
+    #   userData {
+    #     usrId
+    #     name
+    #     avatar
+    #   }
+    # }
   }
 }
 

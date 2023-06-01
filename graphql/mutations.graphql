@@ -1,17 +1,14 @@
 # REVIEWS
-mutation CreateReview($id: ID, $reviews: ReviewUpdateManyInlineInput) {
-  updateProduct(data: { reviews: $reviews }, where: { id: $id }) {
-    id
-    reviews {
-      content
-      rating
-      createdAt
-      userData {
-        usrId
-        name
-        avatar
-      }
+mutation CreateReview($content: String, $rating: Float, $productId: ID) {
+  createReview(
+    data: {
+      content: $content
+      rating: $rating
+      product: { connect: { id: $productId } }
     }
+  ) {
+    id
+    content
   }
 }
 
