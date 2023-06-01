@@ -1,44 +1,34 @@
-import { User } from "@/mocks/users";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
+import { Review } from "@/generated/graphql";
 import React from "react";
 import ReactStars from "react-stars";
 
-export interface ReviewProps {
-  id: string;
-  user: User;
-  date: string;
-  rating: number;
-  description: string;
-}
-
-export const Review = (review: ReviewProps) => {
+export function Review(review: Review) {
   return (
     <div className="flex flex-row">
-      <div>
-        <Image
-          width={70}
-          height={70}
-          src={review.user.avatar}
-          alt={review.user.name}
-          style={{
-            borderRadius: "999999px",
-            objectFit: "cover",
-            height: "70px",
-            width: "70px",
-          }}
+      {review.userAvatar ? (
+        <img
+          src={review.userAvatar || ""}
+          alt={review.userName || ""}
+          className="object-cover w-10 h-10 rounded-full"
         />
-      </div>
-      <div className="flex bg-white rounded-xl w-full ml-2 p-2 dark:bg-black">
+      ) : (
+        <div className="w-10 h-10 rounded-full bg-primaryBlue" />
+      )}
+
+      <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
         <div className="flex flex-col">
-          <span>{review.user.name}</span>
-          <span className="text-sm text-primaryGray">{review.date}</span>
-          <div className="flex flex-row gap-2">
+          <span className="text-sm font-semibold">{review.userName}</span>
+          <span className="text-sm text-primaryGray">
+            {review.createdAt.slice(0, 10)}
+          </span>
+          <div className="flex flex-row items-center gap-2 text-sm">
             <span>{review.rating}/5</span>
             <ReactStars edit={false} value={review.rating} />
           </div>
-          <span>{review.description}</span>
+          <span>{review.content}</span>
         </div>
       </div>
     </div>
   );
-};
+}

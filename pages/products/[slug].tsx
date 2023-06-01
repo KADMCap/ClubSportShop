@@ -4,22 +4,22 @@ import ProductCard from "@/components/Products/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useRef, useState } from "react";
-
-import { AddReviewModal } from "@/components/Modals/AddReviewModal";
 import { Review } from "@/components/Review/Review";
 import {
   GetProductDetailBySlugDocument,
   GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
+  GetReviewDocument,
+  GetReviewQueryResult,
   Product,
   Review as ReviewType,
 } from "@/generated/graphql";
 
-import mockedUsers from "../../mocks/users.json";
-
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
+import { useSession } from "next-auth/react";
+import { NewReview } from "@/components/Review/NewReview";
 
 export interface GetProductDetailResponse {
   product: Product;
@@ -31,6 +31,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       slug: params?.slug,
     },
     query: GetProductDetailBySlugDocument,
+  });
+
+  const productReviews = await apolloClient.query<GetReviewQueryResult>({
+    variables: {
+      slug: params?.slug,
+    },
+    query: GetReviewDocument,
   });
 
   const productsByTags =
@@ -54,6 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
       data,
+      reviews: productReviews.data,
       tagsProducts: productsByTags.data,
     },
   };
@@ -61,9 +69,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 const ProductPage = ({
   data,
+  reviews,
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const session = useSession();
+  const [openNewReview, setOpenNewReview] = useState(false);
+  const [newReview, setNewReview] = useState<ReviewType>();
   const [averageRating, setAverageRating] = useState(0);
   const [roundedAverageRating, setRoundedAverageRating] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +85,7 @@ const ProductPage = ({
   }, [data]);
 
   useEffect(() => {
-    const sum = product.reviews.reduce(
+    const sum = reviews.reviews.reduce(
       (total: number, review: ReviewType) => total + review.rating,
       0
     );
@@ -82,12 +93,12 @@ const ProductPage = ({
       setAverageRating(0);
       setRoundedAverageRating(0);
     } else {
-      const averageRating = sum / product.reviews.length;
+      const averageRating = sum / reviews.reviews.length;
       const roundedAverageRating = Math.round(averageRating * 2) / 2;
       setAverageRating(averageRating);
       setRoundedAverageRating(roundedAverageRating);
     }
-  }, [averageRating, roundedAverageRating, product]);
+  }, [averageRating, roundedAverageRating, reviews]);
 
   const scrollContainer = () => {
     containerRef.current?.scrollIntoView({
@@ -96,16 +107,19 @@ const ProductPage = ({
     });
   };
 
-  const handleOpenAddReviewDialog = () => {
-    setOpenReviewModal(true);
+  const handleAddNewReview = () => {
+    setOpenNewReview((prev) => !prev);
   };
-  const handleCloseAddReviewDialog = () => {
-    setOpenReviewModal(false);
-  };
+
+  console.log({ newReview });
 
   return (
     <Layout>
-      <ProductSeo product={product} averageRating={averageRating} />
+      <ProductSeo
+        product={product}
+        reviews={reviews}
+        averageRating={averageRating}
+      />
       <div ref={containerRef} className="flex-col w-full">
         <ProductDetails
           product={product}
@@ -133,31 +147,31 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
-            <Button size="small" onClick={handleOpenAddReviewDialog}>
-              ADD REVIEW
-            </Button>
+            {session.data && (
+              <Button size="small" onClick={handleAddNewReview}>
+                {openNewReview ? "Close Review" : "Add Review"}
+              </Button>
+            )}
           </div>
-          <AddReviewModal
-            product={product}
-            openReviewModal={openReviewModal}
-            handleCloseAddReviewDialog={handleCloseAddReviewDialog}
-          />
+          {openNewReview && (
+            <NewReview
+              productId={product.id}
+              userData={session.data}
+              handleAddNewReview={handleAddNewReview}
+              setNewReview={setNewReview}
+            />
+          )}
+          {newReview && (
+            <div className="pb-4">
+              <Review {...newReview} />
+            </div>
+          )}
           <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
-            {product.reviews.length === 0 ? (
-              <span className="p-4 text-darkBlue">
-                No reviews yet. You can add the first one by clicking on the
-                button to the right.{" "}
-              </span>
+            {reviews.reviews.length === 0 ? (
+              <span className="p-4 text-darkBlue">No reviews yet</span>
             ) : (
-              product.reviews.map((review: ReviewType) => (
-                <Review
-                  key={review.id}
-                  id={review.id}
-                  user={mockedUsers[0]}
-                  date={review.publishedAt}
-                  rating={review.rating}
-                  description={review.content}
-                />
+              reviews.reviews.map((review: ReviewType) => (
+                <Review key={review.id} {...review} />
               ))
             )}
           </div>

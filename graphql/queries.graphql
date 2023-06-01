@@ -22,12 +22,21 @@ query GetProductDetailBySlug($slug: String) {
       }
       alt
     }
-    reviews {
-      user
-      content
-      rating
-      updatedAt
-    }
+  }
+}
+
+query GetReview($slug: String!) {
+  reviews(
+    stage: DRAFT
+    where: { product: { slug: $slug } }
+    orderBy: createdAt_DESC
+  ) {
+    content
+    rating
+    createdAt
+    userAvatar
+    userId
+    userName
   }
 }
 

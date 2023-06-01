@@ -67,7 +67,7 @@ export const ProductDetails = ({
           <span className="text-sm">{roundedAverageRating}/5</span>{" "}
           <ReactStars half edit={false} value={roundedAverageRating} />
           <span className="text-sm text-primaryGray">
-            ({`${product.reviews.length} reviews`})
+            {/* ({`${product.reviews.length} reviews`}) */}
           </span>
         </div>
         <div className="flex flex-row items-center flex-1 gap-2">
