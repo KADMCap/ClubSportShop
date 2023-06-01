@@ -6659,7 +6659,9 @@ export type Review = Node & {
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
-  userData?: Maybe<UserData>;
+  userAvatar?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
 };
 
 
@@ -6712,12 +6714,6 @@ export type ReviewUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-
-export type ReviewUserDataArgs = {
-  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
-  locales?: InputMaybe<Array<Locale>>;
-};
-
 export type ReviewConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -6741,7 +6737,9 @@ export type ReviewCreateInput = {
   product?: InputMaybe<ProductCreateOneInlineInput>;
   rating?: InputMaybe<Scalars['Float']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
-  userData?: InputMaybe<UserDataCreateOneInlineInput>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
 };
 
 export type ReviewCreateManyInlineInput = {
@@ -6885,7 +6883,63 @@ export type ReviewManyWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
-  userData?: InputMaybe<UserDataWhereInput>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userAvatar_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userAvatar_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userAvatar_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userAvatar_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userAvatar_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userAvatar_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userAvatar_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userAvatar_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userAvatar_starts_with?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userId_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userId_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userId_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userId_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userId_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userId_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userId_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userId_starts_with?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userName_starts_with?: InputMaybe<Scalars['String']>;
 };
 
 export enum ReviewOrderByInput {
@@ -6900,14 +6954,22 @@ export enum ReviewOrderByInput {
   RatingAsc = 'rating_ASC',
   RatingDesc = 'rating_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC'
+  UpdatedAtDesc = 'updatedAt_DESC',
+  UserAvatarAsc = 'userAvatar_ASC',
+  UserAvatarDesc = 'userAvatar_DESC',
+  UserIdAsc = 'userId_ASC',
+  UserIdDesc = 'userId_DESC',
+  UserNameAsc = 'userName_ASC',
+  UserNameDesc = 'userName_DESC'
 }
 
 export type ReviewUpdateInput = {
   content?: InputMaybe<Scalars['String']>;
   product?: InputMaybe<ProductUpdateOneInlineInput>;
   rating?: InputMaybe<Scalars['Float']>;
-  userData?: InputMaybe<UserDataUpdateOneInlineInput>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
 };
 
 export type ReviewUpdateManyInlineInput = {
@@ -6930,6 +6992,9 @@ export type ReviewUpdateManyInlineInput = {
 export type ReviewUpdateManyInput = {
   content?: InputMaybe<Scalars['String']>;
   rating?: InputMaybe<Scalars['Float']>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
 };
 
 export type ReviewUpdateManyWithNestedWhereInput = {
@@ -7099,7 +7164,63 @@ export type ReviewWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
-  userData?: InputMaybe<UserDataWhereInput>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userAvatar_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userAvatar_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userAvatar_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userAvatar_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userAvatar_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userAvatar_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userAvatar_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userAvatar_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userAvatar_starts_with?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userId_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userId_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userId_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userId_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userId_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userId_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userId_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userId_starts_with?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userName_starts_with?: InputMaybe<Scalars['String']>;
 };
 
 /** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
@@ -8266,13 +8387,6 @@ export type UserData = {
   usrId?: Maybe<Scalars['String']>;
 };
 
-export type UserDataConnectInput = {
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: InputMaybe<ConnectPositionInput>;
-  /** Document to connect */
-  where: UserDataWhereUniqueInput;
-};
-
 /** A connection to a list of items. */
 export type UserDataConnection = {
   __typename?: 'UserDataConnection';
@@ -8287,16 +8401,6 @@ export type UserDataCreateInput = {
   avatar?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   usrId?: InputMaybe<Scalars['String']>;
-};
-
-export type UserDataCreateManyInlineInput = {
-  /** Create and connect multiple existing UserData documents */
-  create?: InputMaybe<Array<UserDataCreateInput>>;
-};
-
-export type UserDataCreateOneInlineInput = {
-  /** Create and connect one UserData document */
-  create?: InputMaybe<UserDataCreateInput>;
 };
 
 export type UserDataCreateWithPositionInput = {
@@ -8414,101 +8518,10 @@ export enum UserDataOrderByInput {
   UsrIdDesc = 'usrId_DESC'
 }
 
-export type UserDataParent = Review;
-
-export type UserDataParentConnectInput = {
-  Review?: InputMaybe<ReviewConnectInput>;
-};
-
-export type UserDataParentCreateInput = {
-  Review?: InputMaybe<ReviewCreateInput>;
-};
-
-export type UserDataParentCreateManyInlineInput = {
-  /** Connect multiple existing UserDataParent documents */
-  connect?: InputMaybe<Array<UserDataParentWhereUniqueInput>>;
-  /** Create and connect multiple existing UserDataParent documents */
-  create?: InputMaybe<Array<UserDataParentCreateInput>>;
-};
-
-export type UserDataParentCreateOneInlineInput = {
-  /** Connect one existing UserDataParent document */
-  connect?: InputMaybe<UserDataParentWhereUniqueInput>;
-  /** Create and connect one UserDataParent document */
-  create?: InputMaybe<UserDataParentCreateInput>;
-};
-
-export type UserDataParentUpdateInput = {
-  Review?: InputMaybe<ReviewUpdateInput>;
-};
-
-export type UserDataParentUpdateManyInlineInput = {
-  /** Connect multiple existing UserDataParent documents */
-  connect?: InputMaybe<Array<UserDataParentConnectInput>>;
-  /** Create and connect multiple UserDataParent documents */
-  create?: InputMaybe<Array<UserDataParentCreateInput>>;
-  /** Delete multiple UserDataParent documents */
-  delete?: InputMaybe<Array<UserDataParentWhereUniqueInput>>;
-  /** Disconnect multiple UserDataParent documents */
-  disconnect?: InputMaybe<Array<UserDataParentWhereUniqueInput>>;
-  /** Override currently-connected documents with multiple existing UserDataParent documents */
-  set?: InputMaybe<Array<UserDataParentWhereUniqueInput>>;
-  /** Update multiple UserDataParent documents */
-  update?: InputMaybe<Array<UserDataParentUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple UserDataParent documents */
-  upsert?: InputMaybe<Array<UserDataParentUpsertWithNestedWhereUniqueInput>>;
-};
-
-export type UserDataParentUpdateManyWithNestedWhereInput = {
-  Review?: InputMaybe<ReviewUpdateManyWithNestedWhereInput>;
-};
-
-export type UserDataParentUpdateOneInlineInput = {
-  /** Connect existing UserDataParent document */
-  connect?: InputMaybe<UserDataParentWhereUniqueInput>;
-  /** Create and connect one UserDataParent document */
-  create?: InputMaybe<UserDataParentCreateInput>;
-  /** Delete currently connected UserDataParent document */
-  delete?: InputMaybe<Scalars['Boolean']>;
-  /** Disconnect currently connected UserDataParent document */
-  disconnect?: InputMaybe<Scalars['Boolean']>;
-  /** Update single UserDataParent document */
-  update?: InputMaybe<UserDataParentUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single UserDataParent document */
-  upsert?: InputMaybe<UserDataParentUpsertWithNestedWhereUniqueInput>;
-};
-
-export type UserDataParentUpdateWithNestedWhereUniqueInput = {
-  Review?: InputMaybe<ReviewUpdateWithNestedWhereUniqueInput>;
-};
-
-export type UserDataParentUpsertWithNestedWhereUniqueInput = {
-  Review?: InputMaybe<ReviewUpsertWithNestedWhereUniqueInput>;
-};
-
-export type UserDataParentWhereInput = {
-  Review?: InputMaybe<ReviewWhereInput>;
-};
-
-export type UserDataParentWhereUniqueInput = {
-  Review?: InputMaybe<ReviewWhereUniqueInput>;
-};
-
 export type UserDataUpdateInput = {
   avatar?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   usrId?: InputMaybe<Scalars['String']>;
-};
-
-export type UserDataUpdateManyInlineInput = {
-  /** Create and connect multiple UserData component instances */
-  create?: InputMaybe<Array<UserDataCreateWithPositionInput>>;
-  /** Delete multiple UserData documents */
-  delete?: InputMaybe<Array<UserDataWhereUniqueInput>>;
-  /** Update multiple UserData component instances */
-  update?: InputMaybe<Array<UserDataUpdateWithNestedWhereUniqueAndPositionInput>>;
-  /** Upsert multiple UserData component instances */
-  upsert?: InputMaybe<Array<UserDataUpsertWithNestedWhereUniqueAndPositionInput>>;
 };
 
 export type UserDataUpdateManyInput = {
@@ -8522,17 +8535,6 @@ export type UserDataUpdateManyWithNestedWhereInput = {
   data: UserDataUpdateManyInput;
   /** Document search */
   where: UserDataWhereInput;
-};
-
-export type UserDataUpdateOneInlineInput = {
-  /** Create and connect one UserData document */
-  create?: InputMaybe<UserDataCreateInput>;
-  /** Delete currently connected UserData document */
-  delete?: InputMaybe<Scalars['Boolean']>;
-  /** Update single UserData document */
-  update?: InputMaybe<UserDataUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single UserData document */
-  upsert?: InputMaybe<UserDataUpsertWithNestedWhereUniqueInput>;
 };
 
 export type UserDataUpdateWithNestedWhereUniqueAndPositionInput = {
@@ -9103,10 +9105,13 @@ export type CreateReviewMutationVariables = Exact<{
   content?: InputMaybe<Scalars['String']>;
   rating?: InputMaybe<Scalars['Float']>;
   productId?: InputMaybe<Scalars['ID']>;
+  userAvatar?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string, content?: string | null } | null };
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string, content?: string | null, rating?: number | null, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null } | null };
 
 export type CreateOrderMutationVariables = Exact<{
   order: OrderCreateInput;
@@ -9161,7 +9166,14 @@ export type GetProductDetailBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductDetailBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, sale: boolean, slug: string, title: string, description: string, sport: Sport, category: Category, tags: Array<string>, sizes: Array<Sizes>, rating: Array<number>, prices: Array<{ __typename?: 'Price', id: string, price?: number | null, date?: any | null }>, images: Array<{ __typename?: 'Image', alt?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, reviews: Array<{ __typename?: 'Review', id: string, content?: string | null, documentInStages: Array<{ __typename?: 'Review', id: string }> }> } | null };
+export type GetProductDetailBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, sale: boolean, slug: string, title: string, description: string, sport: Sport, category: Category, tags: Array<string>, sizes: Array<Sizes>, rating: Array<number>, prices: Array<{ __typename?: 'Price', id: string, price?: number | null, date?: any | null }>, images: Array<{ __typename?: 'Image', alt?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> } | null };
+
+export type GetReviewQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetReviewQuery = { __typename?: 'Query', reviews: Array<{ __typename?: 'Review', content?: string | null, rating?: number | null, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null }> };
 
 export type GetProductsByTagsQueryVariables = Exact<{
   tags?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -9217,12 +9229,17 @@ export type GetUserDataQuery = { __typename?: 'Query', account?: { __typename?: 
 
 
 export const CreateReviewDocument = gql`
-    mutation CreateReview($content: String, $rating: Float, $productId: ID) {
+    mutation CreateReview($content: String, $rating: Float, $productId: ID, $userAvatar: String, $userName: String, $userId: String) {
   createReview(
-    data: {content: $content, rating: $rating, product: {connect: {id: $productId}}}
+    data: {content: $content, rating: $rating, product: {connect: {id: $productId}}, userAvatar: $userAvatar, userId: $userId, userName: $userName}
   ) {
     id
     content
+    rating
+    createdAt
+    userAvatar
+    userId
+    userName
   }
 }
     `;
@@ -9244,6 +9261,9 @@ export type CreateReviewMutationFn = Apollo.MutationFunction<CreateReviewMutatio
  *      content: // value for 'content'
  *      rating: // value for 'rating'
  *      productId: // value for 'productId'
+ *      userAvatar: // value for 'userAvatar'
+ *      userName: // value for 'userName'
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -9484,15 +9504,6 @@ export const GetProductDetailBySlugDocument = gql`
       }
       alt
     }
-    reviews {
-      ... on Review {
-        id
-        content
-        documentInStages(stages: DRAFT) {
-          id
-        }
-      }
-    }
   }
 }
     `;
@@ -9524,6 +9535,46 @@ export function useGetProductDetailBySlugLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetProductDetailBySlugQueryHookResult = ReturnType<typeof useGetProductDetailBySlugQuery>;
 export type GetProductDetailBySlugLazyQueryHookResult = ReturnType<typeof useGetProductDetailBySlugLazyQuery>;
 export type GetProductDetailBySlugQueryResult = Apollo.QueryResult<GetProductDetailBySlugQuery, GetProductDetailBySlugQueryVariables>;
+export const GetReviewDocument = gql`
+    query GetReview($slug: String!) {
+  reviews(stage: DRAFT, where: {product: {slug: $slug}}) {
+    content
+    rating
+    createdAt
+    userAvatar
+    userId
+    userName
+  }
+}
+    `;
+
+/**
+ * __useGetReviewQuery__
+ *
+ * To run a query within a React component, call `useGetReviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReviewQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetReviewQuery(baseOptions: Apollo.QueryHookOptions<GetReviewQuery, GetReviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetReviewQuery, GetReviewQueryVariables>(GetReviewDocument, options);
+      }
+export function useGetReviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReviewQuery, GetReviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetReviewQuery, GetReviewQueryVariables>(GetReviewDocument, options);
+        }
+export type GetReviewQueryHookResult = ReturnType<typeof useGetReviewQuery>;
+export type GetReviewLazyQueryHookResult = ReturnType<typeof useGetReviewLazyQuery>;
+export type GetReviewQueryResult = Apollo.QueryResult<GetReviewQuery, GetReviewQueryVariables>;
 export const GetProductsByTagsDocument = gql`
     query getProductsByTags($tags: [String!], $id: ID) {
   products(where: {tags_contains_some: $tags, id_not: $id}) {

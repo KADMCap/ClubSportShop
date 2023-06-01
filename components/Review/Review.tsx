@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { User } from "@/mocks/users";
 import Image from "next/image";
 import React from "react";
@@ -8,24 +9,17 @@ export interface ReviewProps {
   user: User;
   date: string;
   rating: number;
-  description: string;
+  content: string;
 }
 
 export const Review = (review: ReviewProps) => {
   return (
     <div className="flex flex-row">
       <div>
-        <Image
-          width={40}
-          height={40}
+        <img
           src={review.user.avatar}
           alt={review.user.name}
-          style={{
-            borderRadius: "100%",
-            objectFit: "cover",
-            height: "40px",
-            width: "40px",
-          }}
+          className="object-cover w-10 h-10 rounded-full"
         />
       </div>
       <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
@@ -36,7 +30,7 @@ export const Review = (review: ReviewProps) => {
             <span>{review.rating}/5</span>
             <ReactStars edit={false} value={review.rating} />
           </div>
-          <span>{review.description}</span>
+          <span>{review.content}</span>
         </div>
       </div>
     </div>

@@ -6,13 +6,15 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useRef, useState } from "react";
 
 import { AddReviewModal } from "@/components/Modals/AddReviewModal";
-//import { Review } from "@/components/Review/Review";
+import { Review } from "@/components/Review/Review";
 import {
   GetProductDetailBySlugDocument,
   GetProductsByTagsDocument,
   GetProductsByTagsQueryVariables,
+  GetReviewDocument,
+  GetReviewQueryResult,
   Product,
-  //Review as ReviewType,
+  Review as ReviewType,
 } from "@/generated/graphql";
 
 import mockedUsers from "../../mocks/users.json";
@@ -20,7 +22,6 @@ import mockedUsers from "../../mocks/users.json";
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 import { ProductDetails } from "@/components/Products/ProductDetails";
 import { ProductSeo } from "@/components/Products/ProductSeo";
-// import { NewReview } from "@/components/Review/NewReview";
 import { useSession } from "next-auth/react";
 import { NewReview } from "@/components/Review/NewReview";
 
@@ -34,6 +35,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       slug: params?.slug,
     },
     query: GetProductDetailBySlugDocument,
+  });
+
+  const productReviews = await apolloClient.query<GetReviewQueryResult>({
+    variables: {
+      slug: params?.slug,
+    },
+    query: GetReviewDocument,
   });
 
   const productsByTags =
@@ -57,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
       data,
+      reviews: productReviews.data,
       tagsProducts: productsByTags.data,
     },
   };
@@ -64,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 const ProductPage = ({
   data,
+  reviews,
   tagsProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const session = useSession();
@@ -73,6 +83,7 @@ const ProductPage = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
   console.log({ product });
+  console.log({ reviews });
 
   useEffect(() => {
     scrollContainer();
@@ -149,25 +160,25 @@ const ProductPage = ({
           {openNewReview && (
             <NewReview productId={product.id} userData={session.data} />
           )}
-          {/* <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
-            {product.reviews.length === 0 ? (
+          <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
+            {reviews.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">
                 No reviews yet. You can add the first one by clicking on the
                 button to the right.{" "}
               </span>
             ) : (
-              product.reviews.map((review: ReviewType) => (
+              reviews.reviews.map((review: any) => (
                 <Review
                   key={review.id}
                   id={review.id}
                   user={mockedUsers[0]}
                   date={review.publishedAt}
-                  rating={review.rating}
-                  description={review.content}
+                  rating={review.rating ? review.rating : 0}
+                  content={review.content}
                 />
               ))
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </Layout>

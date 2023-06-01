@@ -7,21 +7,16 @@ import {
 
 const AddReviewHandler: NextApiHandler = async (req, res) => {
   console.log("req:", req.body);
-  const { productId, content, rating, userData } = req.body;
+  const { accountId, productId, content, rating } = req.body;
 
   const response =
     await authorizedApolloClient.mutate<CreateReviewMutationResult>({
       mutation: CreateReviewDocument,
       variables: {
-        id: productId,
-        reviews: {
-          create: [
-            {
-              content: content,
-              rating: rating,
-            },
-          ],
-        },
+        accountId,
+        productId,
+        content,
+        rating,
       },
     });
   console.log("add review", response);
