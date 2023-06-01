@@ -78,12 +78,11 @@ const ProductPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const session = useSession();
   const [openNewReview, setOpenNewReview] = useState(false);
+  const [newReview, setNewReview] = useState<ReviewType>();
   const [averageRating, setAverageRating] = useState(0);
   const [roundedAverageRating, setRoundedAverageRating] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const product = data?.product;
-  console.log({ product });
-  console.log({ reviews });
 
   useEffect(() => {
     scrollContainer();
@@ -115,7 +114,9 @@ const ProductPage = ({
   const handleAddNewReview = () => {
     setOpenNewReview((prev) => !prev);
   };
-  console.log(session);
+
+  console.log({ newReview });
+
   return (
     <Layout>
       <ProductSeo
@@ -157,8 +158,14 @@ const ProductPage = ({
             )}
           </div>
           {openNewReview && (
-            <NewReview productId={product.id} userData={session.data} />
+            <NewReview
+              productId={product.id}
+              userData={session.data}
+              handleAddNewReview={handleAddNewReview}
+              setNewReview={setNewReview}
+            />
           )}
+          <div className="py-4">{newReview && <Review {...newReview} />}</div>
           <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {reviews.reviews.length === 0 ? (
               <span className="p-4 text-darkBlue">

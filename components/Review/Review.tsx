@@ -16,7 +16,9 @@ export function Review(review: Review) {
       <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
         <div className="flex flex-col">
           <span>{review.userName}</span>
-          <span className="text-sm text-primaryGray">{review.createdAt}</span>
+          <span className="text-sm text-primaryGray">
+            {review.createdAt.slice(0, 10)}
+          </span>
           <div className="flex flex-row gap-2">
             <span>{review.rating}/5</span>
             <ReactStars edit={false} value={review.rating} />

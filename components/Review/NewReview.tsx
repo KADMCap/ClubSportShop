@@ -11,10 +11,13 @@ import * as yup from "yup";
 import React, { useState } from "react";
 import ReactStars from "react-stars";
 import { Session } from "next-auth/core/types";
+import { CreateReviewMutationFn } from "@/generated/graphql";
 
 export interface Props {
   productId: string;
   userData: Session | null;
+  setNewReview: (data: any) => void;
+  handleAddNewReview: () => void;
 }
 
 const schema = yup
@@ -25,7 +28,12 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
-export const NewReview = ({ productId, userData }: Props) => {
+export const NewReview = ({
+  productId,
+  userData,
+  setNewReview,
+  handleAddNewReview,
+}: Props) => {
   const [rating, setRating] = useState(0);
   const [ratingError, setRatingError] = useState("");
   const {
@@ -47,7 +55,7 @@ export const NewReview = ({ productId, userData }: Props) => {
       return;
     }
 
-    const response = await apolloClient.mutate<CreateReviewMutationResult>({
+    const response = await apolloClient.mutate({
       mutation: CreateReviewDocument,
       variables: {
         productId: productId,
@@ -59,6 +67,10 @@ export const NewReview = ({ productId, userData }: Props) => {
       },
     });
     console.log(response);
+    if (response.data) {
+      setNewReview(response.data.createReview);
+    }
+    handleAddNewReview();
   });
 
   return (

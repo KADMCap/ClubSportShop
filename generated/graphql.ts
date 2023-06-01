@@ -9537,7 +9537,7 @@ export type GetProductDetailBySlugLazyQueryHookResult = ReturnType<typeof useGet
 export type GetProductDetailBySlugQueryResult = Apollo.QueryResult<GetProductDetailBySlugQuery, GetProductDetailBySlugQueryVariables>;
 export const GetReviewDocument = gql`
     query GetReview($slug: String!) {
-  reviews(stage: DRAFT, where: {product: {slug: $slug}}) {
+  reviews(stage: DRAFT, where: {product: {slug: $slug}}, orderBy: createdAt_DESC) {
     content
     rating
     createdAt
