@@ -89,21 +89,21 @@ const ProductPage = ({
     scrollContainer();
   }, [data]);
 
-  // useEffect(() => {
-  //   const sum = product.reviews.reduce(
-  //     (total: number, review: ReviewType) => total + review.rating,
-  //     0
-  //   );
-  //   if (sum === 0) {
-  //     setAverageRating(0);
-  //     setRoundedAverageRating(0);
-  //   } else {
-  //     const averageRating = sum / product.reviews.length;
-  //     const roundedAverageRating = Math.round(averageRating * 2) / 2;
-  //     setAverageRating(averageRating);
-  //     setRoundedAverageRating(roundedAverageRating);
-  //   }
-  // }, [averageRating, roundedAverageRating, product]);
+  useEffect(() => {
+    const sum = reviews.reviews.reduce(
+      (total: number, review: ReviewType) => total + review.rating,
+      0
+    );
+    if (sum === 0) {
+      setAverageRating(0);
+      setRoundedAverageRating(0);
+    } else {
+      const averageRating = sum / reviews.reviews.length;
+      const roundedAverageRating = Math.round(averageRating * 2) / 2;
+      setAverageRating(averageRating);
+      setRoundedAverageRating(roundedAverageRating);
+    }
+  }, [averageRating, roundedAverageRating, reviews]);
 
   const scrollContainer = () => {
     containerRef.current?.scrollIntoView({
@@ -118,7 +118,11 @@ const ProductPage = ({
   console.log(session);
   return (
     <Layout>
-      {/* <ProductSeo product={product} averageRating={averageRating} /> */}
+      <ProductSeo
+        product={product}
+        reviews={reviews}
+        averageRating={averageRating}
+      />
       <div ref={containerRef} className="flex-col w-full">
         <ProductDetails
           product={product}
@@ -146,17 +150,12 @@ const ProductPage = ({
         <div>
           <div className="flex flex-row justify-between w-full my-6">
             <span className="font-bold">Reviews</span>
-            {/* {session.data && ( */}
-            <Button size="small" onClick={handleAddNewReview}>
-              {openNewReview ? "Close Review" : "Add Review"}
-            </Button>
-            {/* )} */}
+            {session.data && (
+              <Button size="small" onClick={handleAddNewReview}>
+                {openNewReview ? "Close Review" : "Add Review"}
+              </Button>
+            )}
           </div>
-          {/* <AddReviewModal
-            product={product}
-            openReviewModal={openReviewModal}
-            handleCloseAddReviewDialog={handleCloseAddReviewDialog}
-          /> */}
           {openNewReview && (
             <NewReview productId={product.id} userData={session.data} />
           )}
@@ -167,15 +166,8 @@ const ProductPage = ({
                 button to the right.{" "}
               </span>
             ) : (
-              reviews.reviews.map((review: any) => (
-                <Review
-                  key={review.id}
-                  id={review.id}
-                  user={mockedUsers[0]}
-                  date={review.publishedAt}
-                  rating={review.rating ? review.rating : 0}
-                  content={review.content}
-                />
+              reviews.reviews.map((review: ReviewType) => (
+                <Review key={review.id} {...review} />
               ))
             )}
           </div>

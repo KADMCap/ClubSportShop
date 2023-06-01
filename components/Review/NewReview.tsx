@@ -1,17 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   CreateReviewMutationResult,
   CreateReviewDocument,
 } from "@/generated/graphql";
-import { apolloClient, authorizedApolloClient } from "@/graphql/apolloClient";
+import { apolloClient } from "@/graphql/apolloClient";
 import { useForm } from "react-hook-form";
-import { Button, SubmitButton } from "../Buttons/Button";
+import { SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { User } from "@/mocks/users";
-import Image from "next/image";
 import React, { useState } from "react";
 import ReactStars from "react-stars";
-import { useSession } from "next-auth/react";
 import { Session } from "next-auth/core/types";
 
 export interface Props {
@@ -28,11 +26,8 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 export const NewReview = ({ productId, userData }: Props) => {
-  const session = useSession();
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState("");
   const [ratingError, setRatingError] = useState("");
-  const [contentError, setContentError] = useState("");
   const {
     register,
     setValue,
@@ -42,6 +37,8 @@ export const NewReview = ({ productId, userData }: Props) => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+
+  const { avatar, fullName, id } = userData?.user!;
 
   const onSubmit = handleSubmit(async (data: FormData) => {
     console.log("Comment");
@@ -56,9 +53,9 @@ export const NewReview = ({ productId, userData }: Props) => {
         productId: productId,
         content: data.content,
         rating: rating,
-        userAvatar: session.data?.user.avatar,
-        userId: session.data?.user.id,
-        userName: session.data?.user.fullName,
+        userAvatar: avatar,
+        userId: id,
+        userName: fullName,
       },
     });
     console.log(response);
@@ -66,23 +63,16 @@ export const NewReview = ({ productId, userData }: Props) => {
 
   return (
     <form className="flex flex-row pb-4" onSubmit={onSubmit}>
-      <div className="w-10 h-10 bg-blue-400 rounded-full">
-        {/* <Image
-          width={70}
-          height={70}
-          src={review.user.avatar}
-          alt={review.user.name}
-          style={{
-            borderRadius: "999999px",
-            objectFit: "cover",
-            height: "70px",
-            width: "70px",
-          }}
-        /> */}
+      <div className="w-10 h-10 rounded-full">
+        <img
+          src={avatar!}
+          alt={fullName!}
+          className="object-cover w-10 h-10 rounded-full"
+        />
       </div>
       <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
         <div className="flex flex-col w-full gap-1">
-          <span>UserName</span>
+          <span>{fullName}</span>
           <div className="flex flex-row items-center gap-2">
             <span>{rating}/5</span>
             <ReactStars

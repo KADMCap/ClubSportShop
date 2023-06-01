@@ -1,13 +1,14 @@
-import { Product } from "@/generated/graphql";
+import { Product, Review } from "@/generated/graphql";
 import { NextSeo, ProductJsonLd } from "next-seo";
 import React from "react";
 
 interface Props {
   product: Product;
   averageRating: number;
+  reviews: Review[];
 }
 
-export const ProductSeo = ({ product, averageRating }: Props) => {
+export const ProductSeo = ({ product, reviews, averageRating }: Props) => {
   return (
     <>
       <NextSeo
@@ -40,7 +41,7 @@ export const ProductSeo = ({ product, averageRating }: Props) => {
         color="white"
         aggregateRating={{
           ratingValue: averageRating,
-          reviewCount: product.reviews.length,
+          reviewCount: reviews.length,
         }}
         offers={[
           {

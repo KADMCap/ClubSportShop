@@ -6635,7 +6635,7 @@ export type RgbaInput = {
 
 export type Review = Node & {
   __typename?: 'Review';
-  content?: Maybe<Scalars['String']>;
+  content: Scalars['String'];
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -6651,7 +6651,7 @@ export type Review = Node & {
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  rating?: Maybe<Scalars['Float']>;
+  rating: Scalars['Float'];
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -6732,10 +6732,10 @@ export type ReviewConnection = {
 };
 
 export type ReviewCreateInput = {
-  content?: InputMaybe<Scalars['String']>;
+  content: Scalars['String'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   product?: InputMaybe<ProductCreateOneInlineInput>;
-  rating?: InputMaybe<Scalars['Float']>;
+  rating: Scalars['Float'];
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   userAvatar?: InputMaybe<Scalars['String']>;
   userId?: InputMaybe<Scalars['String']>;
@@ -9102,8 +9102,8 @@ export enum _SystemDateTimeFieldVariation {
 }
 
 export type CreateReviewMutationVariables = Exact<{
-  content?: InputMaybe<Scalars['String']>;
-  rating?: InputMaybe<Scalars['Float']>;
+  content: Scalars['String'];
+  rating: Scalars['Float'];
   productId?: InputMaybe<Scalars['ID']>;
   userAvatar?: InputMaybe<Scalars['String']>;
   userName?: InputMaybe<Scalars['String']>;
@@ -9111,7 +9111,7 @@ export type CreateReviewMutationVariables = Exact<{
 }>;
 
 
-export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string, content?: string | null, rating?: number | null, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null } | null };
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string, content: string, rating: number, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null } | null };
 
 export type CreateOrderMutationVariables = Exact<{
   order: OrderCreateInput;
@@ -9173,7 +9173,7 @@ export type GetReviewQueryVariables = Exact<{
 }>;
 
 
-export type GetReviewQuery = { __typename?: 'Query', reviews: Array<{ __typename?: 'Review', content?: string | null, rating?: number | null, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null }> };
+export type GetReviewQuery = { __typename?: 'Query', reviews: Array<{ __typename?: 'Review', content: string, rating: number, createdAt: any, userAvatar?: string | null, userId?: string | null, userName?: string | null }> };
 
 export type GetProductsByTagsQueryVariables = Exact<{
   tags?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -9229,7 +9229,7 @@ export type GetUserDataQuery = { __typename?: 'Query', account?: { __typename?: 
 
 
 export const CreateReviewDocument = gql`
-    mutation CreateReview($content: String, $rating: Float, $productId: ID, $userAvatar: String, $userName: String, $userId: String) {
+    mutation CreateReview($content: String!, $rating: Float!, $productId: ID, $userAvatar: String, $userName: String, $userId: String) {
   createReview(
     data: {content: $content, rating: $rating, product: {connect: {id: $productId}}, userAvatar: $userAvatar, userId: $userId, userName: $userName}
   ) {

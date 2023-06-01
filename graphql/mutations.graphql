@@ -1,7 +1,7 @@
 # REVIEWS
 mutation CreateReview(
-  $content: String
-  $rating: Float
+  $content: String!
+  $rating: Float!
   $productId: ID
   $userAvatar: String
   $userName: String
