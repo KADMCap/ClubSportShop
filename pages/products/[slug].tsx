@@ -4,8 +4,6 @@ import ProductCard from "@/components/Products/ProductCard";
 import { apolloClient } from "@/graphql/apolloClient";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useRef, useState } from "react";
-
-import { AddReviewModal } from "@/components/Modals/AddReviewModal";
 import { Review } from "@/components/Review/Review";
 import {
   GetProductDetailBySlugDocument,
@@ -16,8 +14,6 @@ import {
   Product,
   Review as ReviewType,
 } from "@/generated/graphql";
-
-import mockedUsers from "../../mocks/users.json";
 
 import { ProductContainerScroll } from "@/components/Products/ProductContainerScroll";
 import { ProductDetails } from "@/components/Products/ProductDetails";
@@ -165,13 +161,14 @@ const ProductPage = ({
               setNewReview={setNewReview}
             />
           )}
-          <div className="py-4">{newReview && <Review {...newReview} />}</div>
+          {newReview && (
+            <div className="pb-4">
+              <Review {...newReview} />
+            </div>
+          )}
           <div className="flex flex-col gap-4 pb-6 dark:bg-primaryDark h-fit rounded-xl">
             {reviews.reviews.length === 0 ? (
-              <span className="p-4 text-darkBlue">
-                No reviews yet. You can add the first one by clicking on the
-                button to the right.{" "}
-              </span>
+              <span className="p-4 text-darkBlue">No reviews yet</span>
             ) : (
               reviews.reviews.map((review: ReviewType) => (
                 <Review key={review.id} {...review} />

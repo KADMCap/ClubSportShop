@@ -75,17 +75,20 @@ export const NewReview = ({
 
   return (
     <form className="flex flex-row pb-4" onSubmit={onSubmit}>
-      <div className="w-10 h-10 rounded-full">
+      {avatar ? (
         <img
-          src={avatar!}
+          src={avatar}
           alt={fullName!}
           className="object-cover w-10 h-10 rounded-full"
         />
-      </div>
+      ) : (
+        <div className="w-10 h-10 rounded-full bg-primaryBlue" />
+      )}
+
       <div className="flex w-full p-2 ml-2 bg-white rounded-xl dark:bg-black">
         <div className="flex flex-col w-full gap-1">
-          <span>{fullName}</span>
-          <div className="flex flex-row items-center gap-2">
+          <span className="text-sm font-semibold">{fullName}</span>
+          <div className="flex flex-row items-center gap-2 text-sm">
             <span>{rating}/5</span>
             <ReactStars
               edit={true}
