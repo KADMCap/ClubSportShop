@@ -26,6 +26,7 @@ export const ShippingAddresses = () => {
           </button>
           {open === address.name && (
             <AddressForm
+              addressName={address.name}
               fullName={address.fullName}
               email={address.email}
               phoneNumber={address.phoneNumber}
@@ -47,6 +48,7 @@ export const ShippingAddresses = () => {
         </button>
         {open === "new" && (
           <AddressForm
+            addressName=""
             fullName=""
             email=""
             phoneNumber=""

@@ -81,3 +81,10 @@ mutation UpdateAccountData($newUserName: String, $id: ID) {
     id
   }
 }
+
+#ADDRESS
+mutation CreateUserAddress($address: AddressCreateInput!) {
+  createAddress(data: $address) {
+    id
+  }
+}

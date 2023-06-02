@@ -1,13 +1,16 @@
 import { SubmitButton } from "../Buttons/Button";
-import { Input } from "../PaymentForm/Input";
+import { AddressInput } from "./AddressInput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect } from "react";
+import { apolloClient } from "@/graphql/apolloClient";
+import { CreateUserAddressDocument } from "@/generated/graphql";
+import { useSession } from "next-auth/react";
 
 const schema = yup
   .object({
-    orderId: yup.string().required(),
+    addressName: yup.string().required(),
     fullName: yup.string().required(),
     email: yup.string().email().required(),
     phoneNumber: yup.string().required(),
@@ -20,6 +23,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 interface Props {
+  addressName: string;
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -29,6 +33,7 @@ interface Props {
 }
 
 export const AddressForm = ({
+  addressName,
   fullName,
   email,
   phoneNumber,
@@ -45,8 +50,10 @@ export const AddressForm = ({
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+  const session = useSession();
 
   useEffect(() => {
+    setValue("addressName", addressName);
     setValue("fullName", fullName);
     setValue("email", email);
     setValue("phoneNumber", phoneNumber);
@@ -55,12 +62,52 @@ export const AddressForm = ({
     setValue("street", street);
   }, []);
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormData) => {
+    const response = await apolloClient.mutate({
+      mutation: CreateUserAddressDocument,
+      variables: {
+        address: {
+          create: {
+            addressName: data.addressName,
+            city: data.city,
+            emailAddress: data.email,
+            fullName: data.fullName,
+            phoneNumber: data.phoneNumber,
+            postCode: data.postCode,
+            streetAddress: data.street,
+            userId: "jjjaja",
+          },
+        },
+      },
+    });
+    const payload = {
+      data,
+      userId: session.data?.user.id,
+    };
+
+    // const response = await fetch("/api/address", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(payload),
+    // });
+    if (response) {
+      console.log(response);
+    }
+  };
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
-      <input type="hidden" value="10009929" {...register("orderId")} />
+      <AddressInput
+        label="Address Name"
+        type="text"
+        placeholder="Home"
+        register={register}
+        name="addressName"
+        errorMsg={errors.addressName?.message}
+      />
       <div className="grid gap-6 mb-6 md:grid-cols-2">
-        <Input
+        <AddressInput
           label="Full Name"
           type="text"
           placeholder="John Doe"
@@ -68,7 +115,7 @@ export const AddressForm = ({
           name="fullName"
           errorMsg={errors.fullName?.message}
         />
-        <Input
+        <AddressInput
           label="Email address"
           type="email"
           placeholder="john@mail.com"
@@ -76,7 +123,7 @@ export const AddressForm = ({
           name="email"
           errorMsg={errors.email?.message}
         />
-        <Input
+        <AddressInput
           label="Phone Number"
           type="tel"
           placeholder="123-456-789"
@@ -84,7 +131,7 @@ export const AddressForm = ({
           name="phoneNumber"
           errorMsg={errors.phoneNumber?.message}
         />
-        <Input
+        <AddressInput
           label="Post Code"
           type="tel"
           placeholder="12-345"
@@ -92,7 +139,7 @@ export const AddressForm = ({
           name="postCode"
           errorMsg={errors.postCode?.message}
         />
-        <Input
+        <AddressInput
           label="City"
           type="string"
           placeholder="Poznan"
@@ -100,7 +147,7 @@ export const AddressForm = ({
           name="city"
           errorMsg={errors.city?.message}
         />
-        <Input
+        <AddressInput
           label="Street address"
           type="string"
           placeholder="Polska 21/37"
