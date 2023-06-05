@@ -11,6 +11,7 @@ import {
 } from "@/generated/graphql";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@apollo/client";
+import { AlertModal } from "../Modals/AlertModal";
 
 const schema = yup
   .object({
@@ -91,6 +92,10 @@ export const AddressForm = ({
   };
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
+      <AlertModal variant="success">Success!</AlertModal>
+      <AlertModal variant="warning">Warning!</AlertModal>
+      <AlertModal variant="error">Error!</AlertModal>
+      <AlertModal variant="info">Info!</AlertModal>
       <AddressInput
         label="Address Name"
         type="text"
