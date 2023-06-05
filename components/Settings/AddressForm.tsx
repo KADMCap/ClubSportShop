@@ -3,10 +3,14 @@ import { AddressInput } from "./AddressInput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
-import { CreateUserAddressDocument } from "@/generated/graphql";
+import {
+  CreateUserAddressDocument,
+  useCreateUserAddressMutation,
+} from "@/generated/graphql";
 import { useSession } from "next-auth/react";
+import { useMutation } from "@apollo/client";
 
 const schema = yup
   .object({
@@ -51,6 +55,9 @@ export const AddressForm = ({
     resolver: yupResolver(schema),
   });
   const session = useSession();
+  const [createUserAddressMutation, { data, loading, error }] =
+    useCreateUserAddressMutation();
+  const [createAlert, SetCreateAlert] = useState("");
 
   useEffect(() => {
     setValue("addressName", addressName);
@@ -63,37 +70,23 @@ export const AddressForm = ({
   }, []);
 
   const onSubmit = async (data: FormData) => {
-    const response = await apolloClient.mutate({
-      mutation: CreateUserAddressDocument,
+    const response = await createUserAddressMutation({
       variables: {
         address: {
-          create: {
-            addressName: data.addressName,
-            city: data.city,
-            emailAddress: data.email,
-            fullName: data.fullName,
-            phoneNumber: data.phoneNumber,
-            postCode: data.postCode,
-            streetAddress: data.street,
-            userId: "jjjaja",
-          },
+          addressName: data.addressName,
+          city: data.city,
+          emailAddress: data.email,
+          fullName: data.fullName,
+          phoneNumber: data.phoneNumber,
+          postCode: data.postCode,
+          streetAddress: data.street,
+          userId: session.data?.user.id || "empty",
         },
       },
     });
-    const payload = {
-      data,
-      userId: session.data?.user.id,
-    };
 
-    // const response = await fetch("/api/address", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(payload),
-    // });
-    if (response) {
-      console.log(response);
+    if (response.data?.createAddress) {
+      alert("Your data has been created");
     }
   };
   return (
