@@ -88,3 +88,15 @@ mutation CreateUserAddress($address: AddressCreateInput!) {
     id
   }
 }
+
+mutation UpdateUserAddress($address: AddressUpdateInput!, $addressId: ID!) {
+  updateAddress(data: $address, where: { id: $addressId }) {
+    id
+  }
+}
+
+mutation DeleteUserAddress($addressId: ID!) {
+  deleteAddress(where: { id: $addressId }) {
+    id
+  }
+}

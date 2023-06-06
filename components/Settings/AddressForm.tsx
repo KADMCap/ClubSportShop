@@ -1,4 +1,4 @@
-import { SubmitButton } from "../Buttons/Button";
+import { Button, SubmitButton } from "../Buttons/Button";
 import { AddressInput } from "./AddressInput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +8,8 @@ import { apolloClient } from "@/graphql/apolloClient";
 import {
   CreateUserAddressDocument,
   useCreateUserAddressMutation,
+  useDeleteUserAddressMutation,
+  useUpdateUserAddressMutation,
 } from "@/generated/graphql";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@apollo/client";
@@ -28,6 +30,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 interface Props {
+  addressId?: string;
   addressName: string;
   fullName: string;
   email: string;
@@ -35,6 +38,7 @@ interface Props {
   postCode: string;
   city: string;
   street: string;
+  isNew: boolean;
 }
 
 type AlertModal = {
@@ -44,6 +48,7 @@ type AlertModal = {
 };
 
 export const AddressForm = ({
+  addressId = "",
   addressName,
   fullName,
   email,
@@ -51,6 +56,7 @@ export const AddressForm = ({
   postCode,
   city,
   street,
+  isNew,
 }: Props) => {
   const {
     register,
@@ -63,8 +69,30 @@ export const AddressForm = ({
     resolver: yupResolver(schema),
   });
   const session = useSession();
-  const [createUserAddressMutation, { data, loading, error }] =
-    useCreateUserAddressMutation();
+  const [
+    createUserAddressMutation,
+    {
+      data: createAddressData,
+      loading: createAddressLoading,
+      error: createAddressError,
+    },
+  ] = useCreateUserAddressMutation();
+  const [
+    updateUserAddressMutation,
+    {
+      data: updateAddressData,
+      loading: updateAddressLoading,
+      error: updateAddressError,
+    },
+  ] = useUpdateUserAddressMutation();
+  const [
+    deleteUserAddressMutation,
+    {
+      data: deleteAddressData,
+      loading: deleteAddressLoading,
+      error: deleteAddressError,
+    },
+  ] = useDeleteUserAddressMutation();
   const [createAlert, SetCreateAlert] = useState<AlertModal>({
     open: false,
     variant: "success",
@@ -81,7 +109,7 @@ export const AddressForm = ({
     setValue("street", street);
   }, []);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmitNew = async (data: FormData) => {
     const response = await createUserAddressMutation({
       variables: {
         address: {
@@ -105,13 +133,60 @@ export const AddressForm = ({
       });
       reset();
     }
-    if (error) {
+    if (createAddressError) {
       SetCreateAlert({
         open: true,
         variant: "error",
         value: "Error! Something went wrong!",
       });
       reset();
+    }
+  };
+
+  const onSubmitUpdate = async (data: FormData) => {
+    console.log("update");
+    const response = await updateUserAddressMutation({
+      variables: {
+        address: {
+          addressName: data.addressName,
+          city: data.city,
+          emailAddress: data.email,
+          fullName: data.fullName,
+          phoneNumber: data.phoneNumber,
+          postCode: data.postCode,
+          streetAddress: data.street,
+          userId: session.data?.user.id || "empty",
+        },
+        addressId: addressId,
+      },
+    });
+
+    if (response.data?.updateAddress) {
+      SetCreateAlert({
+        open: true,
+        variant: "success",
+        value: "Success! Your address is added!",
+      });
+      reset();
+    }
+    if (updateAddressError) {
+      SetCreateAlert({
+        open: true,
+        variant: "error",
+        value: "Error! Something went wrong!",
+      });
+      reset();
+    }
+  };
+
+  const handleDelete = async () => {
+    const response = await deleteUserAddressMutation({
+      variables: {
+        addressId,
+      },
+    });
+    if (response.data?.deleteAddress) {
+      location.reload();
     }
   };
 
@@ -124,7 +199,12 @@ export const AddressForm = ({
     location.reload();
   };
   return (
-    <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="flex flex-col gap-1"
+      onSubmit={
+        isNew ? handleSubmit(onSubmitNew) : handleSubmit(onSubmitUpdate)
+      }
+    >
       {createAlert.open && (
         <AlertModal variant={createAlert.variant} closeAlert={closeAlert}>
           {createAlert.value}
@@ -190,6 +270,9 @@ export const AddressForm = ({
       </div>
       <section className="flex flex-row items-center justify-center w-full gap-2">
         <SubmitButton value="UPDATE" />
+        <Button variant="danger" onClick={handleDelete}>
+          DELETE
+        </Button>
       </section>
     </form>
   );

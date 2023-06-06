@@ -34,6 +34,7 @@ export const ShippingAddresses = ({ addresses }: Props) => {
           </button>
           {open === address.addressName && (
             <AddressForm
+              addressId={address.id}
               addressName={address.addressName}
               fullName={address.fullName}
               email={address.emailAddress}
@@ -41,6 +42,7 @@ export const ShippingAddresses = ({ addresses }: Props) => {
               city={address.city}
               postCode={address.postCode}
               street={address.streetAddress}
+              isNew={false}
             />
           )}
         </div>
@@ -63,6 +65,7 @@ export const ShippingAddresses = ({ addresses }: Props) => {
             city=""
             postCode=""
             street=""
+            isNew={true}
           />
         )}
       </div>
