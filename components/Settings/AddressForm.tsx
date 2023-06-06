@@ -37,6 +37,12 @@ interface Props {
   street: string;
 }
 
+type AlertModal = {
+  open: boolean;
+  variant: "success" | "warning" | "error" | "info";
+  value: string;
+};
+
 export const AddressForm = ({
   addressName,
   fullName,
@@ -58,7 +64,11 @@ export const AddressForm = ({
   const session = useSession();
   const [createUserAddressMutation, { data, loading, error }] =
     useCreateUserAddressMutation();
-  const [createAlert, SetCreateAlert] = useState("");
+  const [createAlert, SetCreateAlert] = useState<AlertModal>({
+    open: false,
+    variant: "success",
+    value: "",
+  });
 
   useEffect(() => {
     setValue("addressName", addressName);
@@ -87,15 +97,35 @@ export const AddressForm = ({
     });
 
     if (response.data?.createAddress) {
-      alert("Your data has been created");
+      SetCreateAlert({
+        open: true,
+        variant: "success",
+        value: "Success! Your address is added!",
+      });
     }
+    if (error) {
+      SetCreateAlert({
+        open: true,
+        variant: "error",
+        value: "Error! Something went wrong!",
+      });
+    }
+  };
+
+  const closeAlert = () => {
+    SetCreateAlert({
+      open: false,
+      variant: "success",
+      value: "",
+    });
   };
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
-      <AlertModal variant="success">Success!</AlertModal>
-      <AlertModal variant="warning">Warning!</AlertModal>
-      <AlertModal variant="error">Error!</AlertModal>
-      <AlertModal variant="info">Info!</AlertModal>
+      {createAlert.open && (
+        <AlertModal variant={createAlert.variant} closeAlert={closeAlert}>
+          {createAlert.value}
+        </AlertModal>
+      )}
       <AddressInput
         label="Address Name"
         type="text"

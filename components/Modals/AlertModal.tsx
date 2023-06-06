@@ -6,6 +6,7 @@ interface Props {
   variant?: "success" | "warning" | "error" | "info";
   full?: boolean;
   className?: string;
+  closeAlert: () => void;
 }
 
 const classes = {
@@ -31,6 +32,7 @@ export const AlertModal = ({
   children,
   variant = "success",
   className,
+  closeAlert,
 }: Props) => {
   return (
     <div
@@ -59,10 +61,10 @@ export const AlertModal = ({
           classes.btnVariant[variant],
           className
         )}
+        onClick={closeAlert}
         data-dismiss-target="#alert-1"
         aria-label="Close"
       >
-        <span className="sr-only">Close</span>
         <svg
           aria-hidden="true"
           className="w-5 h-5"
