@@ -10185,7 +10185,7 @@ export type GetUserAddressesQueryVariables = Exact<{
 }>;
 
 
-export type GetUserAddressesQuery = { __typename?: 'Query', addresses: Array<{ __typename?: 'Address', addressName: string, city: string, emailAddress: string, fullName: string, id: string, phoneNumber: string, postCode: string }> };
+export type GetUserAddressesQuery = { __typename?: 'Query', addresses: Array<{ __typename?: 'Address', addressName: string, city: string, emailAddress: string, fullName: string, id: string, phoneNumber: string, postCode: string, streetAddress: string, userId: string }> };
 
 
 export const CreateReviewDocument = gql`
@@ -10983,7 +10983,7 @@ export type GetUserDataLazyQueryHookResult = ReturnType<typeof useGetUserDataLaz
 export type GetUserDataQueryResult = Apollo.QueryResult<GetUserDataQuery, GetUserDataQueryVariables>;
 export const GetUserAddressesDocument = gql`
     query GetUserAddresses($userId: String!) {
-  addresses(where: {userId: $userId}) {
+  addresses(where: {userId: $userId}, stage: DRAFT) {
     addressName
     city
     emailAddress
@@ -10991,6 +10991,8 @@ export const GetUserAddressesDocument = gql`
     id
     phoneNumber
     postCode
+    streetAddress
+    userId
   }
 }
     `;

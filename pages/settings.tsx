@@ -8,7 +8,12 @@ import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { apolloClient } from "@/graphql/apolloClient";
-import { GetUserDataDocument, GetUserDataQuery } from "@/generated/graphql";
+import {
+  GetUserAddressesDocument,
+  GetUserAddressesQuery,
+  GetUserDataDocument,
+  GetUserDataQuery,
+} from "@/generated/graphql";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -28,18 +33,26 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     query: GetUserDataDocument,
   });
 
+  const addressesData = await apolloClient.query<GetUserAddressesQuery>({
+    variables: {
+      userId: session.user.id,
+    },
+    query: GetUserAddressesDocument,
+  });
+
   return {
     props: {
       data,
+      addressesData,
     },
   };
 }
 
 export default function SettingsPage({
   data,
+  addressesData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   //const { data: session, status } = useSession({ required: true });
-  console.log(data);
   return (
     <Layout>
       <div className="flex flex-col w-full">
@@ -57,7 +70,7 @@ export default function SettingsPage({
             <ChangePassword />
           </div>
           <UISettings />
-          <ShippingAddresses />
+          <ShippingAddresses addresses={addressesData.data.addresses} />
         </section>
         <br />
       </div>

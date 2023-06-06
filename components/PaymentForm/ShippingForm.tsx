@@ -3,7 +3,7 @@ import { Button, SubmitButton } from "../Buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Input } from "./Input";
-import addresses from "@/mocks/shippingAddresses.json";
+//import addresses from "@/mocks/shippingAddresses.json";
 import { useCartCount } from "@/hooks/useCartCount";
 import { useState } from "react";
 import { apolloClient } from "@/graphql/apolloClient";
@@ -13,7 +13,9 @@ import { useRouter } from "next/router";
 import {
   AbandonOrderDocument,
   CreateAddressToOrderDocument,
+  useGetUserAddressesQuery,
 } from "@/generated/graphql";
+import { useSession } from "next-auth/react";
 
 const schema = yup
   .object({
@@ -39,12 +41,22 @@ export const ShippingForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-  const userId = "123"; //temp for finding user address
+  const session = useSession();
   const { cartCount, totalPrice } = useCartCount();
   const [selectedAddress, setSelectedAddress] = useState("");
   const orderInfo = useAppSelector(orderData);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const {
+    data: addressesData,
+    loading,
+    error,
+  } = useGetUserAddressesQuery({
+    variables: {
+      userId: session.data?.user.id || "",
+    },
+  });
+  const addresses = addressesData?.addresses;
 
   const fillForm = (addressId: string) => {
     if (addressId === "") {
@@ -56,15 +68,15 @@ export const ShippingForm = () => {
       setValue("city", "");
       setValue("street", "");
     }
-    let address = addresses.find((address) => address.id === addressId);
+    let address = addresses?.find((address) => address.id === addressId);
     if (address) {
-      setSelectedAddress(address.name);
+      setSelectedAddress(address.addressName);
       setValue("fullName", address.fullName);
-      setValue("email", address.email);
+      setValue("email", address.emailAddress);
       setValue("phoneNumber", address.phoneNumber);
       setValue("postCode", address.postCode);
       setValue("city", address.city);
-      setValue("street", address.street);
+      setValue("street", address.streetAddress);
     }
   };
 
@@ -135,9 +147,9 @@ export const ShippingForm = () => {
           onChange={(e) => fillForm(e.target.value)}
         >
           <option value="">New Address</option>
-          {addresses.map((address) => (
+          {addresses?.map((address) => (
             <option key={address.id} value={address.id}>
-              {address.name}
+              {address.addressName}
             </option>
           ))}
         </select>

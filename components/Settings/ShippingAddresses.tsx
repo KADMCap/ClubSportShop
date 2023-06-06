@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import addresses from "@/mocks/shippingAddresses.json";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
 import { AddressForm } from "./AddressForm";
+import { Address, GetUserAddressesQuery } from "@/generated/graphql";
 
-export const ShippingAddresses = () => {
+interface Props {
+  addresses: GetUserAddressesQuery["addresses"];
+}
+
+export const ShippingAddresses = ({ addresses }: Props) => {
   const [open, setOpen] = useState("");
 
   const toggleAddress = (name: string) => {
@@ -17,22 +21,26 @@ export const ShippingAddresses = () => {
         <div key={address.id}>
           <button
             className="flex flex-row items-start justify-between min-w-[120px] pb-2"
-            onClick={() => toggleAddress(address.name)}
+            onClick={() => toggleAddress(address.addressName)}
           >
-            <p>{address.name}</p>
+            <p>{address.addressName}</p>
             <div className="bg-transparent">
-              {open === address.name ? <ChevronUpIcon /> : <ChevronDownIcon />}
+              {open === address.addressName ? (
+                <ChevronUpIcon />
+              ) : (
+                <ChevronDownIcon />
+              )}
             </div>
           </button>
-          {open === address.name && (
+          {open === address.addressName && (
             <AddressForm
-              addressName={address.name}
+              addressName={address.addressName}
               fullName={address.fullName}
-              email={address.email}
+              email={address.emailAddress}
               phoneNumber={address.phoneNumber}
               city={address.city}
               postCode={address.postCode}
-              street={address.street}
+              street={address.streetAddress}
             />
           )}
         </div>

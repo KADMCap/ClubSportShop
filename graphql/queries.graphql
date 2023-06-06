@@ -229,7 +229,7 @@ query GetUserData($email: String) {
 
 #ADDRESS
 query GetUserAddresses($userId: String!) {
-  addresses(where: { userId: $userId }) {
+  addresses(where: { userId: $userId }, stage: DRAFT) {
     addressName
     city
     emailAddress
@@ -237,5 +237,7 @@ query GetUserAddresses($userId: String!) {
     id
     phoneNumber
     postCode
+    streetAddress
+    userId
   }
 }

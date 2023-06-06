@@ -58,6 +58,7 @@ export const AddressForm = ({
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
@@ -102,6 +103,7 @@ export const AddressForm = ({
         variant: "success",
         value: "Success! Your address is added!",
       });
+      reset();
     }
     if (error) {
       SetCreateAlert({
@@ -109,6 +111,7 @@ export const AddressForm = ({
         variant: "error",
         value: "Error! Something went wrong!",
       });
+      reset();
     }
   };
 
@@ -118,6 +121,7 @@ export const AddressForm = ({
       variant: "success",
       value: "",
     });
+    location.reload();
   };
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
