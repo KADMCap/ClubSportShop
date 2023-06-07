@@ -4,15 +4,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { apolloClient } from "@/graphql/apolloClient";
 import {
-  CreateUserAddressDocument,
+  Exact,
+  GetUserAddressesQuery,
   useCreateUserAddressMutation,
   useDeleteUserAddressMutation,
   useUpdateUserAddressMutation,
 } from "@/generated/graphql";
 import { useSession } from "next-auth/react";
-import { useMutation } from "@apollo/client";
+import { ApolloQueryResult } from "@apollo/client";
 import { AlertModal } from "../Modals/AlertModal";
 
 const schema = yup
@@ -39,6 +39,15 @@ interface Props {
   city: string;
   street: string;
   isNew: boolean;
+  refetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            userId: string;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetUserAddressesQuery>>;
 }
 
 type AlertModal = {
@@ -57,6 +66,7 @@ export const AddressForm = ({
   city,
   street,
   isNew,
+  refetch,
 }: Props) => {
   const {
     register,
@@ -132,6 +142,7 @@ export const AddressForm = ({
         value: "Success! Your address is added!",
       });
       reset();
+      refetch();
     }
     if (createAddressError) {
       SetCreateAlert({
@@ -165,9 +176,10 @@ export const AddressForm = ({
       SetCreateAlert({
         open: true,
         variant: "success",
-        value: "Success! Your address is added!",
+        value: "Success! Your address is updated!",
       });
       reset();
+      refetch();
     }
     if (updateAddressError) {
       SetCreateAlert({
@@ -186,7 +198,7 @@ export const AddressForm = ({
       },
     });
     if (response.data?.deleteAddress) {
-      location.reload();
+      refetch();
     }
   };
 
@@ -196,7 +208,6 @@ export const AddressForm = ({
       variant: "success",
       value: "",
     });
-    location.reload();
   };
   return (
     <form
@@ -269,10 +280,12 @@ export const AddressForm = ({
         />
       </div>
       <section className="flex flex-row items-center justify-center w-full gap-2">
-        <SubmitButton value="UPDATE" />
-        <Button variant="danger" onClick={handleDelete}>
-          DELETE
-        </Button>
+        <SubmitButton value={isNew ? "CREATE" : "UPDATE"} />
+        {!isNew && (
+          <Button variant="danger" onClick={handleDelete}>
+            DELETE
+          </Button>
+        )}
       </section>
     </form>
   );

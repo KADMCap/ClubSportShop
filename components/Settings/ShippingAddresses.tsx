@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
 import { AddressForm } from "./AddressForm";
-import { Address, GetUserAddressesQuery } from "@/generated/graphql";
+import { Address, Exact, GetUserAddressesQuery } from "@/generated/graphql";
+import { ApolloQueryResult } from "@apollo/client";
 
 interface Props {
   addresses: GetUserAddressesQuery["addresses"];
+  refetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            userId: string;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetUserAddressesQuery>>;
 }
 
-export const ShippingAddresses = ({ addresses }: Props) => {
+export const ShippingAddresses = ({ addresses, refetch }: Props) => {
   const [open, setOpen] = useState("");
 
   const toggleAddress = (name: string) => {
@@ -43,6 +53,7 @@ export const ShippingAddresses = ({ addresses }: Props) => {
               postCode={address.postCode}
               street={address.streetAddress}
               isNew={false}
+              refetch={refetch}
             />
           )}
         </div>
@@ -66,6 +77,7 @@ export const ShippingAddresses = ({ addresses }: Props) => {
             postCode=""
             street=""
             isNew={true}
+            refetch={refetch}
           />
         )}
       </div>

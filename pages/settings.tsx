@@ -13,6 +13,7 @@ import {
   GetUserAddressesQuery,
   GetUserDataDocument,
   GetUserDataQuery,
+  useGetUserAddressesQuery,
 } from "@/generated/graphql";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -26,6 +27,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
   console.log("session ssr", session);
+
   const { data } = await apolloClient.query<GetUserDataQuery>({
     variables: {
       email: session.user.email,
@@ -33,26 +35,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     query: GetUserDataDocument,
   });
 
-  const addressesData = await apolloClient.query<GetUserAddressesQuery>({
-    variables: {
-      userId: session.user.id,
-    },
-    query: GetUserAddressesDocument,
-  });
-
   return {
     props: {
       data,
-      addressesData,
     },
   };
 }
 
 export default function SettingsPage({
   data,
-  addressesData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   //const { data: session, status } = useSession({ required: true });
+  const { data: addressesData, refetch } = useGetUserAddressesQuery({
+    variables: {
+      userId: data.account?.id || "",
+    },
+  });
   return (
     <Layout>
       <div className="flex flex-col w-full">
@@ -70,7 +68,10 @@ export default function SettingsPage({
             <ChangePassword />
           </div>
           <UISettings />
-          <ShippingAddresses addresses={addressesData.data.addresses} />
+          <ShippingAddresses
+            addresses={addressesData!.addresses}
+            refetch={refetch}
+          />
         </section>
         <br />
       </div>
