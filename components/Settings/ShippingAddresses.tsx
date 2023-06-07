@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import addresses from "@/mocks/shippingAddresses.json";
 import { ChevronDownIcon, ChevronUpIcon } from "../Icons";
 import { AddressForm } from "./AddressForm";
+import { Address, Exact, GetUserAddressesQuery } from "@/generated/graphql";
+import { ApolloQueryResult } from "@apollo/client";
 
-export const ShippingAddresses = () => {
+interface Props {
+  addresses: GetUserAddressesQuery["addresses"];
+  refetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            userId: string;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<GetUserAddressesQuery>>;
+}
+
+export const ShippingAddresses = ({ addresses, refetch }: Props) => {
   const [open, setOpen] = useState("");
 
   const toggleAddress = (name: string) => {
@@ -17,21 +31,29 @@ export const ShippingAddresses = () => {
         <div key={address.id}>
           <button
             className="flex flex-row items-start justify-between min-w-[120px] pb-2"
-            onClick={() => toggleAddress(address.name)}
+            onClick={() => toggleAddress(address.addressName)}
           >
-            <p>{address.name}</p>
+            <p>{address.addressName}</p>
             <div className="bg-transparent">
-              {open === address.name ? <ChevronUpIcon /> : <ChevronDownIcon />}
+              {open === address.addressName ? (
+                <ChevronUpIcon />
+              ) : (
+                <ChevronDownIcon />
+              )}
             </div>
           </button>
-          {open === address.name && (
+          {open === address.addressName && (
             <AddressForm
+              addressId={address.id}
+              addressName={address.addressName}
               fullName={address.fullName}
-              email={address.email}
+              email={address.emailAddress}
               phoneNumber={address.phoneNumber}
               city={address.city}
               postCode={address.postCode}
-              street={address.street}
+              street={address.streetAddress}
+              isNew={false}
+              refetch={refetch}
             />
           )}
         </div>
@@ -47,12 +69,15 @@ export const ShippingAddresses = () => {
         </button>
         {open === "new" && (
           <AddressForm
+            addressName=""
             fullName=""
             email=""
             phoneNumber=""
             city=""
             postCode=""
             street=""
+            isNew={true}
+            refetch={refetch}
           />
         )}
       </div>

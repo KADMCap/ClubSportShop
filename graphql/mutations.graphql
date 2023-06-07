@@ -81,3 +81,22 @@ mutation UpdateAccountData($newUserName: String, $id: ID) {
     id
   }
 }
+
+#ADDRESS
+mutation CreateUserAddress($address: AddressCreateInput!) {
+  createAddress(data: $address) {
+    id
+  }
+}
+
+mutation UpdateUserAddress($address: AddressUpdateInput!, $addressId: ID!) {
+  updateAddress(data: $address, where: { id: $addressId }) {
+    id
+  }
+}
+
+mutation DeleteUserAddress($addressId: ID!) {
+  deleteAddress(where: { id: $addressId }) {
+    id
+  }
+}

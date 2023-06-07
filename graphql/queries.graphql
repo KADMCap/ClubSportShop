@@ -226,3 +226,18 @@ query GetUserData($email: String) {
     updatedAt
   }
 }
+
+#ADDRESS
+query GetUserAddresses($userId: String!) {
+  addresses(where: { userId: $userId }, stage: DRAFT) {
+    addressName
+    city
+    emailAddress
+    fullName
+    id
+    phoneNumber
+    postCode
+    streetAddress
+    userId
+  }
+}
